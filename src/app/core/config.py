@@ -21,6 +21,17 @@ class Settings(BaseSettings):
     postgres_user: str = Field(min_length=1)
     postgres_password: SecretStr
     db_echo: bool = False
+    jwt_secret: SecretStr
+    jwt_algorithm: Literal["HS256"] = "HS256"
+    access_token_expire_minutes: int = Field(default=30, ge=1, le=1440)
+    test_database_name: str | None = None
+
+    @field_validator("jwt_secret")
+    @classmethod
+    def validate_jwt_secret(cls, value: SecretStr) -> SecretStr:
+        if len(value.get_secret_value().strip().encode("utf-8")) < 32:
+            raise ValueError("JWT_SECRET must contain at least 32 bytes")
+        return value
 
     @field_validator("postgres_password")
     @classmethod
