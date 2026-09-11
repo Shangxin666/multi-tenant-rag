@@ -40,3 +40,24 @@ def test_url_preserves_password(config_env: Path, monkeypatch: pytest.MonkeyPatc
     assert settings.database_url.drivername == "postgresql+asyncpg"
     assert password not in repr(settings)
     assert password not in str(settings.database_url)
+
+@pytest.mark.parametrize(
+    ("key", "value"),
+    [
+        ("JWT_SECRET", None),
+        ("JWT_SECRET", ""),
+        ("JWT_SECRET", " " * 32),
+        ("JWT_ALGORITHM", "HS384"),
+        ("ACCESS_TOKEN_EXPIRE_MINUTES", "0"),
+        ("ACCESS_TOKEN_EXPIRE_MINUTES", "1441"),
+    ],
+)
+def test_invalid_jwt_config(
+    config_env: Path, monkeypatch: pytest.MonkeyPatch, key: str, value: str | None
+) -> None:
+    if value is None:
+        monkeypatch.delenv(key, raising=False)
+    else:
+        monkeypatch.setenv(key, value)
+    with pytest.raises(ValidationError):
+        Settings()
