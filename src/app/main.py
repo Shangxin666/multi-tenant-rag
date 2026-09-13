@@ -7,6 +7,7 @@ from app.api.routes.health import router
 from app.db.session import engine
 from app.modules.auth.router import router as auth_router
 from app.modules.users.router import router as users_router
+from app.modules.knowledge_bases.router import router as knowledge_bases_router
 
 
 @asynccontextmanager
@@ -22,6 +23,7 @@ def create_app() -> FastAPI:
     application.include_router(router)
     application.include_router(auth_router)
     application.include_router(users_router)
+    application.include_router(knowledge_bases_router)
     return application
 
 
