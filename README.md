@@ -1,4 +1,4 @@
-# Multi-tenant authentication backend — M2
+# Multi-tenant authentication backend — M3
 
 Python venv + pip、FastAPI、SQLAlchemy 2.x Async、asyncpg、Alembic、
 PostgreSQL 17 + pgvector。M2 实现 Tenant/User 注册、JWT 登录与 Tenant admin 查询。
@@ -113,7 +113,7 @@ docker compose up -d --wait db
 
 prepare_test_database.py 只创建指定测试库；已有库保留，账号需要 CREATEDB 权限。
 集成测试 fixture 首先在该库执行 Alembic upgrade head，再用独立请求 Session 运行测试。
-每个用例前后 TRUNCATE users、tenants；仅允许明确指定、不同于开发库、
+每个用例前后显式 TRUNCATE chunks、documents、knowledge_bases、users、tenants；仅允许明确指定、不同于开发库、
 后缀为 _test 的本机数据库，并在清理前核对 current_database()。
 不要把有价值的数据放入测试库。当前串行运行，不支持多个测试进程共用同一库。
 
@@ -135,3 +135,55 @@ prepare_test_database.py 只创建指定测试库；已有库保留，账号需�
 - 数据库直接写入不强制 email 小写；未来写入口必须统一规范化。
 - 生产数据库应用账号与迁移账号应分权，后续完善密钥轮换与审计。
 - pip 使用依赖兼容范围，无锁文件；不同时间解析的依赖版本可能不同。
+
+
+## M3：KnowledgeBase / Document / Chunk
+
+新增三张表全部保留非空 tenant_id。KnowledgeBase name strip 首尾空白、长度 1–100，
+保留大小写；同一 Tenant 内唯一，不同 Tenant 可同名。description 可空，API 最大 5000 字符。
+
+| API | 权限 | 响应 |
+| --- | --- | --- |
+| POST /knowledge-bases | admin | 201；同 Tenant 重名 409 |
+| GET /knowledge-bases | admin/member | 当前 Tenant 数组；limit 默认 50、范围 1–100，offset >= 0 |
+| GET /knowledge-bases/{id} | admin/member | 当前 Tenant 详情；不可见或不存在均 404 |
+
+Create 仅接受 name、description，拒绝 tenant_id/id/created_at/updated_at。
+Public 仅输出 id、tenant_id、name、description、created_at、updated_at。
+列表固定按 created_at、id 升序；详情在同一 SQL 中按 id + 当前 tenant_id 过滤。
+客户端 query/body 不能改变授权 Tenant。
+
+认证查询已经通过 autobegin 开启 Session 事务。创建使用 add → flush → 构造响应 →
+commit → 返回；任何普通异常 rollback，已知名称唯一冲突返回 409。
+不会再次 begin，不使用 nested transaction。
+
+数据库约束：
+- knowledge_bases.tenant_id → tenants.id，RESTRICT。
+- UNIQUE(tenant_id, name)、UNIQUE(tenant_id, id)。
+- documents.(tenant_id, knowledge_base_id) → knowledge_bases.(tenant_id, id)，RESTRICT。
+- documents UNIQUE(tenant_id, id)，索引 (tenant_id, knowledge_base_id)。
+- source_type 仅 pdf/markdown/html；status 仅 pending/processing/ready/failed，默认 pending。
+- chunks.(tenant_id, document_id) → documents.(tenant_id, id)，CASCADE。
+- chunks UNIQUE(document_id, chunk_index)，chunk_index >= 0，tenant_id 索引。
+- 父表唯一索引以 tenant_id 开头，Chunk 唯一索引以 document_id 开头，不重复创建单列索引。
+
+Chunk Python 属性 chunk_metadata 映射数据库 JSONB 列 metadata，None 存储为 SQL NULL。
+没有 relationship、vector 列、Document/Chunk API 或删除 API。
+0003 按 KnowledgeBase → Document → Chunk 创建，降级反向删除；0001/0002 不修改。
+
+created_at/updated_at 使用带时区时间和数据库插入默认值。
+updated_at 使用 SQLAlchemy onupdate；原始 SQL 更新必须显式设置，不是数据库触发器。
+filename 仅为显示名称，不是可信存储路径；不要求文件名唯一。
+
+测试清理范围扩展为 chunks、documents、knowledge_bases、users、tenants，
+一次显式 TRUNCATE，不使用 TRUNCATE CASCADE。仍只清理已校验的独立测试库。
+新增测试直接验证复合 FK、CHECK、UNIQUE、CASCADE/RESTRICT，也覆盖创建 commit 失败。
+
+M4 接口边界：Document tenant_id 从可见 KnowledgeBase 注入，Chunk tenant_id 从 Document
+注入；pending → processing → ready，失败为 failed。M3 不运行这些状态流转。
+ready 应表示完整 ingestion 成功，不能只完成解析就提前发布。
+未来再确定文件存储位置、重试幂等、Chunk 原子替换、Embedding 模型及维度。
+error_message 只保存安全摘要，不保存 Secret、堆栈或文档全文。
+
+复合 FK 保证父子归属一致，不能代替读取授权或 PostgreSQL RLS。
+M3 不实现上传、解析、TextSplitter、Embedding、检索、RAG、Agent、Worker 或对象存储。
