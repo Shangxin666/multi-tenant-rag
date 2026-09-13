@@ -63,7 +63,7 @@ async def db_engine(database_settings: Settings) -> AsyncIterator[AsyncEngine]:
             actual = await connection.scalar(text("SELECT current_database()"))
             if actual != database_settings.postgres_db or not actual.endswith("_test"):
                 raise RuntimeError("Refusing to clean a non-test database")
-            await connection.execute(text("TRUNCATE TABLE users, tenants"))
+            await connection.execute(text("TRUNCATE TABLE chunks, documents, knowledge_bases, users, tenants"))
 
     try:
         await clean()
