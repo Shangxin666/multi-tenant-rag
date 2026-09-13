@@ -9,6 +9,10 @@ from app.db.base import Base
 from app.modules.tenants.models import Tenant  # noqa: F401
 from app.modules.users.models import User  # noqa: F401
 
+from app.modules.knowledge_bases.models import KnowledgeBase  # noqa: F401
+from app.modules.documents.models import Document  # noqa: F401
+from app.modules.chunks.models import Chunk  # noqa: F401
+
 target_metadata = Base.metadata
 
 
