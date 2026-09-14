@@ -61,3 +61,13 @@ def test_invalid_jwt_config(
         monkeypatch.setenv(key, value)
     with pytest.raises(ValidationError):
         Settings()
+
+
+@pytest.mark.parametrize(("key", "value"), [
+    ("MAX_UPLOAD_BYTES", "0"), ("MAX_UPLOAD_REQUEST_BYTES", "1"),
+    ("CHUNK_SIZE", "150"), ("CHUNK_OVERLAP", "1000"), ("MAX_PDF_PAGES", "0"),
+])
+def test_ingestion_limits(config_env: Path, monkeypatch: pytest.MonkeyPatch, key: str, value: str) -> None:
+    monkeypatch.setenv(key, value)
+    with pytest.raises(ValidationError):
+        Settings()

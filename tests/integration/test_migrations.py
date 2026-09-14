@@ -7,7 +7,7 @@ pytestmark = [pytest.mark.integration, pytest.mark.asyncio]
 
 async def test_upgrade_head_and_vector(db_engine: AsyncEngine) -> None:
     async with db_engine.connect() as connection:
-        assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "0003_create_knowledge_models"
+        assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "0004_add_document_storage_fields"
         assert await connection.scalar(
             text("SELECT extname FROM pg_extension WHERE extname = 'vector'")
         ) == "vector"
@@ -33,7 +33,7 @@ async def test_knowledge_schema(db_engine: AsyncEngine) -> None:
         inspector = inspect(connection)
         expected_uniques = {
             "knowledge_bases": {("tenant_id", "name"), ("tenant_id", "id")},
-            "documents": {("tenant_id", "id")},
+            "documents": {("tenant_id", "id"), ("storage_key",)},
             "chunks": {("document_id", "chunk_index")},
         }
         expected_foreign_keys = {
@@ -43,7 +43,7 @@ async def test_knowledge_schema(db_engine: AsyncEngine) -> None:
         }
         expected_checks = {
             "knowledge_bases": set(),
-            "documents": {"ck_documents_source_type", "ck_documents_status"},
+            "documents": {"ck_documents_source_type", "ck_documents_status", "ck_documents_storage_fields", "ck_documents_file_size", "ck_documents_sha256"},
             "chunks": {"ck_chunks_chunk_index"},
         }
         for table in expected_uniques:

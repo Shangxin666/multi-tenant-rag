@@ -75,12 +75,17 @@ async def db_engine(database_settings: Settings) -> AsyncIterator[AsyncEngine]:
             await engine.dispose()
 
 
+@pytest.fixture
+def document_settings(database_settings: Settings, tmp_path: Path) -> Settings:
+    return database_settings.model_copy(update={"document_storage_root": tmp_path / "documents"})
+
+
 @pytest_asyncio.fixture
-async def application(db_engine: AsyncEngine, database_settings: Settings) -> AsyncIterator[FastAPI]:
+async def application(db_engine: AsyncEngine, database_settings: Settings, document_settings: Settings) -> AsyncIterator[FastAPI]:
     from app.db.session import get_db
     from app.main import create_app
 
-    app = create_app()
+    app = create_app(document_settings)
     factory = async_sessionmaker(db_engine, expire_on_commit=False)
 
     async def override_db() -> AsyncIterator[AsyncSession]:
@@ -88,7 +93,7 @@ async def application(db_engine: AsyncEngine, database_settings: Settings) -> As
             yield session
 
     app.dependency_overrides[get_db] = override_db
-    app.dependency_overrides[get_settings] = lambda: database_settings
+    app.dependency_overrides[get_settings] = lambda: document_settings
     try:
         async with app.router.lifespan_context(app):
             yield app
@@ -102,3 +107,38 @@ async def client(application: FastAPI) -> AsyncIterator[AsyncClient]:
         transport=ASGITransport(app=application), base_url="http://test"
     ) as client:
         yield client
+
+
+@pytest_asyncio.fixture
+async def ingestion_accounts(client: AsyncClient, db_engine: AsyncEngine) -> dict:
+    import secrets
+    from uuid import UUID
+    from app.core.security import hash_password
+    from app.modules.users.models import User
+
+    accounts = {}
+    for name in ("alpha", "beta"):
+        password = secrets.token_urlsafe(24)
+        email = name + "@example.com"
+        response = await client.post("/auth/register", json={
+            "tenant_name": name, "tenant_slug": name, "email": email, "password": password,
+        })
+        assert response.status_code == 201
+        tenant_id = response.json()["tenant"]["id"]
+        login = await client.post("/auth/login", json={"email": email, "password": password})
+        assert login.status_code == 200
+        headers = {"Authorization": "Bearer " + login.json()["access_token"]}
+        kb = await client.post("/knowledge-bases", headers=headers, json={"name": "Documents"})
+        assert kb.status_code == 201
+        accounts[name] = {"headers": headers, "tenant_id": tenant_id, "kb_id": kb.json()["id"]}
+    password = secrets.token_urlsafe(24)
+    encoded = await hash_password(password)
+    async with async_sessionmaker(db_engine)() as session:
+        async with session.begin():
+            session.add(User(tenant_id=UUID(accounts["alpha"]["tenant_id"]), email="member@example.com", password_hash=encoded))
+    login = await client.post("/auth/login", json={"email": "member@example.com", "password": password})
+    assert login.status_code == 200
+    accounts["member"] = {
+        **accounts["alpha"], "headers": {"Authorization": "Bearer " + login.json()["access_token"]},
+    }
+    return accounts

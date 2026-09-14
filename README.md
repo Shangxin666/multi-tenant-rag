@@ -1,8 +1,8 @@
-# Multi-tenant authentication backend — M3
+# Multi-tenant authentication backend — M4
 
 Python venv + pip、FastAPI、SQLAlchemy 2.x Async、asyncpg、Alembic、
 PostgreSQL 17 + pgvector。M2 实现 Tenant/User 注册、JWT 登录与 Tenant admin 查询。
-不包含 RLS、Refresh Token、RAG 或业务知识库模块。
+不包含 RLS、Refresh Token 或 RAG。M4 新增本地文档 ingestion。
 
 ## 本地环境（PowerShell）
 
@@ -187,3 +187,109 @@ error_message 只保存安全摘要，不保存 Secret、堆栈或文档全文�
 
 复合 FK 保证父子归属一致，不能代替读取授权或 PostgreSQL RLS。
 M3 不实现上传、解析、TextSplitter、Embedding、检索、RAG、Agent、Worker 或对象存储。
+
+
+## M4：Document Ingestion
+
+M4 在 HTTP 请求内完成 ingestion，不使用后台任务。只新增：
+- POST /knowledge-bases/{knowledge_base_id}/documents：admin，单个 multipart 文件字段 file。
+- GET /documents/{document_id}：admin/member，仅当前 Tenant。
+- POST /documents/{document_id}/retry：admin，仅 failed。
+
+上传成功创建资源返回 201 + DocumentPublic；解析失败时同样保留资源并返回 status=failed。
+retry 返回 200 + DocumentPublic，必须检查 status，不把 HTTP 成功等同于 ready。
+DocumentPublic 包含 id、tenant_id、knowledge_base_id、filename、source_type、status、
+error_message、file_size_bytes、created_at、updated_at。
+不暴露 storage_key、content_sha256 或真实路径。
+
+仅允许 .pdf/.md/.markdown/.html/.htm，扩展名不区分大小写；MIME 不作为安全依据。
+不支持扩展名 415，空文件 422，超限 413，权限不足 403，跨 Tenant 404。
+额外 multipart 字段（包括 tenant_id）被拒绝。
+Swagger /docs 可直接上传；也可以用 curl.exe -F "file=@sample.md" 并提供 Bearer header。
+不要将真实 Token 写进脚本或提交 Git。
+
+配置（.env.example 已列出）：
+- DOCUMENT_STORAGE_ROOT=.data/documents，首次保存时创建，路径相对于启动工作目录。
+- MAX_UPLOAD_BYTES=10485760（10 MiB）。
+- MAX_UPLOAD_REQUEST_BYTES=11534336（11 MiB，包含 multipart 开销，应用级请求体上限）。
+- CHUNK_SIZE=1000、CHUNK_OVERLAP=150，字符级，不是 token 级，尚未经检索质量评估。
+- MAX_PDF_PAGES=200、MAX_PARSED_CHARS=2000000、MAX_DOCUMENT_CHUNKS=5000。
+
+更新依赖和数据库后启动：
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+docker compose up -d --wait db
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+### 原文件与解析
+
+存储 key 为服务端 tenant UUID / 随机 UUID，不含客户端 filename。
+filename 只保留展示名称，处理 Windows/Unix 路径分隔符；真实路径必须位于 storage root。
+文件以 64 KiB 分块复制到 .part 临时文件，同时统计大小和 SHA-256；
+fsync、关闭后同目录原子 rename。异常清理临时文件，未保存完整文件不创建 Document。
+.data/ 已被 Git 忽略，不作为静态目录提供。
+
+0004 新增 nullable storage_key、file_size_bytes、content_sha256，兼容旧 Document。
+三个字段必须同时为空或同时非空；size > 0；hash 为 64 位小写十六进制；
+storage_key 唯一，hash 不唯一，不做自动去重。历史记录缺少原文件时 retry 返回 409。
+0004 downgrade 删除字段和约束，不删除文件，文件与数据库的关联会丢失。
+
+PDF 使用 pypdf 逐页提取，metadata.page 从 1 开始；加密 PDF 不支持。
+Markdown 严格 UTF-8（允许 BOM），保留原 Markdown 内容。
+HTML 使用 BeautifulSoup 和 html.parser，移除 script/style 等节点，提取正文，
+可保留 title，不抓取网络资源。没有文本时进入 failed，不发布零 Chunk 的 ready。
+解析和 RecursiveCharacterTextSplitter 整体在线程池执行，不传递数据库 Session。
+langchain-text-splitters 带有 langchain-core/langsmith 等传递依赖，但本项目不启用
+追踪或使用 Retriever/VectorStore/Agent，也不调用 LLM 或外部解析服务。
+
+每个 Section 独立切块，PDF 不跨页合并。过滤空白后 Chunk index 从 0 连续编号；
+metadata 复制解析上下文，不重复 tenant_id/document_id/status。
+overlap 为递归切块的目标值，不保证每对 Chunk 都恰好重叠 150 字符。
+
+### 状态与事务
+
+认证与资源查询 → 保存 UUID 标量 → rollback 结束只读事务 → 文件保存 →
+pending INSERT/commit → 条件更新 processing/commit → 无事务解析与切块 →
+短事务 DELETE 旧 Chunk + INSERT 全部新 Chunk + ready/commit。
+
+最终事务先锁定 ID + tenant_id 对应的 processing Document；
+Chunk 可分批 INSERT，但不分批 commit。任何写入失败整体 rollback，
+retry 原 Chunk 完整保留。新事务仅将仍为 processing 的 Document 改为 failed，
+不覆盖已经提交成功的 ready。error_message 为固定安全摘要；
+日志只保留错误类型及栈位置，不输出异常原始内容、请求体或 Authorization。
+
+retry 使用 WHERE id + tenant_id + status=failed 的条件 UPDATE 取得处理权。
+pending/processing/ready 返回 409；正常并发 retry 只有一个能取得处理权。
+原文件每次处理前校验存在性、大小、SHA-256。成功替换全部旧 Chunk，失败保留旧 Chunk。
+未来读取 Chunk 必须同时要求 Document ready；failed 留存的旧 Chunk 不是发布结果。
+
+### 故障边界
+
+文件系统与 PostgreSQL 没有共同事务。
+pending INSERT 明确失败时尝试删除文件；提交结果不明确时先按生成的 Document ID 查询，
+无法确认时保守保留文件，503 中带 Document ID 供后续查询。
+可能留下未引用文件，不自动扫描或删除。状态写回失败也会返回 503，
+不假装已经标记 failed。
+
+请求取消、进程崩溃可能留下 pending/processing。没有 timeout takeover、lease、
+attempt、scheduler 或 crash recovery worker，需要人工检查后续处理。
+线程池不等于解析沙箱，不能强制终止解析；PDF 解压后的内存开销可能远超文件大小。
+不支持 OCR、Office、杀毒、对象存储和文档下载 API。
+
+M4 的 ready 仅代表原文件已解析并切块，不代表完成向量化。
+M5 再单独设计 embedding/indexing 状态，不在本阶段增加向量列或检索逻辑。
+
+### 验证
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -o "addopts="
+.\.venv\Scripts\python.exe -m alembic check
+```
+
+全部 M1～M3 测试保留。M4 storage 使用 pytest 临时目录，绝不使用开发 .data。
+测试包括真正超过 10 MiB 的文件、无 Content-Length 的超限 multipart、PDF 页码、
+独立 Session 观察已提交 pending/processing、分批 INSERT 失败和 commit 失败、
+并发 retry、历史 Document 升级兼容及原文件完整性。
+迁移兼容用例只在明确的独立测试库临时降级至 0003，随后恢复 head。
