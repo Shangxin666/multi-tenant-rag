@@ -29,6 +29,9 @@ class Document(Base):
         ),
         CheckConstraint("source_type IN ('pdf', 'markdown', 'html')", name="source_type"),
         CheckConstraint("status IN ('pending', 'processing', 'ready', 'failed')", name="status"),
+        CheckConstraint("index_status IN ('pending', 'processing', 'ready', 'failed')", name="index_status"),
+        CheckConstraint("index_status NOT IN ('processing', 'ready') OR status = 'ready'", name="index_text_ready"),
+        CheckConstraint("(index_status = 'ready' AND embedding_model IS NOT NULL AND indexed_at IS NOT NULL AND index_error_message IS NULL) OR (index_status <> 'ready' AND embedding_model IS NULL AND indexed_at IS NULL)", name="index_metadata"),
         Index("ix_documents_tenant_knowledge_base", "tenant_id", "knowledge_base_id"),
     )
 
@@ -44,6 +47,10 @@ class Document(Base):
     file_size_bytes: Mapped[int | None] = mapped_column(BigInteger)
     content_sha256: Mapped[str | None] = mapped_column(String(64))
     error_message: Mapped[str | None] = mapped_column(Text)
+    index_status: Mapped[DocumentStatus] = mapped_column(String(16), default="pending", server_default="pending")
+    index_error_message: Mapped[str | None] = mapped_column(Text)
+    embedding_model: Mapped[str | None] = mapped_column(String(255))
+    indexed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

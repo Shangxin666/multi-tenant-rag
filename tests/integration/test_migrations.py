@@ -7,7 +7,7 @@ pytestmark = [pytest.mark.integration, pytest.mark.asyncio]
 
 async def test_upgrade_head_and_vector(db_engine: AsyncEngine) -> None:
     async with db_engine.connect() as connection:
-        assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "0004_add_document_storage_fields"
+        assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "0005_add_vector_indexing"
         assert await connection.scalar(
             text("SELECT extname FROM pg_extension WHERE extname = 'vector'")
         ) == "vector"
@@ -43,7 +43,7 @@ async def test_knowledge_schema(db_engine: AsyncEngine) -> None:
         }
         expected_checks = {
             "knowledge_bases": set(),
-            "documents": {"ck_documents_source_type", "ck_documents_status", "ck_documents_storage_fields", "ck_documents_file_size", "ck_documents_sha256"},
+            "documents": {"ck_documents_source_type", "ck_documents_status", "ck_documents_storage_fields", "ck_documents_file_size", "ck_documents_sha256", "ck_documents_index_status", "ck_documents_index_text_ready", "ck_documents_index_metadata"},
             "chunks": {"ck_chunks_chunk_index"},
         }
         for table in expected_uniques:
@@ -59,7 +59,8 @@ async def test_knowledge_schema(db_engine: AsyncEngine) -> None:
             columns = {c["name"]: c for c in inspector.get_columns(table)}
             assert not columns["tenant_id"]["nullable"]
             assert columns["created_at"]["type"].timezone
-            assert "embedding" not in columns and "vector" not in columns
+            assert "vector" not in columns
+            assert ("embedding" in columns) == (table == "chunks")
         document_indexes = inspector.get_indexes("documents")
         assert any(i["column_names"] == ["tenant_id", "knowledge_base_id"] for i in document_indexes)
         assert any(i["column_names"] == ["tenant_id"] for i in inspector.get_indexes("chunks"))

@@ -129,6 +129,10 @@ async def publish(
             } for draft in drafts[start:start + 100]])
         current.status = "ready"
         current.error_message = None
+        current.index_status = "pending"
+        current.index_error_message = None
+        current.embedding_model = None
+        current.indexed_at = None
         # The context commits all Chunk batches and status together.
 
 

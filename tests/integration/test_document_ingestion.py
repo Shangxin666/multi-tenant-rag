@@ -16,7 +16,8 @@ from app.modules.documents.ingestion.types import ChunkDraft
 
 pytestmark = [pytest.mark.integration, pytest.mark.asyncio]
 PUBLIC = {"id", "tenant_id", "knowledge_base_id", "filename", "source_type", "status",
-          "error_message", "file_size_bytes", "created_at", "updated_at"}
+          "error_message", "file_size_bytes", "created_at", "updated_at",
+          "index_status", "index_error_message", "embedding_model", "indexed_at"}
 
 
 @pytest.mark.parametrize("extension", ["md", "markdown", "html", "htm", "pdf"])

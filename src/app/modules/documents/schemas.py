@@ -19,3 +19,7 @@ class DocumentPublic(BaseModel):
     file_size_bytes: int | None
     created_at: datetime
     updated_at: datetime
+    index_status: DocumentStatus
+    index_error_message: str | None
+    embedding_model: str | None
+    indexed_at: datetime | None

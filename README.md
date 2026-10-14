@@ -279,7 +279,7 @@ attempt、scheduler 或 crash recovery worker，需要人工检查后续处理�
 不支持 OCR、Office、杀毒、对象存储和文档下载 API。
 
 M4 的 ready 仅代表原文件已解析并切块，不代表完成向量化。
-M5 再单独设计 embedding/indexing 状态，不在本阶段增加向量列或检索逻辑。
+该文本状态语义在 M5 中保持不变；M5 的独立 indexing 状态见下文。
 
 ### 验证
 
@@ -293,3 +293,129 @@ M5 再单独设计 embedding/indexing 状态，不在本阶段增加向量列或
 独立 Session 观察已提交 pending/processing、分批 INSERT 失败和 commit 失败、
 并发 retry、历史 Document 升级兼容及原文件完整性。
 迁移兼容用例只在明确的独立测试库临时降级至 0003，随后恢复 head。
+
+## M5：Basic RAG
+
+M5 增加请求内 indexing 和非流式问答，不包含 M6/M7 功能。
+
+### 配置和启动
+
+仍使用 venv + pip。新增 sentence-transformers、pgvector、openai；
+sentence-transformers 带入 PyTorch、Transformers、NumPy 等运行依赖。
+安装和迁移沿用上文命令，之后填写本地 `.env` 中的 M5 配置：
+
+| 配置 | 默认值 / 说明 |
+| --- | --- |
+| EMBEDDING_MODEL | BAAI/bge-small-zh-v1.5，M5 固定模型与 512 维 |
+| EMBEDDING_DEVICE | cpu；GPU 部署须自行匹配 PyTorch/CUDA |
+| EMBEDDING_BATCH_SIZE | 32 |
+| DEEPSEEK_API_KEY | 本地 Secret；不提交、不打印 |
+| LLM_BASE_URL | https://api.deepseek.com |
+| LLM_MODEL | deepseek-flash，由配置传入请求 |
+| LLM_TIMEOUT_SECONDS | 60 |
+| LLM_MAX_TOKENS | 2048 |
+| MAX_RAG_CONTEXT_CHARS | 12000，包含完整 source block 的标签和 metadata |
+
+缺少 LLM key 不影响启动、上传或索引；有 Context 的问答返回安全 503。
+生产模型每进程延迟加载并复用，加载/推理在线程池执行，以进程内锁串行化模型操作。
+首次索引需要访问 Hugging Face 下载公开模型，之后使用本机缓存。
+自动测试禁止真实模型加载和真实 LLM 客户端，使用 fake / mock transport。
+
+### 数据和状态
+
+0005 新增 `chunks.embedding VECTOR(512) NULL`，不创建近似向量索引。
+Document 新增 `index_status`、`index_error_message`、`embedding_model`、`indexed_at`。
+迁移先增加 nullable 状态列、回填所有历史行为 pending，再设置 NOT NULL 和 pending 默认值。
+历史 embedding 保持 NULL；0001～0004 不修改。
+CHECK 限定四种索引状态；processing/ready 要求文本 ready；只有 index ready 才允许
+非空 model/indexed_at，且必须同时存在、error 为空。其他状态 model/indexed_at 为空。
+跨表“全部 Chunk 都有向量”由短事务发布和测试保证，不使用跨表 CHECK 或触发器。
+0005 downgrade 删除新字段和约束，会丢弃向量，但保留文本、Chunk 和原文件。
+
+M4 发布新 Chunk 时，在同一个事务重置 index pending、清空索引元信息；新向量为 NULL。
+`Document.status=ready` 始终只表示文本和切块已经发布。
+
+### API
+
+| API | 权限 | 响应 |
+| --- | --- | --- |
+| POST /documents/{id}/index | admin | 200 DocumentPublic；必须检查 index_status |
+| GET /documents/{id} | admin/member | 包含独立索引状态和安全错误摘要 |
+| POST /knowledge-bases/{id}/query | admin/member | answer + sources |
+
+index 仅允许文本 ready 且索引 pending/failed。其他状态返回 409。
+正常并发请求通过 tenant/id/status 条件 UPDATE RETURNING 取得唯一处理权。
+编码失败或发布失败且成功记录状态：200 + index failed；状态不可可靠确认：503。
+query JSON 仅接受 question 和 top_k；问题 strip 后 1～2000 字符，top_k 默认 5，范围 1～10。
+不存在与跨 Tenant 资源均为 404；member index 为 403。
+
+### 事务和检索
+
+认证/范围查询结束只读事务 → claim processing/commit → 读取 Chunk 普通数据快照并结束事务 →
+线程池生成向量 → 短事务锁 Document、重查 Chunk 的数量/ID/index/content →
+分批更新向量（不分批 commit）→ index ready + model + indexed_at 一次提交。
+任何更新或提交失败整体 rollback，新事务只把仍 processing 的记录标 failed，避免覆盖已提交 ready。
+没有 Chunk 不能完成索引。模型输出必须数量一致、512 维、有限值且单位范数合理。
+
+Passage 直接编码正文，Query 前缀为“为这个句子生成表示以用于检索相关文章：”。
+两者都 normalize_embeddings=True。模型 encode 保持输入顺序，数据库按 chunk_index/id 取快照。
+该模型输入上限为 512 tokens，现有 1000 字符 Chunk 不等于 512 tokens，长输入会被模型截断；
+这是 baseline 的召回质量边界，M5 不改变 M4 切块或引入多向量/版本系统。
+
+query 先检查是否有可检索 Chunk；没有则不加载 embedding、不调用 LLM，返回 200：
+“当前知识库中没有足够的信息回答该问题”，sources=[]。
+调用链明确为 embed_query → retrieve_chunks → build_context → generate_answer。
+检索 SQL 对 Chunk 和 Document 同时过滤 tenant，限制 KB、文本 ready、index ready、
+配置中的 embedding model 和非空向量，然后 cosine_distance ASC、Chunk.id ASC、LIMIT top_k。
+不做全库检索后的 Python 租户过滤。distance 越小越近，不是 confidence。
+Embedding 和外部 LLM 调用期间不持有数据库事务。
+
+### Context、来源和外部服务
+
+按排名加入完整 [S1]/[S2] source block，下一个 block 超过字符预算立即停止。
+正文、展示文件名及允许的 page/title 作为 JSON 数据转义，Context 不进入 system message。
+公开 sources 只包含实际加入 Context 的来源，snippet 最多 300 字符，不返回任意原始 metadata、
+向量、storage key、hash 或本地路径。title 最多 300 字符。
+固定 system message 要求只依据资料、忽略资料中的指令、信息不足说明、禁止虚构引用。
+返回未知 S 编号视为 upstream invalid result，返回安全 502，不偷偷替换引用。
+来源编号检查不能证明事实正确，Prompt Injection 没有被完全解决。
+
+DeepSeek 使用 AsyncOpenAI、stream=False、显式 thinking.type=disabled，
+只读取 message.content，不读取或返回 reasoning_content，不提供工具。
+超时/连接失败/限流/上游不可用返回 503，其他无效响应返回 502。
+不自动重试 provider 请求，不记录请求 Body、Authorization、完整 Prompt/Context 或 provider 原始异常。
+发送给 DeepSeek 的内容包括用户问题和检索到的文档片段；部署方应确认文档允许外发。
+
+### 验证命令
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+docker compose up -d --wait
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe -m alembic check
+.\.venv\Scripts\python.exe scripts/prepare_test_database.py
+.\.venv\Scripts\python.exe -m pytest -o "addopts="
+.\.venv\Scripts\python.exe -m pip check
+git diff --check
+```
+
+真实验收脚本不是 pytest 测试，不使用 fake。它运行真实 Uvicorn HTTP，使用独立测试库和临时文件，
+只清理本次创建租户的数据。请勿与回归测试同时运行。仅验证本地模型/数据库/权限：
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.verify_m5 --skip-llm
+```
+
+完整验收在 `.env` 配置有效 DeepSeek key 后运行 `python -m scripts.verify_m5`。
+它会把脚本中的人工年假资料和问题发送到配置中的 LLM 服务，验证真实回答和 sources。
+没有 key 或显式 skip 时会打印 NOT VERIFIED，不把本地模型或 fake 测试当作真实 LLM 验收。
+
+### 已知边界
+
+无崩溃接管、lease/heartbeat 或 durable worker；中断可能留下 index processing。
+线程池不是进程隔离，无法强制取消模型推理，多 worker 各自占用一份模型内存。
+模型权重未按 revision 锁定；模型升级与重建索引须后续单独设计，不能只改配置后混用向量。
+Exact search 未做规模性能评估，不声明生产吞吐量；字符 Context 预算不是 token 精确预算。
+无相似度阈值或质量评估体系，有召回结果不代表足以回答问题。
+应用层 tenant filter 仍是访问隔离边界，Composite FK 只保证一致性，不是 RLS。
+不实现 BM25、融合、rerank、HNSW/IVFFlat、SSE、会话、Agent、RLS、Redis 或任务队列。

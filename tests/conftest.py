@@ -13,6 +13,8 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
         "JWT_SECRET", "JWT_ALGORITHM", "ACCESS_TOKEN_EXPIRE_MINUTES", "TEST_DATABASE_NAME",
         "DOCUMENT_STORAGE_ROOT", "MAX_UPLOAD_BYTES", "MAX_UPLOAD_REQUEST_BYTES",
         "CHUNK_SIZE", "CHUNK_OVERLAP", "MAX_PDF_PAGES", "MAX_PARSED_CHARS", "MAX_DOCUMENT_CHUNKS",
+        "EMBEDDING_MODEL", "EMBEDDING_DEVICE", "EMBEDDING_BATCH_SIZE", "DEEPSEEK_API_KEY",
+        "LLM_BASE_URL", "LLM_MODEL", "LLM_TIMEOUT_SECONDS", "LLM_MAX_TOKENS", "MAX_RAG_CONTEXT_CHARS",
     ):
         monkeypatch.delenv(key, raising=False)
     monkeypatch.chdir(tmp_path)
@@ -22,6 +24,20 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
     monkeypatch.setenv("POSTGRES_PASSWORD", secrets.token_urlsafe(24))
     monkeypatch.setenv("JWT_SECRET", secrets.token_urlsafe(48))
     return tmp_path
+
+
+@pytest.fixture(autouse=True)
+def prevent_real_rag_backends(monkeypatch):
+    from app.modules.rag.embedding import BgeEmbedding
+    from app.modules.rag import generation
+    def no_model(self):
+        raise AssertionError("Automatic tests must not load a real embedding model")
+    # HTTP provider adapter unit tests explicitly replace AsyncOpenAI with a mock
+    # transport; other tests must override the dependency with a fake backend.
+    monkeypatch.setattr(BgeEmbedding, "_load", no_model)
+    def no_client(*args, **kwargs):
+        raise AssertionError("Automatic tests must use a fake LLM or mock transport")
+    monkeypatch.setattr(generation, "AsyncOpenAI", no_client)
 
 
 @pytest.fixture

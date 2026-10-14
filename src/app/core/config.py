@@ -35,6 +35,16 @@ class Settings(BaseSettings):
     max_parsed_chars: int = Field(default=2_000_000, ge=1)
     max_document_chunks: int = Field(default=5000, ge=1)
 
+    embedding_model: Literal["BAAI/bge-small-zh-v1.5"] = "BAAI/bge-small-zh-v1.5"
+    embedding_device: str = "cpu"
+    embedding_batch_size: int = Field(default=32, ge=1, le=128)
+    deepseek_api_key: SecretStr | None = None
+    llm_base_url: str = "https://api.deepseek.com"
+    llm_model: str = Field(default="deepseek-flash", min_length=1)
+    llm_timeout_seconds: float = Field(default=60, gt=0, le=300)
+    llm_max_tokens: int = Field(default=2048, ge=1, le=8192)
+    max_rag_context_chars: int = Field(default=12000, ge=1, le=100000)
+
     @model_validator(mode="after")
     def validate_ingestion_limits(self) -> "Settings":
         if self.chunk_overlap >= self.chunk_size:

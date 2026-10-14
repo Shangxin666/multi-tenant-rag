@@ -2,6 +2,7 @@ from datetime import datetime
 from uuid import UUID, uuid4
 
 from pydantic import JsonValue
+from pgvector.sqlalchemy import VECTOR
 from sqlalchemy import CheckConstraint, DateTime, ForeignKeyConstraint, Index, Text, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
@@ -26,6 +27,7 @@ class Chunk(Base):
     document_id: Mapped[UUID] = mapped_column()
     chunk_index: Mapped[int] = mapped_column()
     content: Mapped[str] = mapped_column(Text)
+    embedding: Mapped[list[float] | None] = mapped_column(VECTOR(512))
     chunk_metadata: Mapped[dict[str, JsonValue] | None] = mapped_column(
         "metadata", JSONB(none_as_null=True)
     )
