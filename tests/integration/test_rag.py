@@ -146,7 +146,7 @@ async def test_concurrent_claim(client, ingestion_accounts, db_engine, backends,
 
 
 @pytest.mark.parametrize("mode", ["batch", "commit"])
-async def test_publish_rollback(client, ingestion_accounts, db_engine, backends, monkeypatch, mode):
+async def test_publish_rollback(client, ingestion_accounts, db_engine, app_db_engine, backends, monkeypatch, mode):
     a = ingestion_accounts["alpha"]
     old = [vector(1)] * 101
     doc = await seed(db_engine, a, count=101, index_status="failed", vectors=old)
@@ -162,11 +162,11 @@ async def test_publish_rollback(client, ingestion_accounts, db_engine, backends,
             calls.append(1)
             raise RuntimeError("simulated commit failure")
     if mode == "batch": monkeypatch.setattr(indexing, "write_batch", batch)
-    else: event.listen(db_engine.sync_engine, "commit", fail_commit)
+    else: event.listen(app_db_engine.sync_engine, "commit", fail_commit)
     try:
         response = await client.post(f"/documents/{doc}/index", headers=a["headers"])
     finally:
-        if mode == "commit": event.remove(db_engine.sync_engine, "commit", fail_commit)
+        if mode == "commit": event.remove(app_db_engine.sync_engine, "commit", fail_commit)
     assert response.status_code == 200 and response.json()["index_status"] == "failed"
     assert await stored_vectors(db_engine, doc) == old
 

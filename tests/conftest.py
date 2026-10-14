@@ -15,6 +15,7 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
         "CHUNK_SIZE", "CHUNK_OVERLAP", "MAX_PDF_PAGES", "MAX_PARSED_CHARS", "MAX_DOCUMENT_CHUNKS",
         "EMBEDDING_MODEL", "EMBEDDING_DEVICE", "EMBEDDING_BATCH_SIZE", "DEEPSEEK_API_KEY",
         "LLM_BASE_URL", "LLM_MODEL", "LLM_TIMEOUT_SECONDS", "LLM_MAX_TOKENS", "MAX_RAG_CONTEXT_CHARS",
+        "APP_DB_PASSWORD", "MIGRATION_DB_PASSWORD",
     ):
         monkeypatch.delenv(key, raising=False)
     monkeypatch.chdir(tmp_path)
@@ -22,6 +23,7 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
     monkeypatch.setenv("POSTGRES_DB", "unit")
     monkeypatch.setenv("POSTGRES_USER", "unit")
     monkeypatch.setenv("POSTGRES_PASSWORD", secrets.token_urlsafe(24))
+    monkeypatch.setenv("APP_DB_PASSWORD", secrets.token_urlsafe(24))
     monkeypatch.setenv("JWT_SECRET", secrets.token_urlsafe(48))
     return tmp_path
 

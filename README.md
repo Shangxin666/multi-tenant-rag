@@ -1,8 +1,9 @@
-# Multi-tenant authentication backend — M4
+# Multi-tenant RAG backend — M6
 
 Python venv + pip、FastAPI、SQLAlchemy 2.x Async、asyncpg、Alembic、
 PostgreSQL 17 + pgvector。M2 实现 Tenant/User 注册、JWT 登录与 Tenant admin 查询。
-不包含 RLS、Refresh Token 或 RAG。M4 新增本地文档 ingestion。
+M4 实现本地文档 ingestion，M5 实现 Basic RAG，M6 增加 PostgreSQL RLS。
+不包含 Refresh Token 或 M7 检索增强。
 
 ## 本地环境（PowerShell）
 
@@ -14,7 +15,8 @@ python -m venv .venv
 Copy-Item .env.example .env
 ```
 
-已有 .env 时不要覆盖。设置非空 POSTGRES_PASSWORD 和随机 JWT_SECRET。
+已有 .env 时不要覆盖。设置非空 POSTGRES_PASSWORD、APP_DB_PASSWORD、MIGRATION_DB_PASSWORD 和随机 JWT_SECRET。
+三个数据库密码应分别生成，应用连接身份固定为 rag_app，迁移为 rag_migrator。
 JWT_SECRET 至少 32 字节，应使用安全随机值；没有默认 Secret。
 .env 和 .venv 被 Git 忽略，.env.example 可以提交。
 生产环境从环境变量注入，环境变量优先于当前目录 .env。
@@ -32,6 +34,7 @@ JWT_SECRET 至少 32 字节，应使用安全随机值；没有默认 Secret。
 
 ```powershell
 docker compose up -d --wait db
+.\.venv\Scripts\python.exe -m scripts.prepare_database_roles
 .\.venv\Scripts\python.exe -m alembic upgrade head
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
@@ -112,7 +115,7 @@ docker compose up -d --wait db
 ```
 
 prepare_test_database.py 只创建指定测试库；已有库保留，账号需要 CREATEDB 权限。
-集成测试 fixture 首先在该库执行 Alembic upgrade head，再用独立请求 Session 运行测试。
+集成测试 fixture 首先准备专用角色并在该库执行 Alembic upgrade head，再用真实 rag_app 请求 Session 运行测试。
 每个用例前后显式 TRUNCATE chunks、documents、knowledge_bases、users、tenants；仅允许明确指定、不同于开发库、
 后缀为 _test 的本机数据库，并在清理前核对 current_database()。
 不要把有价值的数据放入测试库。当前串行运行，不支持多个测试进程共用同一库。
@@ -126,7 +129,7 @@ prepare_test_database.py 只创建指定测试库；已有库保留，账号需�
 ## 安全边界 / TODO
 
 - tenant_id filter 只是应用层隔离，不是最终数据库级安全方案。
-  PostgreSQL RLS 将在后续 Milestone 单独实现和测试。
+  M6 在此基础上增加 PostgreSQL RLS，具体身份与事务边界见下文。
 - 当前没有 Refresh Token、Token blacklist、密码重置、邮箱验证或第三方 OAuth。
 - 没有速率限制和注册防滥用，不能据此认为已经满足公开生产部署要求。
 - JWT 是签名而非加密，生产必须 HTTPS；保护客户端 Token 存储。
@@ -417,5 +420,130 @@ git diff --check
 模型权重未按 revision 锁定；模型升级与重建索引须后续单独设计，不能只改配置后混用向量。
 Exact search 未做规模性能评估，不声明生产吞吐量；字符 Context 预算不是 token 精确预算。
 无相似度阈值或质量评估体系，有召回结果不代表足以回答问题。
-应用层 tenant filter 仍是访问隔离边界，Composite FK 只保证一致性，不是 RLS。
-不实现 BM25、融合、rerank、HNSW/IVFFlat、SSE、会话、Agent、RLS、Redis 或任务队列。
+应用层 tenant filter 保留，Composite FK 保证一致性；M6 另提供 RLS 防线。
+不实现 BM25、融合、rerank、HNSW/IVFFlat、SSE、会话、Agent、Redis 或任务队列。
+
+## M6：PostgreSQL Row-Level Security
+
+### 必须遵守的执行顺序
+
+先停止旧应用，避免它继续使用管理员凭据访问数据库。保留原数据卷和 M1～M5 migration。
+在本地 `.env` 中分别配置管理员 POSTGRES_*、APP_DB_PASSWORD 和 MIGRATION_DB_PASSWORD。
+现有 `.env` 不要用示例覆盖；Secret 不进 Git、不进入命令行参数。
+
+```powershell
+docker compose up -d --wait db
+# 管理员身份：创建/校正三个固定角色，调整明确列出的项目表所有权。
+.\.venv\Scripts\python.exe -m scripts.prepare_database_roles
+# rag_migrator：创建 Policy、认证函数、ACL，并 ENABLE/FORCE RLS。
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe -m alembic check
+# rag_app：启动时校验角色、RLS 标志、对象所有权、认证函数和危险权限。
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+角色初始化可以重复运行，保留数据，不禁用已有 RLS，不做全库 REASSIGN OWNED。
+只调整 alembic_version、tenants、users、knowledge_bases、documents、chunks 的所有权。
+在全新数据库中，管理员先启用 vector，随后历史 0001 的 IF NOT EXISTS 保持幂等。
+角色是 PostgreSQL 集群级对象，数据库级 grant/所有权是每个库独立配置；本地开发库与测试库
+共用同一套固定角色凭据。不要在共享集群上把本脚本当作任意项目角色管理器使用。
+若 rag_app 或 rag_auth_lookup 已加入其他角色，脚本拒绝继续，须管理员先审计现有授权。
+
+测试库准备顺序：
+
+```powershell
+.\.venv\Scripts\python.exe scripts/prepare_test_database.py
+.\.venv\Scripts\python.exe -m scripts.prepare_database_roles --test
+.\.venv\Scripts\python.exe -m pytest -o "addopts="
+```
+
+集成 fixture 会幂等准备测试角色并升级测试库；只在显式本地 *_test 库清理指定表。
+API 通过 rag_app 执行；管理员连接仅用于准备、观察、迁移兼容测试及清理。
+不要与真实验收脚本同时运行这些测试。
+
+### 角色与凭据
+
+| 身份 | 权限及用途 |
+| --- | --- |
+| POSTGRES_USER | Docker 初始化/本地管理员，负责 provision、测试准备和清理，不用于 FastAPI |
+| rag_migrator | LOGIN、NOSUPERUSER、NOBYPASSRLS、NOINHERIT；拥有项目表和认证 schema，负责 Alembic |
+| rag_app | LOGIN、NOSUPERUSER、NOBYPASSRLS、NOINHERIT；非表所有者、没有任何角色成员关系 |
+| rag_auth_lookup | NOLOGIN、NOSUPERUSER、NOBYPASSRLS、NOINHERIT；非表所有者，仅认证函数需要的 users 列读取 |
+
+rag_migrator 可显式 SET ROLE 到 rag_auth_lookup 管理函数，但不自动继承该角色的读取 Policy。
+rag_app 不能 SET ROLE、创建对象、修改 Policy 或 TRUNCATE。
+实际表权限：tenants/users/knowledge_bases 为 SELECT+INSERT；documents 增加 UPDATE；chunks 增加 UPDATE+DELETE。
+每张表都有四类 tenant Policy，但 Policy 本身不授予表权限，也不增加任何 HTTP API。
+
+生产应用只注入 APP_DB_PASSWORD、数据库地址/库名及其他运行配置；不注入
+POSTGRES_PASSWORD 或 MIGRATION_DB_PASSWORD，也不要挂载含管理凭据的开发 .env。
+管理员密码缺失不会影响正常 runtime Settings；访问 administrator URL 时才强制要求它。
+缺少应用/迁移密码分别报错，绝不回退使用管理员连接。
+
+### Policy 与默认拒绝
+
+0006 对五张业务表执行 ENABLE 和 FORCE ROW LEVEL SECURITY。
+tenants 使用 id，其余使用 tenant_id，与事务局部 app.tenant_id UUID 比较。
+SELECT/DELETE 使用 USING；INSERT 使用 WITH CHECK；UPDATE 同时检查旧行和新行。
+上下文不存在或为空时不返回租户数据，INSERT 被拒绝；UPDATE/DELETE 无可见目标影响零行。
+非法 UUID 报错，不能退化为放行。无相关表权限的操作直接被 ACL 拒绝。
+每张表的四个策略为 `<table>_tenant_select/insert/update/delete`，仅授予 rag_app。
+users 另有 users_auth_lookup SELECT Policy，仅适用于 rag_auth_lookup。
+所有应用层 tenant filter 和 Composite FK 原样保留。
+
+### 认证函数与 password_hash 风险
+
+认证之前尚不知道 tenant，不能直接使用普通受限 users 查询。
+app_private.login_credentials(email) 至多返回一行 user_id/password_hash/is_active，
+app_private.user_tenant(user_id) 只返回 tenant UUID，不返回密码或角色。
+两个函数均为 SECURITY DEFINER，所有者 rag_auth_lookup，固定 search_path=pg_catalog,pg_temp，
+全限定引用 public.users；没有动态 SQL。PUBLIC EXECUTE 被撤销，仅 rag_app 可调用。
+认证角色只有 id/tenant_id/email/password_hash/is_active 的列级 SELECT，并依靠
+users_auth_lookup Policy 读取；不是表所有者，也没有 BYPASSRLS。不能写 users 或访问其他业务表。
+
+登录按规范化 email 查询凭据，复制标量后结束事务，再在线程池校验 Argon2。
+password_hash 只在服务端短暂用于验证，不进入 JWT、公开 Schema 或日志。
+但持有 rag_app SQL 凭据或获得任意 SQL 执行能力的人，仍可能按已知 email 调用凭据函数，
+取得 hash 并离线猜测密码；这是明确的认证信任边界，不宣称函数完全消除 hash 暴露风险。
+不授予列举所有账号的认证函数；继续使用 Argon2、通用登录失败响应和 Secret 隔离。
+
+JWT 仍只有 sub/exp。先校验 JWT，再按 sub 获取 tenant UUID，rollback 结束认证只读事务，
+绑定 tenant 后重新按 user_id+tenant_id 查询最新 User、active 和 role。普通用户列表始终受 RLS。
+注册在服务端预生成新的 tenant UUID，hash 后绑定该 UUID，再同一事务插入 Tenant+首个 admin；
+客户端不能指定已有 tenant。用户创建失败仍整体 rollback。
+
+### Session、事务与连接池
+
+应用沿用一个 AsyncEngine 和请求级 AsyncSession；运行 Session 使用 TenantSession。
+已认证 UUID 存在 Session.info，after_begin 通过该事件提供的 Connection 执行参数化
+set_config('app.tenant_id', tenant, true)。无 tenant 时显式设置空值。
+数据库值仅当前事务有效，commit/rollback 后恢复；下一个事务自动重新设置。
+只读认证事务结束前不允许绑定，已绑定的同一请求 Session 不允许切换到另一个 tenant。
+请求关闭时清理 Session.info；Session 不跨请求复用，共享的是连接池。
+事件只注册在 TenantSession，不影响管理员 Session，不靠全局变量或永久 SET。
+
+M4/M5 的 claim、快照、发布、错误状态写回、提交结果确认都在各自短事务自动获得上下文。
+文件读写、解析、embedding、LLM 期间仍无数据库事务。没有新增长事务、嵌套事务或 UoW。
+
+### 回滚与系统维护
+
+0006 downgrade 先撤销 rag_app 对五张表的权限，再删除认证函数与 Policy、取消 FORCE/ENABLE。
+不删除业务数据、角色或密码。迁移完成后新版应用启动检查会拒绝启动，避免无 RLS 继续服务。
+回滚须停应用并配合兼容版本及管理员审计后的权限方案；不自动回退到超级用户。
+表所有者在 FORCE 下的普通读取仍默认拒绝；需要跨租户的数据修复/备份使用独立、显式管理员操作。
+不新增 HTTP 系统管理员接口，也不把后台管理员身份放进 get_db。
+
+### 测试与安全边界
+
+集成测试直接用运行角色执行不带 WHERE 的 SQL，包括向量排序/JOIN，验证数据库独立隔离。
+覆盖非法 INSERT、改 tenant、跨父资源外键、无上下文写入、真实 Policy/函数 ACL、表 owner FORCE、
+禁止 SET ROLE/TRUNCATE/DDL、同一物理连接 A/B/无上下文复用、commit/rollback 重启、并发 HTTP、
+以及 0006 downgrade/re-upgrade 后的数据保留与权限恢复。M1～M5 原测试仍全部保留。
+启动检查不能替代数据库 Policy 审计；alembic check 也不会完整检查 Policy/ACL，另有 pg_policies 断言。
+
+自定义 GUC 是可信服务端传递的上下文，不是密码或签名。共享 SQL 角色可以设置它，
+因此 RLS 防御遗漏过滤、正常请求串租户和错误写入，不能防御任意 SQL 注入或应用进程完全失陷。
+FORCE 不限制超级用户/BYPASSRLS，表所有者仍能修改 DDL；必须隔离管理凭据。
+UNIQUE/FK 检查可能暴露存在性线索，API 保持通用冲突响应，不泄漏原始数据库错误。
+RLS 不替代 admin/member RBAC，不保护本地原文件，也不改变 M5 的 Prompt/外发安全边界。
+M6 不引入新检索算法、Agent、Redis、worker 或 M7 功能。

@@ -4,11 +4,13 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, text
 
 from app.core.config import Settings, get_settings
 from app.core.security import decode_access_token
 from app.db.session import get_db
 from app.modules.users.models import User
+from app.db.tenant_context import bind_tenant
 
 bearer = HTTPBearer(auto_error=False)
 Database = Annotated[AsyncSession, Depends(get_db)]
@@ -33,7 +35,12 @@ async def get_current_user(
         user_id = decode_access_token(credentials.credentials, settings)
     except jwt.InvalidTokenError:
         raise unauthorized() from None
-    user = await session.get(User, user_id)
+    tenant_id = await session.scalar(text("SELECT app_private.user_tenant(:user_id)"), {"user_id": user_id})
+    await session.rollback()
+    if tenant_id is None:
+        raise unauthorized()
+    bind_tenant(session, tenant_id)
+    user = await session.scalar(select(User).where(User.id == user_id, User.tenant_id == tenant_id))
     if user is None or not user.is_active:
         raise unauthorized()
     return user

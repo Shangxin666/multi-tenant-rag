@@ -1,4 +1,6 @@
-from sqlalchemy import select
+from dataclasses import dataclass
+from uuid import UUID, uuid4
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import hash_password, verify_password
@@ -7,12 +9,15 @@ from app.modules.tenants.models import Tenant
 from app.modules.tenants.schemas import TenantPublic
 from app.modules.users.models import User
 from app.modules.users.schemas import UserPublic
+from app.db.tenant_context import bind_tenant
 
 
 async def register_tenant(session: AsyncSession, data: RegisterRequest) -> RegisterResponse:
     encoded = await hash_password(data.password.get_secret_value())
+    tenant_id = uuid4()
+    bind_tenant(session, tenant_id)
     async with session.begin():
-        tenant = Tenant(name=data.tenant_name, slug=data.tenant_slug)
+        tenant = Tenant(id=tenant_id, name=data.tenant_name, slug=data.tenant_slug)
         session.add(tenant)
         await session.flush()
         user = User(
@@ -31,9 +36,17 @@ async def register_tenant(session: AsyncSession, data: RegisterRequest) -> Regis
     return result
 
 
-async def authenticate(session: AsyncSession, email: str, password: str) -> User | None:
-    user = await session.scalar(select(User).where(User.email == email))
-    valid = await verify_password(password, user.password_hash if user else None)
-    if user is None or not valid or not user.is_active:
+@dataclass(frozen=True)
+class AuthenticatedUser:
+    id: UUID
+
+
+async def authenticate(session: AsyncSession, email: str, password: str) -> AuthenticatedUser | None:
+    row = (await session.execute(text("SELECT * FROM app_private.login_credentials(:email)"),
+                                 {"email": email.strip().lower()})).one_or_none()
+    user_id, encoded, active = (tuple(row) if row is not None else (None, None, False))
+    await session.rollback()
+    valid = await verify_password(password, encoded)
+    if user_id is None or not valid or not active:
         return None
-    return user
+    return AuthenticatedUser(user_id)

@@ -150,6 +150,7 @@ async def test_legacy_without_file_cannot_retry(client: AsyncClient, ingestion_a
 
 async def test_retry_commit_failure_preserves_old_chunks(
     client: AsyncClient, ingestion_accounts: dict, db_engine: AsyncEngine,
+    app_db_engine: AsyncEngine,
 ) -> None:
     from sqlalchemy import Connection, event, text
 
@@ -164,11 +165,11 @@ async def test_retry_commit_failure_preserves_old_chunks(
             failures.append(True)
             raise RuntimeError("Simulated final commit failure")
 
-    event.listen(db_engine.sync_engine, "commit", fail_before_commit)
+    event.listen(app_db_engine.sync_engine, "commit", fail_before_commit)
     try:
         response = await client.post(f"/documents/{document['id']}/retry", headers=ingestion_accounts["alpha"]["headers"])
         assert response.status_code == 200 and response.json()["status"] == "failed"
     finally:
-        event.remove(db_engine.sync_engine, "commit", fail_before_commit)
+        event.remove(app_db_engine.sync_engine, "commit", fail_before_commit)
     assert failures == [True]
     assert await chunk_ids(db_engine, document["id"]) == before

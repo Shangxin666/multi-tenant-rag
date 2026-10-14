@@ -43,7 +43,15 @@ def database_settings() -> Settings:
         "JWT_ALGORITHM": target.jwt_algorithm,
         "ACCESS_TOKEN_EXPIRE_MINUTES": str(target.access_token_expire_minutes),
         "DB_ECHO": "false",
+        "APP_DB_PASSWORD": target.app_db_password.get_secret_value(),
+        "MIGRATION_DB_PASSWORD": target.migration_db_password.get_secret_value(),
     })
+    provision = subprocess.run(
+        [sys.executable, "-m", "scripts.prepare_database_roles", "--test"],
+        cwd=ROOT, capture_output=True, text=True,
+    )
+    if provision.returncode:
+        pytest.fail("Test database role provisioning failed")
     result = subprocess.run(
         [sys.executable, "-m", "alembic", "upgrade", "head"],
         cwd=ROOT, env=env, capture_output=True, text=True,
@@ -81,12 +89,22 @@ def document_settings(database_settings: Settings, tmp_path: Path) -> Settings:
 
 
 @pytest_asyncio.fixture
-async def application(db_engine: AsyncEngine, database_settings: Settings, document_settings: Settings) -> AsyncIterator[FastAPI]:
+async def app_db_engine(db_engine: AsyncEngine, database_settings: Settings) -> AsyncIterator[AsyncEngine]:
+    engine = create_async_engine(database_settings.application_database_url, hide_parameters=True, pool_size=1, max_overflow=0)
+    try:
+        yield engine
+    finally:
+        await engine.dispose()
+
+
+@pytest_asyncio.fixture
+async def application(app_db_engine: AsyncEngine, database_settings: Settings, document_settings: Settings) -> AsyncIterator[FastAPI]:
     from app.db.session import get_db
     from app.main import create_app
 
-    app = create_app(document_settings)
-    factory = async_sessionmaker(db_engine, expire_on_commit=False)
+    from app.db.tenant_context import TenantSession
+    app = create_app(document_settings, database_engine=app_db_engine)
+    factory = async_sessionmaker(app_db_engine, expire_on_commit=False, sync_session_class=TenantSession)
 
     async def override_db() -> AsyncIterator[AsyncSession]:
         async with factory() as session:

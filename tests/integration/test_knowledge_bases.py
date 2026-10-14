@@ -108,10 +108,12 @@ async def test_no_token(client: AsyncClient) -> None:
 
 async def test_commit_failure_rolls_back(
     application: FastAPI, accounts: dict, db_engine: AsyncEngine,
+    app_db_engine: AsyncEngine,
 ) -> None:
     from app.db.session import get_db
 
-    factory = async_sessionmaker(db_engine, expire_on_commit=False)
+    from app.db.tenant_context import TenantSession
+    factory = async_sessionmaker(app_db_engine, expire_on_commit=False, sync_session_class=TenantSession)
     sessions = []
 
     async def failing_db() -> AsyncIterator[AsyncSession]:
@@ -131,8 +133,10 @@ async def test_commit_failure_rolls_back(
             response = await client.post("/knowledge-bases", headers=accounts["alpha"], json={"name": "Never committed"})
         assert response.status_code == 500
         assert len(sessions) == 1
-        sessions[0].rollback.assert_awaited_once()
-        async with factory() as session:
+        sessions[0].commit.assert_awaited_once()
+        # Authentication releases its read transaction; failed commit rolls back again.
+        assert sessions[0].rollback.await_count == 2
+        async with async_sessionmaker(db_engine)() as session:
             assert await session.scalar(select(KnowledgeBase).where(KnowledgeBase.name == "Never committed")) is None
     finally:
         application.dependency_overrides[get_db] = previous

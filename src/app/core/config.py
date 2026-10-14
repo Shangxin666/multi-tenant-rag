@@ -19,8 +19,10 @@ class Settings(BaseSettings):
     db_host: str = Field(default="127.0.0.1", min_length=1)
     db_port: int = Field(default=5433, ge=1, le=65535)
     postgres_db: str = Field(min_length=1)
-    postgres_user: str = Field(min_length=1)
-    postgres_password: SecretStr
+    postgres_user: str = Field(default="postgres", min_length=1)
+    postgres_password: SecretStr | None = None
+    app_db_password: SecretStr | None = None
+    migration_db_password: SecretStr | None = None
     db_echo: bool = False
     jwt_secret: SecretStr
     jwt_algorithm: Literal["HS256"] = "HS256"
@@ -34,7 +36,6 @@ class Settings(BaseSettings):
     max_pdf_pages: int = Field(default=200, ge=1)
     max_parsed_chars: int = Field(default=2_000_000, ge=1)
     max_document_chunks: int = Field(default=5000, ge=1)
-
     embedding_model: Literal["BAAI/bge-small-zh-v1.5"] = "BAAI/bge-small-zh-v1.5"
     embedding_device: str = "cpu"
     embedding_batch_size: int = Field(default=32, ge=1, le=128)
@@ -62,13 +63,16 @@ class Settings(BaseSettings):
 
     @field_validator("postgres_password")
     @classmethod
-    def password_not_empty(cls, value: SecretStr) -> SecretStr:
-        if not value.get_secret_value().strip():
+    def password_not_empty(cls, value: SecretStr | None) -> SecretStr | None:
+        if value is not None and not value.get_secret_value().strip():
             raise ValueError("POSTGRES_PASSWORD must not be empty")
         return value
 
     @property
     def database_url(self) -> URL:
+        """Administrator URL, used only by provisioning/maintenance tools."""
+        if self.postgres_password is None:
+            raise ValueError("POSTGRES_PASSWORD is required for administrator connections")
         return URL.create(
             drivername="postgresql+asyncpg",
             username=self.postgres_user,
@@ -77,6 +81,21 @@ class Settings(BaseSettings):
             port=self.db_port,
             database=self.postgres_db,
         )
+
+
+    @property
+    def application_database_url(self) -> URL:
+        if self.app_db_password is None or not self.app_db_password.get_secret_value().strip():
+            raise ValueError("APP_DB_PASSWORD is required for application connections")
+        return URL.create("postgresql+asyncpg", username="rag_app", password=self.app_db_password.get_secret_value(),
+                          host=self.db_host, port=self.db_port, database=self.postgres_db)
+
+    @property
+    def migration_database_url(self) -> URL:
+        if self.migration_db_password is None or not self.migration_db_password.get_secret_value().strip():
+            raise ValueError("MIGRATION_DB_PASSWORD is required for migrations")
+        return URL.create("postgresql+asyncpg", username="rag_migrator", password=self.migration_db_password.get_secret_value(),
+                          host=self.db_host, port=self.db_port, database=self.postgres_db)
 
 
 @lru_cache

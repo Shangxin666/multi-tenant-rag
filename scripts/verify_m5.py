@@ -19,6 +19,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.core.config import Settings, get_settings
 from app.db.session import get_db
+from app.db.tenant_context import TenantSession
 from app.main import create_app
 from app.modules.chunks.models import Chunk
 from app.modules.documents.models import Document
@@ -42,12 +43,14 @@ async def verify(skip_llm: bool = False) -> None:
         settings = settings.model_copy(update={"deepseek_api_key": None})
     engine = create_async_engine(settings.database_url, hide_parameters=True)
     factory = async_sessionmaker(engine, expire_on_commit=False)
+    runtime_engine = create_async_engine(settings.application_database_url, hide_parameters=True)
+    runtime_factory = async_sessionmaker(runtime_engine, expire_on_commit=False, sync_session_class=TenantSession)
     tenants = []
     with TemporaryDirectory(prefix="m5-http-") as directory:
         settings = settings.model_copy(update={"document_storage_root": Path(directory)})
-        app = create_app(settings)
+        app = create_app(settings, database_engine=runtime_engine)
         async def db():
-            async with factory() as session:
+            async with runtime_factory() as session:
                 yield session
         app.dependency_overrides[get_db] = db
         app.dependency_overrides[get_settings] = lambda: settings

@@ -19,8 +19,8 @@ def test_password_required(config_env: Path, monkeypatch: pytest.MonkeyPatch, pa
     monkeypatch.delenv("POSTGRES_PASSWORD")
     if password is not None:
         monkeypatch.setenv("POSTGRES_PASSWORD", password)
-    with pytest.raises(ValidationError):
-        Settings()
+    with pytest.raises(ValueError):
+        Settings().database_url
 
 
 @pytest.mark.parametrize("port", ["invalid", "0", "65536"])
