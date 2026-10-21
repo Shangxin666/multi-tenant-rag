@@ -1,3 +1,4 @@
+from app.observability.trace import traced
 """Rank-only fusion; raw retrieval scores are never added together."""
 from dataclasses import dataclass
 from uuid import UUID
@@ -10,6 +11,7 @@ class FusedChunk:
     score: float
 
 
+@traced("rrf")
 def fuse_rrf(lists: list[list[RetrievedChunk]], k: int = 60) -> list[FusedChunk]:
     if k < 1:
         raise ValueError("RRF k must be positive")

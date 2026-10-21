@@ -1,3 +1,4 @@
+from app.observability.trace import traced, count
 from dataclasses import dataclass
 import json
 
@@ -11,6 +12,7 @@ class RagContext:
     sources: list[RagSource]
 
 
+@traced("context")
 def build_context(rows: list[RetrievedChunk], max_chars: int) -> RagContext:
     blocks: list[str] = []
     sources: list[RagSource] = []
@@ -36,4 +38,5 @@ def build_context(rows: list[RetrievedChunk], max_chars: int) -> RagContext:
             chunk_index=row.chunk_index, page=page, title=title,
             distance=row.distance, snippet=row.content[:300],
         ))
+    count(sources=len(sources), context_chars=length)
     return RagContext("\n\n".join(blocks), sources)

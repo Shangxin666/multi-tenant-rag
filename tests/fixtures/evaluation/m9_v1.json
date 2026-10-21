@@ -1,0 +1,664 @@
+{
+  "version": "m9-artificial-v1",
+  "description": "Frozen before first real M9 run. Synthetic only; no private data. Holdout questions never used to tune prompts.",
+  "documents": {
+    "leave": "正式员工每年享有十二天带薪年假。年假申请需提前三个工作日提交。",
+    "probation": "试用期员工不享有正式员工年假，可以申请无薪事假。",
+    "sick": "员工病假需要提供医院证明，病假不占用年假额度。",
+    "travel": "出差交通费需附发票，每月最后一个工作日前报销。",
+    "e1001": "错误码 E1001 表示设备认证令牌过期，请重新登录以更新令牌。",
+    "e10010": "错误码 E10010 表示存储空间不足，请清理历史日志。",
+    "e1002": "错误码 E1002 表示账号被锁定，请联系管理员解锁。",
+    "zx200": "产品型号 ZX-200 支持离线运行，额定输入电压为十二伏。",
+    "zx200s": "产品型号 ZX-200S 必须联网运行，额定输入电压为二十四伏。",
+    "zx20": "产品型号 ZX-20 是便携式设备，采用五伏 USB 供电。",
+    "timeout": "连接出现 connection timeout 时，检查网络连通性和服务端响应时间。",
+    "retry": "客户端重试采用 exponential backoff，最大等待时间为三十秒。",
+    "quota": "API rate limit 默认每分钟六十次，超限后返回 HTTP 429。",
+    "notfound": "HTTP 404 表示资源不存在，也用于隐藏不可见的租户资源。",
+    "aurora": "极光计划 Aurora 是内部成本优化项目，由财务部门负责。",
+    "nebula": "星云计划 Nebula 是数据迁移项目，由平台部门负责。",
+    "backup": "数据库每日凌晨两点备份，备份保留三十天。",
+    "restore": "恢复备份前需要停止写入，并校验备份文件完整性。",
+    "account": "离职员工账号应在离职当天禁用，管理员负责执行。",
+    "password": "忘记密码需联系管理员，禁止通过邮件发送明文密码。",
+    "remote": "远程办公每周最多两天，需要直属经理批准。",
+    "meeting": "周例会固定在周一上午十点，会议纪要当天发布。",
+    "support": "技术支持服务时间为工作日上午九点至下午六点。",
+    "warranty": "设备保修期为购买之日起一年，人为损坏不在保修范围内。"
+  },
+  "cases": [
+    {
+      "case_id": "R01",
+      "mode": "rag",
+      "split": "dev",
+      "question": "正式员工一年能休多少天带薪假？",
+      "relevant": [
+        "leave"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "十二",
+          "12"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R02",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "请年假要提前多久？",
+      "relevant": [
+        "leave"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "三个工作日",
+          "3个工作日"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R03",
+      "mode": "rag",
+      "split": "dev",
+      "question": "报销出差车费什么时候截止？",
+      "relevant": [
+        "travel"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "最后一个工作日"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R04",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "E1001",
+      "relevant": [
+        "e1001"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "令牌过期"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R05",
+      "mode": "rag",
+      "split": "dev",
+      "question": "E10010",
+      "relevant": [
+        "e10010"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "空间不足"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R06",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "ZX-200",
+      "relevant": [
+        "zx200"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "离线"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R07",
+      "mode": "rag",
+      "split": "dev",
+      "question": "ZX-200S",
+      "relevant": [
+        "zx200s"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "联网"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R08",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "connection timeout",
+      "relevant": [
+        "timeout"
+      ],
+      "category": "english",
+      "facts": [
+        [
+          "网络"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R09",
+      "mode": "rag",
+      "split": "dev",
+      "question": "exponential backoff",
+      "relevant": [
+        "retry"
+      ],
+      "category": "english",
+      "facts": [
+        [
+          "三十",
+          "30"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R10",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "API rate limit",
+      "relevant": [
+        "quota"
+      ],
+      "category": "english",
+      "facts": [
+        [
+          "六十",
+          "60"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R11",
+      "mode": "rag",
+      "split": "dev",
+      "question": "极光计划由谁负责？",
+      "relevant": [
+        "aurora"
+      ],
+      "category": "name",
+      "facts": [
+        [
+          "财务"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R12",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "Nebula 的负责人是哪个部门？",
+      "relevant": [
+        "nebula"
+      ],
+      "category": "name",
+      "facts": [
+        [
+          "平台"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R13",
+      "mode": "rag",
+      "split": "dev",
+      "question": "数据库备份保存多久？",
+      "relevant": [
+        "backup"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "七天",
+          "7天"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R14",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "同事离职后何时关闭账号？",
+      "relevant": [
+        "account"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "当天"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R15",
+      "mode": "rag",
+      "split": "dev",
+      "question": "一周可以在家上班几天？",
+      "relevant": [
+        "remote"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "两天",
+          "2天"
+        ]
+      ],
+      "no_answer": false
+    },
+    {
+      "case_id": "R16",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "火星基地的氧气储备是多少？",
+      "relevant": [],
+      "category": "no_answer",
+      "facts": [],
+      "no_answer": true
+    },
+    {
+      "case_id": "R17",
+      "mode": "rag",
+      "split": "dev",
+      "question": "病假需要什么证明？",
+      "relevant": [
+        "sick"
+      ],
+      "category": "fact",
+      "facts": [
+        [
+          "医院证明"
+        ]
+      ],
+      "no_answer": false,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R18",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "恢复备份前要做什么？",
+      "relevant": [
+        "restore"
+      ],
+      "category": "fact",
+      "facts": [
+        [
+          "停止写入"
+        ],
+        [
+          "完整性"
+        ]
+      ],
+      "no_answer": false,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R19",
+      "mode": "rag",
+      "split": "dev",
+      "question": "忘记密码怎么办？",
+      "relevant": [
+        "password"
+      ],
+      "category": "fact",
+      "facts": [
+        [
+          "管理员"
+        ]
+      ],
+      "no_answer": false,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R20",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "技术支持服务几点结束？",
+      "relevant": [
+        "support"
+      ],
+      "category": "fact",
+      "facts": [
+        [
+          "六点",
+          "18",
+          "6点"
+        ]
+      ],
+      "no_answer": false,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R21",
+      "mode": "rag",
+      "split": "dev",
+      "question": "设备保修多久？",
+      "relevant": [
+        "warranty"
+      ],
+      "category": "fact",
+      "facts": [
+        [
+          "一年",
+          "1年"
+        ]
+      ],
+      "no_answer": false,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R22",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "E1001 和 E10010 分别是什么问题？",
+      "relevant": [
+        "e1001",
+        "e10010"
+      ],
+      "category": "multiple",
+      "facts": [
+        [
+          "令牌过期"
+        ],
+        [
+          "空间不足"
+        ]
+      ],
+      "no_answer": false,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R23",
+      "mode": "rag",
+      "split": "dev",
+      "question": "员工育儿补贴是多少？",
+      "relevant": [],
+      "category": "no_answer",
+      "facts": [],
+      "no_answer": true,
+      "empty_kb": false
+    },
+    {
+      "case_id": "R24",
+      "mode": "rag",
+      "split": "holdout",
+      "question": "空知识库中员工年假是多少？",
+      "relevant": [],
+      "category": "no_answer",
+      "facts": [],
+      "no_answer": true,
+      "empty_kb": true
+    },
+    {
+      "case_id": "A01",
+      "mode": "agent",
+      "split": "dev",
+      "question": "正式员工一年能休多少天带薪假？",
+      "relevant": [
+        "leave"
+      ],
+      "category": "semantic",
+      "facts": [
+        [
+          "十二",
+          "12"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A02",
+      "mode": "agent",
+      "split": "holdout",
+      "question": "E1001",
+      "relevant": [
+        "e1001"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "令牌过期"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A03",
+      "mode": "agent",
+      "split": "dev",
+      "question": "E10010",
+      "relevant": [
+        "e10010"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "空间不足"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A04",
+      "mode": "agent",
+      "split": "holdout",
+      "question": "ZX-200",
+      "relevant": [
+        "zx200"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "离线"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A05",
+      "mode": "agent",
+      "split": "dev",
+      "question": "ZX-200S",
+      "relevant": [
+        "zx200s"
+      ],
+      "category": "identifier",
+      "facts": [
+        [
+          "联网"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A06",
+      "mode": "agent",
+      "split": "holdout",
+      "question": "极光计划由谁负责？",
+      "relevant": [
+        "aurora"
+      ],
+      "category": "name",
+      "facts": [
+        [
+          "财务"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A07",
+      "mode": "agent",
+      "split": "dev",
+      "question": "火星基地的氧气储备是多少？",
+      "relevant": [],
+      "category": "no_answer",
+      "facts": [],
+      "no_answer": true,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A08",
+      "mode": "agent",
+      "split": "holdout",
+      "question": "空知识库中员工年假是多少？",
+      "relevant": [],
+      "category": "no_answer",
+      "facts": [],
+      "no_answer": true,
+      "empty_kb": true,
+      "allowed_tools": [
+        "search_knowledge_base"
+      ],
+      "required_tools": [
+        "search_knowledge_base"
+      ]
+    },
+    {
+      "case_id": "A09",
+      "mode": "agent",
+      "split": "dev",
+      "question": "请查询文档 {document_id} 的处理状态，只回答状态。",
+      "document_key": "leave",
+      "relevant": [],
+      "category": "document_status",
+      "facts": [
+        [
+          "ready"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "get_document_info"
+      ],
+      "required_tools": [
+        "get_document_info"
+      ]
+    },
+    {
+      "case_id": "A10",
+      "mode": "agent",
+      "split": "holdout",
+      "question": "请查询文档 {document_id} 的处理状态，只回答状态。",
+      "document_key": "zx200",
+      "relevant": [],
+      "category": "document_status",
+      "facts": [
+        [
+          "ready"
+        ]
+      ],
+      "no_answer": false,
+      "allowed_tools": [
+        "get_document_info"
+      ],
+      "required_tools": [
+        "get_document_info"
+      ]
+    },
+    {
+      "case_id": "A11",
+      "mode": "agent",
+      "split": "dev",
+      "question": "请查询文档 {document_id} 的处理状态，只回答状态。",
+      "document_key": "missing",
+      "relevant": [],
+      "category": "document_status",
+      "facts": [],
+      "no_answer": true,
+      "allowed_tools": [
+        "get_document_info"
+      ],
+      "required_tools": [
+        "get_document_info"
+      ]
+    },
+    {
+      "case_id": "A12",
+      "mode": "agent",
+      "split": "holdout",
+      "question": "请查询文档 {document_id} 的处理状态，只回答状态。",
+      "document_key": "foreign",
+      "relevant": [],
+      "category": "document_status",
+      "facts": [],
+      "no_answer": true,
+      "allowed_tools": [
+        "get_document_info"
+      ],
+      "required_tools": [
+        "get_document_info"
+      ]
+    }
+  ]
+}

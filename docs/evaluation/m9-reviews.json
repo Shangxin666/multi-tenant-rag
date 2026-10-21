@@ -1,0 +1,205 @@
+{
+  "R01": {
+    "record_hash": "e59e5616af6fec55bee15d1c1e91ed2a6d02546d87ce87143b5229730f2e6e90",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "正式员工每年享有十二天带薪年假",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "正式员工每年享有十二天带薪年假"
+      }
+    ]
+  },
+  "R04": {
+    "record_hash": "5ce8620a0145ed6436ed79bad9ec9358d13aebab4a85170ff4a2aaf023c8f68a",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "E1001 表示设备认证令牌过期",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "E1001 表示设备认证令牌过期"
+      },
+      {
+        "text": "请重新登录以更新令牌",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "请重新登录以更新令牌"
+      }
+    ]
+  },
+  "R06": {
+    "record_hash": "962202610db36dfd26593462f5fe69b6f2dd74416ec272cf578cb217f94fa8db",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "ZX-200 支持离线运行",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "ZX-200 支持离线运行"
+      },
+      {
+        "text": "额定输入电压为十二伏",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "额定输入电压为十二伏"
+      }
+    ]
+  },
+  "R13": {
+    "record_hash": "67c59db297f1bdddeec766941b9c94a39d43f8b09e6df337b7ef32451bea6cad",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "冻结规则误标七天；实际Context明确三十天，模型回答正确。保留规则原失分，不改数据集。",
+    "claims": [
+      {
+        "text": "数据库备份保留三十天",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "备份保留三十天"
+      }
+    ]
+  },
+  "R18": {
+    "record_hash": "f2c234fe936eba591c3eb8a5683c59b65cb82275c6b84890f35249eee2014128",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "恢复备份前需要停止写入",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "恢复备份前需要停止写入"
+      },
+      {
+        "text": "校验备份文件完整性",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "校验备份文件完整性"
+      }
+    ]
+  },
+  "R22": {
+    "record_hash": "66346b7684f584ea4891f3a03fb97e421458e9109b9b03af0f984817a6045d98",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "E1001 表示设备认证令牌过期",
+        "verdict": "supported",
+        "source_id": "S2",
+        "quote": "E1001 表示设备认证令牌过期"
+      },
+      {
+        "text": "重新登录以更新令牌",
+        "verdict": "supported",
+        "source_id": "S2",
+        "quote": "重新登录以更新令牌"
+      },
+      {
+        "text": "E10010 表示存储空间不足",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "E10010 表示存储空间不足"
+      },
+      {
+        "text": "清理历史日志",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "清理历史日志"
+      }
+    ]
+  },
+  "A09": {
+    "record_hash": "7f506191349f7ec1aa28e502fbaa7ba13f8cabff68483626e08c7112e74335c4",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "\"status\": \"ready\"",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "\"status\": \"ready\""
+      },
+      {
+        "text": "\"index_status\": \"ready\"",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "\"index_status\": \"ready\""
+      }
+    ]
+  },
+  "A10": {
+    "record_hash": "ce4b210304f6b2943a1567a2f3b53cbeef6fc01d995f2b6786b4db1c679b0ba8",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 1,
+    "task_completed": true,
+    "rationale": "逐条比对回答的事实与本次实际模型可见证据，陈述受对应引用支持。",
+    "claims": [
+      {
+        "text": "\"status\": \"ready\"",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "\"status\": \"ready\""
+      },
+      {
+        "text": "\"index_status\": \"ready\"",
+        "verdict": "supported",
+        "source_id": "S1",
+        "quote": "\"index_status\": \"ready\""
+      }
+    ]
+  },
+  "A02": {
+    "record_hash": "b5a059067aee9b669a8ec0d842104319ef91ef2cd7aa55a3452eaec169bc3008",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 0,
+    "task_completed": false,
+    "rationale": "没有工具调用或证据，执行以invalid_citation失败，没有交付答案；不推测被丢弃的模型原文。",
+    "claims": []
+  },
+  "A04": {
+    "record_hash": "4db82f3c914ed74d365c89100d3856354b66dd66625af21764b35f947c116f58",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 0,
+    "task_completed": false,
+    "rationale": "可回答的型号问题未调用检索工具，服务端输出无证据提示；安全拒答但任务没有完成。该提示无正文事实，Faithfulness不适用。",
+    "claims": []
+  },
+  "A05": {
+    "record_hash": "1676b4a82236d4a29dade79f71175477b9dedeee103ecf17557c683a532a54a7",
+    "reviewer_type": "model_assisted",
+    "reviewer": "Codex assistant, 2026-10-17; human confirmation pending",
+    "correctness": 0,
+    "task_completed": false,
+    "rationale": "可回答的型号问题未调用检索工具，服务端输出无证据提示；安全拒答但任务没有完成。该提示无正文事实，Faithfulness不适用。",
+    "claims": []
+  }
+}

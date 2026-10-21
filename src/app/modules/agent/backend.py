@@ -1,3 +1,4 @@
+from app.observability.trace import traced, usage
 import json
 from dataclasses import dataclass
 from typing import Annotated, Any, Protocol
@@ -79,6 +80,7 @@ class DeepSeekAgentBackend:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
 
+    @traced("llm")
     async def complete(self, messages: list[dict], allow_tools: bool, max_tokens: int, timeout: float) -> Turn:
         key = self.settings.deepseek_api_key
         if key is None or not key.get_secret_value().strip():
@@ -87,11 +89,12 @@ class DeepSeekAgentBackend:
             async with AsyncOpenAI(api_key=key.get_secret_value(), base_url=self.settings.llm_base_url,
                                    timeout=timeout, max_retries=0) as client:
                 stream = await client.chat.completions.create(model=self.settings.llm_model, messages=messages,
-                    tools=TOOLS, tool_choice="auto" if allow_tools else "none", stream=True,
+                    stream_options={"include_usage": True}, tools=TOOLS, tool_choice="auto" if allow_tools else "none", stream=True,
                     max_tokens=max_tokens, extra_body={"thinking": {"type": "disabled"}})
                 async with stream:
                     result = Assembler()
                     async for chunk in stream:
+                        usage(chunk.usage)
                         result.add(chunk)
                     return result.result()
         except (APIConnectionError, APIStatusError):

@@ -1,3 +1,4 @@
+from app.observability.trace import traced
 from dataclasses import dataclass
 from uuid import UUID
 from typing import Any
@@ -34,6 +35,7 @@ async def has_chunks(session: AsyncSession, tenant_id: UUID, kb_id: UUID, model:
     return await session.scalar(scoped_query(tenant_id, kb_id, model).limit(1)) is not None
 
 
+@traced("dense_search")
 async def retrieve_chunks(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
                           model: str, vector: list[float], top_k: int) -> list[RetrievedChunk]:
     distance = Chunk.embedding.cosine_distance(vector).label("distance")
@@ -44,6 +46,7 @@ async def retrieve_chunks(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
     return [RetrievedChunk(*row) for row in (await session.execute(statement)).all()]
 
 
+@traced("sparse_search")
 async def retrieve_sparse(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
                           model: str, vector: list[float], question: str,
                           top_k: int) -> list[RetrievedChunk]:

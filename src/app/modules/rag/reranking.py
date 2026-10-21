@@ -1,3 +1,4 @@
+from app.observability.trace import traced
 from app.modules.rag.work import inference_lock
 from functools import lru_cache
 from threading import Lock
@@ -50,6 +51,7 @@ class BgeReranker:
         return validate_scores(scores, len(passages))
 
 
+@traced("rerank")
 def rerank(backend: RerankerBackend, question: str, rows: list[RetrievedChunk], top_k: int) -> list[RetrievedChunk]:
     if not rows:
         return []

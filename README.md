@@ -764,3 +764,44 @@ PostgreSQL 和本地 Uvicorn 网络测试；不下载模型、不调用外部 LL
 这是单次人工用例，不是吞吐或延迟基准；安全结果保存在忽略文件 `.data/verification/m8.json`。
 本次全量 M1～M8 回归为 **266 passed（114.60 秒）**，其中新增 M8 测试 30 项。
 `alembic check`、`pip check`、`git diff --check` 通过，历史迁移保持不变。
+
+## M9：精简评估与本地可观测性
+
+新增版本化人工数据集（24 个 RAG 问题、12 个 Agent 任务），开发集与保留集分开统计。
+保留普通 RAG/Agent API、检索算法、Prompt、RLS 和短事务设计；没有新数据库迁移。
+基线恢复首先确认 Docker/PostgreSQL 不可达导致角色 fixture 失败，启动数据库后原 266 项测试通过，未跳过集成测试。
+
+本地 Trace 默认关闭。设置 `TRACE_ENABLED=true` 后，安全 JSONL 写入
+`TRACE_PATH`（默认 `.data/traces/runs.jsonl`），单文件约 2MB、最多两个轮转备份。
+只记录固定操作名、阶段耗时、计数、安全错误码及 provider Token Usage；不捕获函数参数、
+问题、Prompt、Context、JWT、身份ID、文件名或异常原文。启用失败/写出失败不改变业务响应。
+Trace 有128个span上限，不引入在线监控、告警或数据库表。HTTP/SSE协议不变。
+
+```powershell
+# 全部自动测试：Fake模型 + 真实独立测试库；不调用外部模型
+.venv\Scripts\python.exe -m pytest -o addopts=
+
+# 真实人工评估：有DeepSeek网络/Token成本，不与pytest并行
+.venv\Scripts\python.exe -m scripts.evaluate_m9 --real
+
+# 对已保存结果离线评分和重新生成报告
+.venv\Scripts\python.exe -m scripts.evaluate_m9 --score docs/evaluation/m9-run.json --reviews docs/evaluation/m9-reviews.json
+.venv\Scripts\python.exe -m scripts.evaluation.report docs/evaluation/m9-run.json --reviews docs/evaluation/m9-reviews.json --output docs/evaluation/m9-report.md
+
+# LangSmith安全预览：默认不联网；--send才会使用显式环境Key上传白名单元数据
+.venv\Scripts\python.exe -m scripts.export_m9_langsmith docs/evaluation/m9-run.json
+```
+
+真实运行使用原有独立 `_test` 数据库，创建自己的人工租户，仅清理本次数据。
+评分只依据实际模型输入证据；记录哈希绑定复核结果，区分rule、human、model_assisted、unreviewed。
+关键词规则不等于正确性，编号合法不等于引用支持，没有事实的拒答不自动获得Faithfulness满分。
+
+本次真实36题评估共44次DeepSeek调用，全部usage可用，总25,666 Token。
+RAG规则任务通过23/24，Agent9/12；11条模型辅助复核、0条人工复核、25条未复核。
+保留了冻结标注错误R13、Agent漏检索/非法引用、RRF降序等案例，不以修Prompt或改答案追求高分。
+LangSmith仅完成本地白名单与mock验证，未真实上传；不要宣称部署了LangSmith监控平台。
+
+详细结果：`docs/evaluation/m9-report.md`、`m9-run.json`、`m9-reviews.json`、`m9-failure-cases.md`。
+面试讲解：`docs/interview-prep/m9-evaluation-explanation.md`。
+小样本、单次运行、规则误判及待人工复核范围必须连同数字一起介绍，不外推生产正确率或SLA。
+最终M1～M9全量回归293项通过（新增27项，73.70秒）；依赖、迁移一致性及diff检查通过。

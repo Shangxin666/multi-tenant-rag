@@ -1,3 +1,4 @@
+from app.observability.trace import traced, span, count
 from uuid import UUID
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,6 +14,7 @@ from app.modules.rag.fusion import fuse_rrf
 from app.modules.rag.reranking import RerankerBackend, rerank
 from app.modules.rag.schemas import RagQueryRequest
 
+@traced("retrieval")
 async def retrieve_evidence(session: AsyncSession, tenant_id: UUID, kb_id: UUID, request: RagQueryRequest,
                             settings: Settings, embedding: EmbeddingBackend, reranker: RerankerBackend,
                             run_cpu: Callable[..., Awaitable[Any]] = run_in_threadpool) -> list[RetrievedChunk]:
@@ -26,8 +28,9 @@ async def retrieve_evidence(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
     if not exists:
         return []
     try:
-        vector = await run_cpu(embedding.embed_query, request.question)
-        vector = validate_vectors([vector], 1)[0]
+        with span("query_embedding"):
+            vector = await run_cpu(embedding.embed_query, request.question)
+            vector = validate_vectors([vector], 1)[0]
     except Exception as exc:
         log_failure("Query embedding", exc)
         raise HTTPException(503, "Query embedding unavailable") from None
@@ -41,6 +44,7 @@ async def retrieve_evidence(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
         await session.rollback()
         raise HTTPException(503, "Retrieval unavailable") from None
     candidates = [item.chunk for item in fuse_rrf([dense, sparse], settings.rrf_k)[:settings.rerank_candidate_k]]
+    count(candidates=len(candidates))
     try:
         rows = await run_cpu(rerank, reranker, request.question, candidates, request.top_k)
     except Exception as exc:

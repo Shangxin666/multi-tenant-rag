@@ -1,3 +1,4 @@
+from app.observability.trace import traced, count
 import asyncio
 import json
 from dataclasses import dataclass
@@ -50,6 +51,7 @@ def build_graph(context: Context):
         # Reserve before await; provider errors never enable uncounted retry.
         state["model_calls"] += 1
         context.run.model_calls = state["model_calls"]
+        count(model_calls=state["model_calls"])
         state["reserved_output_tokens"] += tokens
         timeout = context.run.remaining(context.settings.agent_model_timeout_seconds)
         async with asyncio.timeout(timeout):
@@ -79,6 +81,7 @@ def build_graph(context: Context):
             context.run.remaining()
             state["tool_attempts"] += 1
             context.run.tool_attempts = state["tool_attempts"]
+            count(tool_attempts=state["tool_attempts"])
             call_id = uuid4()
             known = call.name in ("search_knowledge_base", "get_document_info")
             if known:
@@ -98,6 +101,7 @@ def build_graph(context: Context):
                 if exc.code not in ("invalid_tool", "invalid_arguments", "resource_not_found"):
                     raise
                 code = exc.code
+                count(**{code: 1})
                 result = {"results": [], "error_code": code}
             body = json.dumps(result, ensure_ascii=False)
             messages.append({"role": "tool", "tool_call_id": call.id, "content": body})
@@ -110,6 +114,7 @@ def build_graph(context: Context):
         return {"messages": messages, "pending_tool_calls": [], "tool_attempts": state["tool_attempts"],
                 "tool_rounds": state["tool_rounds"] + 1, "sources": state["sources"]}
 
+    @traced("agent.finalize")
     async def finalize(state: AgentState) -> dict:
         answer, sources, reason = state["sources"].finalize(state["candidate_answer"])
         final = {"status": "completed", "finish_reason": reason, "answer": answer,
@@ -130,6 +135,7 @@ def build_graph(context: Context):
     return graph.compile()
 
 
+@traced("agent.run", root=True)
 async def execute(context: Context, question: str) -> AgentState:
     state = AgentState(messages=[{"role": "user", "content": question}], sources=Sources(),
         pending_tool_calls=[], model_calls=0, tool_attempts=0, tool_rounds=0,

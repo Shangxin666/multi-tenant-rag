@@ -19,6 +19,7 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
         "RERANKER_MODEL", "RERANKER_DEVICE", "RERANKER_BATCH_SIZE", "RERANKER_MAX_LENGTH",
         "APP_DB_PASSWORD", "MIGRATION_DB_PASSWORD",
         "AGENT_MAX_CONCURRENT", "AGENT_TIMEOUT_SECONDS", "AGENT_MODEL_TIMEOUT_SECONDS", "AGENT_TOOL_TIMEOUT_SECONDS",
+        "TRACE_ENABLED", "TRACE_PATH",
     ):
         monkeypatch.delenv(key, raising=False)
     monkeypatch.chdir(tmp_path)

@@ -55,6 +55,9 @@ class Settings(BaseSettings):
     reranker_batch_size: int = Field(default=8, ge=1, le=32)
     reranker_max_length: int = Field(default=512, ge=32, le=512)
 
+    trace_enabled: bool = False
+    trace_path: Path = Path(".data/traces/runs.jsonl")
+
     agent_max_concurrent: int = Field(default=2, ge=1, le=8)
     agent_timeout_seconds: float = Field(default=120, gt=0, le=300)
     agent_model_timeout_seconds: float = Field(default=30, gt=0, le=60)

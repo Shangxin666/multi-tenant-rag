@@ -1,3 +1,4 @@
+from app.observability.trace import traced
 import json
 from typing import Protocol
 from sqlalchemy import select
@@ -31,6 +32,7 @@ class ReadTools:
         self.scope, self.factory, self.settings = scope, factory, settings
         self.embedding, self.reranker, self.run, self.top_k = embedding, reranker, run, top_k
 
+    @traced("tool")
     async def execute(self, name: str, args: SearchArgs | DocumentArgs, sources: Sources) -> dict:
         scope = self.scope
         async with self.factory() as session:

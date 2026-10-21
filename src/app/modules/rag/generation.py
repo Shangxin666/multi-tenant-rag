@@ -1,3 +1,4 @@
+from app.observability.trace import traced, usage
 import json
 import re
 from typing import Annotated, Protocol
@@ -31,6 +32,7 @@ class DeepSeekBackend:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
 
+    @traced("llm")
     async def generate(self, messages: list[dict[str, str]]) -> str:
         settings = self.settings
         if settings.deepseek_api_key is None or not settings.deepseek_api_key.get_secret_value().strip():
@@ -45,6 +47,7 @@ class DeepSeekBackend:
                     max_tokens=settings.llm_max_tokens,
                     extra_body={"thinking": {"type": "disabled"}},
                 )
+            usage(getattr(result, "usage", None))
             if not result.choices or result.choices[0].finish_reason != "stop":
                 raise GenerationError(502)
             answer = result.choices[0].message.content

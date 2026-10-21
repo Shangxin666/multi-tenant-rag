@@ -1,3 +1,4 @@
+from app.observability.trace import traced
 from uuid import UUID
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +15,7 @@ from app.modules.rag.schemas import RagQueryRequest, RagQueryResponse
 NO_ANSWER = "当前知识库中没有足够的信息回答该问题"
 
 
+@traced("rag.query", root=True)
 async def query(session: AsyncSession, tenant_id: UUID, kb_id: UUID, request: RagQueryRequest,
                 settings: Settings, embedding: EmbeddingBackend, llm: LlmBackend, reranker: RerankerBackend) -> RagQueryResponse:
     rows = await retrieve_evidence(session, tenant_id, kb_id, request, settings, embedding, reranker)

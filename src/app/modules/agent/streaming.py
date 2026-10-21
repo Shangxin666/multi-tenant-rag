@@ -1,3 +1,4 @@
+from app.observability.trace import traced, count, active
 import asyncio
 from uuid import uuid4
 from pydantic import TypeAdapter
@@ -23,6 +24,10 @@ class AgentResponse(Response):
         context.emit = self.emit
 
     async def emit(self, event: str, data: dict) -> None:
+        trace = active.get()
+        if trace and event in ("agent_start", "answer_delta"):
+            from time import monotonic
+            count(**{("first_event_ms" if event == "agent_start" else "answer_ready_ms"): (monotonic()-trace.started)*1000})
         self.seq += 1
         model = EVENTS.validate_python(dict(event=event, v=1, run_id=self.run_id, seq=self.seq, data=data))
         encoded = f"id: {self.run_id}:{self.seq}\nevent: {event}\ndata: {model.model_dump_json()}\n\n".encode()
@@ -46,6 +51,7 @@ class AgentResponse(Response):
             if not self.queue.full():
                 self.queue.put_nowait(None)
 
+    @traced("agent.stream", root=True)
     async def __call__(self, scope, receive, send) -> None:
         tasks = []
         async def disconnect() -> None:
@@ -73,6 +79,7 @@ class AgentResponse(Response):
                 task.result()
         finally:
             self.context.run.stop.set()
+            count(cpu_jobs_at_disconnect=len(self.context.run.jobs))
             for task in tasks:
                 task.cancel()
             await asyncio.gather(*tasks, return_exceptions=True)

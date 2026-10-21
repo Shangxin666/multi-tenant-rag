@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from starlette.middleware.body_limit import RequestBodyLimitMiddleware
 from app.core.config import Settings, get_settings
+from app.observability.trace import configure
 
 from app.api.routes.health import router
 from app.db.session import engine
@@ -22,10 +23,12 @@ def create_app(settings: Settings | None = None, *, database_engine: AsyncEngine
     runtime_engine = database_engine if database_engine is not None else engine
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        configure(settings.trace_path if settings.trace_enabled else None)
         try:
             await verify_runtime_role(runtime_engine)
             yield
         finally:
+            configure(None)
             await runtime_engine.dispose()
     application = FastAPI(title="Knowledge Base API", lifespan=lifespan)
     application.add_middleware(RequestBodyLimitMiddleware, max_body_size=settings.max_upload_request_bytes)
