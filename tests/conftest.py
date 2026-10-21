@@ -15,6 +15,8 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
         "CHUNK_SIZE", "CHUNK_OVERLAP", "MAX_PDF_PAGES", "MAX_PARSED_CHARS", "MAX_DOCUMENT_CHUNKS",
         "EMBEDDING_MODEL", "EMBEDDING_DEVICE", "EMBEDDING_BATCH_SIZE", "DEEPSEEK_API_KEY",
         "LLM_BASE_URL", "LLM_MODEL", "LLM_TIMEOUT_SECONDS", "LLM_MAX_TOKENS", "MAX_RAG_CONTEXT_CHARS",
+        "DENSE_CANDIDATE_K", "SPARSE_CANDIDATE_K", "RRF_K", "RERANK_CANDIDATE_K",
+        "RERANKER_MODEL", "RERANKER_DEVICE", "RERANKER_BATCH_SIZE", "RERANKER_MAX_LENGTH",
         "APP_DB_PASSWORD", "MIGRATION_DB_PASSWORD",
     ):
         monkeypatch.delenv(key, raising=False)
@@ -37,6 +39,8 @@ def prevent_real_rag_backends(monkeypatch):
     # HTTP provider adapter unit tests explicitly replace AsyncOpenAI with a mock
     # transport; other tests must override the dependency with a fake backend.
     monkeypatch.setattr(BgeEmbedding, "_load", no_model)
+    from app.modules.rag.reranking import BgeReranker
+    monkeypatch.setattr(BgeReranker, "_load", no_model)
     def no_client(*args, **kwargs):
         raise AssertionError("Automatic tests must use a fake LLM or mock transport")
     monkeypatch.setattr(generation, "AsyncOpenAI", no_client)

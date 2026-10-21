@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from uuid import UUID
 from typing import Any
 
-from sqlalchemy import select, Select
+from sqlalchemy import select, Select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.chunks.models import Chunk
@@ -41,4 +41,17 @@ async def retrieve_chunks(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
         Chunk.id, Chunk.document_id, Document.filename, Chunk.chunk_index,
         Chunk.content, Chunk.chunk_metadata, distance,
     ).order_by(distance.asc(), Chunk.id.asc()).limit(top_k)
+    return [RetrievedChunk(*row) for row in (await session.execute(statement)).all()]
+
+
+async def retrieve_sparse(session: AsyncSession, tenant_id: UUID, kb_id: UUID,
+                          model: str, vector: list[float], question: str,
+                          top_k: int) -> list[RetrievedChunk]:
+    query = func.app_private.search_question(question)
+    rank = func.ts_rank(Chunk.search_vector, query)
+    distance = Chunk.embedding.cosine_distance(vector).label("distance")
+    statement = scoped_query(tenant_id, kb_id, model).with_only_columns(
+        Chunk.id, Chunk.document_id, Document.filename, Chunk.chunk_index,
+        Chunk.content, Chunk.chunk_metadata, distance,
+    ).where(Chunk.search_vector.bool_op("@@")(query)).order_by(rank.desc(), Chunk.id.asc()).limit(top_k)
     return [RetrievedChunk(*row) for row in (await session.execute(statement)).all()]

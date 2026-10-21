@@ -547,3 +547,129 @@ FORCE 不限制超级用户/BYPASSRLS，表所有者仍能修改 DDL；必须隔
 UNIQUE/FK 检查可能暴露存在性线索，API 保持通用冲突响应，不泄漏原始数据库错误。
 RLS 不替代 admin/member RBAC，不保护本地原文件，也不改变 M5 的 Prompt/外发安全边界。
 M6 不引入新检索算法、Agent、Redis、worker 或 M7 功能。
+
+
+## M7：Hybrid Search + Rerank
+
+现有 query API 和 Answer/Sources 字段不变。流程为 query embedding → Dense + Sparse →
+RRF → 本地 BGE Reranker → 完整 Context block → 原有 LLM。自动测试不调用真实模型或 LLM。
+
+### 检索和状态
+
+两路都复用 tenant/KB/text ready/index ready/model/non-null embedding 过滤，
+由 rag_app + TenantSession 执行，M6 FORCE RLS 不变。
+Sparse 不提前检索尚未 embedding 的文本。Dense 仍是 exact cosine search，无 HNSW/IVFFlat。
+Sparse 用 PostgreSQL FTS 的 ts_rank，**不是 BM25**。
+
+0007 增加 chunks.search_vector STORED GENERATED TSVECTOR 和 GIN 索引。
+文档及问题统一调用 app_private.search_tokens：基本汉字范围 U+4E00～U+9FFF 连续片段
+切为双字词项，独立单字保留；ASCII 英文/数字及内部 ._- 组成完整标识符，小写化。
+最长 128 字符的 ASCII 标识符保留，超长标识符跳过；不做前缀、词干或模糊匹配。
+E1001 不等于 E10010，ZX-200 不等于 ZX-200S。其他文字系统尚未覆盖。
+词项编码为带类型前缀的 Unicode 码点十六进制序列，以 z 分隔，再交给固定 simple 配置。
+这是无语义词典的字符级 baseline，不宣称中文分词质量。
+
+search_question 对去重词项做 OR，最多 64 个，ASCII 词项优先，其余按出现顺序；
+不执行用户输入中的 tsquery 操作符。Sparse 按 ts_rank DESC、Chunk.id ASC 排序。
+自然语言问题中的常见双字组合可能产生噪声，精确词项存在不保证最终排序一定正确。
+
+RRF 分数为各路 1/(RRF_K + rank) 之和，rank 从 1 开始，按 Chunk UUID 去重。
+同路重复只贡献首次排名；分数并列按 UUID 排序。不混加 cosine distance 和 ts_rank。
+重排同分按融合顺序保留。Response.distance 始终是该候选真实 cosine distance，
+包括 Sparse-only 候选；响应顺序按重排结果，所以 distance 不保证递增。
+
+### 配置与运行
+
+.env.example 增加以下初始参数，尚未针对业务数据调优：
+
+| 配置 | 默认值 |
+| --- | --- |
+| DENSE_CANDIDATE_K / SPARSE_CANDIDATE_K | 各 30，范围 10～100 |
+| RRF_K | 60，范围 1～1000 |
+| RERANK_CANDIDATE_K | 30，范围 10～100 |
+| RERANKER_MODEL | BAAI/bge-reranker-base |
+| RERANKER_DEVICE | cpu |
+| RERANKER_BATCH_SIZE | 8 |
+| RERANKER_MAX_LENGTH | 512 tokens，问题与正文合计 |
+
+复用 sentence-transformers CrossEncoder，不新增 Python 依赖。
+模型每进程 lazy cache，锁串行化加载和推理，线程池执行；多 worker 各自持有模型。
+输出为原始 logits，不是概率或置信度；校验一维、数量匹配、数值类型、finite。
+空 KB 不调用任何模型；空候选不调用 Reranker。模型失败返回安全 503，不静默降级。
+两路 SQL 在同一 Session 顺序执行，随后结束事务，再进行 Rerank 和 LLM；
+模型推理和外部调用期间不持有数据库事务。
+
+### 迁移、权限和部署
+
+先停止应用，在维护窗口执行 python -m alembic upgrade head，再执行 alembic check。
+0001～0006 不变。生成列会计算历史 Chunk，不重做 embedding；新写入或 content 更新自动维护。
+0007 downgrade 删除 GIN、生成列和三个 search_* 函数，保留文本、向量和 M6 Policy。
+
+三个函数均为 IMMUTABLE、SECURITY INVOKER，固定 search_path，没有业务表查询、
+动态 SQL 或外部数据；测试检查实际使用的 catalog 函数 overload 也为 immutable。
+不使用依赖 session 默认配置的单参数 to_tsvector，也不使用 array_to_string 的通用类型转换。
+rag_app 拥有 schema USAGE 和所需函数 EXECUTE，无 schema CREATE；PUBLIC 和
+rag_auth_lookup 不获 search_* EXECUTE。原有认证函数和权限保持不变。
+
+增加 stored generated column 可能重写表并持锁；普通 GIN 构建阻塞写入，增加磁盘/WAL。
+当前采用事务式维护窗口迁移，不声称在线无锁。大表须另做分阶段部署；
+CONCURRENTLY 不可放进普通 migration transaction，也不能解决生成列重写。
+RLS 可能影响 GIN 执行计划，不给任何函数虚假标注 LEAKPROOF 来追求索引命中。
+GUC 仍是可信应用上下文，不防御任意 SQL 注入或完全失陷的应用进程。
+
+### 验证与真实模型评估
+
+```powershell
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe -m alembic check
+.\.venv\Scripts\python.exe -m pytest -o "addopts="
+.\.venv\Scripts\python.exe -m pip check
+git diff --check
+# 单独运行，不与 pytest 共用测试库同时执行。不调用任何 LLM。
+.\.venv\Scripts\python.exe -m scripts.evaluate_m7
+```
+
+真实评估使用 scripts/m7_cases.json 的 24 条人工资料和 16 个问题，独立 *_test 库中创建
+一个专用租户，finally 仅删除该租户的数据。不读取用户业务文档。
+首次模型加载可能需要下载公开 Hugging Face 权重；之后可使用已准备好的本地缓存。
+报告保存在被 Git 忽略的 .data/evaluations/m7.json，包括数据集 SHA、模型 revision、
+逐题 Dense/Sparse/RRF/Rerank 排名、Recall@1/5/10、MRR@10、候选召回、阶段时间及进程内存。
+无相关答案用例不混入 Recall 分母。Fake 测试只验证逻辑，不能作为模型质量证据。
+冷启动包含模型加载及可能的下载；暖运行测 24 个短文本对，不能外推到长文生产负载。
+内存是整个评估进程的 RSS/峰值，并非模型独占显存或内存。
+
+### 边界
+
+候选数大于本评估语料数，所以候选召回容易饱和；小数据集不是生产质量评估。
+不设置召回相关性阈值，无答案问题仍可能检索到不相关候选，依赖原有生成约束，不能声称可靠拒答。
+字符二元组噪声、模型 512 token 截断、CPU 延迟和线程池排队均需关注。
+锁不提供硬超时、跨进程共享或推理沙箱。模型 revision 会记录，但生产默认尚未锁定权重版本。
+M7 不加入 BM25、HNSW、Agent、SSE、会话、worker、Redis 或 M8 功能。
+
+
+### 本次真实评估记录
+
+2026-10-15，Windows 11、12 逻辑处理器、PyTorch 6 线程，固定 CPU 模型。
+15 个有答案问题计入指标，另 1 个无答案问题单独记录；完整逐题数据见本地
+`.data/evaluations/m7.json`（首次）和 `.data/evaluations/m7-cached.json`（离线缓存复测）。
+
+| 方法 | Recall@1 | Recall@5 / @10 | MRR@10 |
+| --- | --- | --- | --- |
+| Dense | 0.9333 | 1.0000 / 1.0000 | 0.9667 |
+| Sparse | 0.9333 | 0.9333 / 0.9333 | 0.9333 |
+| RRF | 0.9333 | 1.0000 / 1.0000 | 0.9667 |
+| Hybrid + Rerank | 1.0000 | 1.0000 / 1.0000 | 1.0000 |
+
+E1001 在 Dense 中被 E10010 排到前面，Sparse/RRF/Rerank 修正；四个型号/错误码问题
+最终均正确排第一。但 RRF 单独把“每周在家办公几天”的正确答案从第一降到第二，
+Reranker 才恢复。无答案问题仍返回不相关候选，未进行 LLM 调用或声称能够可靠拒答。
+候选召回在此小语料中为 1.0，不代表大规模检索效果。
+
+首次 Reranker 加载并评分耗时 191.11 秒（包含下载），离线缓存进程首次耗时 8.95 秒。
+24 个短文本对的暖运行三次为 0.318/0.329/0.316 秒；24 个各 1000 字符的合成文本对
+耗时 **5.52 秒**（仍按 512 token 截断），CPU 长文本成本明显，不更换模型掩盖这一结果。
+短文本 query 检索阶段不含 LLM/Context：Dense 平均 16.1 ms，Hybrid 平均 376.6 ms、
+p95 429.0 ms。数值包含问题 embedding；不代表完整 HTTP 或高并发吞吐。
+缓存复测进程峰值 RSS 2069.9 MiB（约 2.02 GiB，包含两个模型和框架）。
+Reranker revision 为 2cfc18c9415c912f9d8155881c133215df768a70；
+Embedding revision 为 7999e1d3359715c523056ef9478215996d62a620。

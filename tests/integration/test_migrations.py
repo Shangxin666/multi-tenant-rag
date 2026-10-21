@@ -7,7 +7,7 @@ pytestmark = [pytest.mark.integration, pytest.mark.asyncio]
 
 async def test_upgrade_head_and_vector(db_engine: AsyncEngine) -> None:
     async with db_engine.connect() as connection:
-        assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "0006_enable_tenant_rls"
+        assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "0007_add_sparse_search"
         assert await connection.scalar(
             text("SELECT extname FROM pg_extension WHERE extname = 'vector'")
         ) == "vector"

@@ -46,6 +46,15 @@ class Settings(BaseSettings):
     llm_max_tokens: int = Field(default=2048, ge=1, le=8192)
     max_rag_context_chars: int = Field(default=12000, ge=1, le=100000)
 
+    dense_candidate_k: int = Field(default=30, ge=10, le=100)
+    sparse_candidate_k: int = Field(default=30, ge=10, le=100)
+    rrf_k: int = Field(default=60, ge=1, le=1000)
+    rerank_candidate_k: int = Field(default=30, ge=10, le=100)
+    reranker_model: Literal["BAAI/bge-reranker-base"] = "BAAI/bge-reranker-base"
+    reranker_device: str = "cpu"
+    reranker_batch_size: int = Field(default=8, ge=1, le=32)
+    reranker_max_length: int = Field(default=512, ge=32, le=512)
+
     @model_validator(mode="after")
     def validate_ingestion_limits(self) -> "Settings":
         if self.chunk_overlap >= self.chunk_size:

@@ -112,6 +112,11 @@ async def application(app_db_engine: AsyncEngine, database_settings: Settings, d
 
     app.dependency_overrides[get_db] = override_db
     app.dependency_overrides[get_settings] = lambda: document_settings
+    from app.modules.rag.reranking import get_reranker_backend
+    class FakeReranker:
+        def score(self, question, passages):
+            return [0.0] * len(passages)
+    app.dependency_overrides[get_reranker_backend] = FakeReranker
     try:
         async with app.router.lifespan_context(app):
             yield app

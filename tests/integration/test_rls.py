@@ -181,7 +181,7 @@ async def test_auth_role_policies_and_function_output(db_engine, app_db_engine, 
         role = (await conn.execute(text("SELECT rolcanlogin, rolsuper, rolbypassrls FROM pg_roles WHERE rolname='rag_auth_lookup'"))).one()
         assert tuple(role) == (False, False, False)
         assert await conn.scalar(text("SELECT pg_get_userbyid(relowner) FROM pg_class WHERE oid='public.users'::regclass")) == "rag_migrator"
-        functions = (await conn.execute(text("SELECT p.prosecdef, pg_get_userbyid(p.proowner), p.proconfig, p.proacl::text FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='app_private'"))).all()
+        functions = (await conn.execute(text("SELECT p.prosecdef, pg_get_userbyid(p.proowner), p.proconfig, p.proacl::text FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='app_private' AND p.proname IN ('login_credentials','user_tenant')"))).all()
         assert len(functions) == 2
         for secure, owner, config, acl in functions:
             assert secure and owner == "rag_auth_lookup" and "search_path=pg_catalog, pg_temp" in config

@@ -259,12 +259,16 @@ async def test_inference_has_no_database_transaction(ingestion_accounts, db_engi
             async def generate(self, messages):
                 assert not session.in_transaction()
                 return await super().generate(messages)
+        class Reranker:
+            def score(self, question, passages):
+                assert not session.in_transaction()
+                return [0.0] * len(passages)
         embedding = Embedding()
         await indexing.claim(session, doc, tenant)
         result = await indexing.process(session, doc, tenant, embedding, document_settings)
         assert result.index_status == "ready"
         await session.rollback()
-        response = await query(session, tenant, kb, RagQueryRequest(question="q"), document_settings, embedding, Llm())
+        response = await query(session, tenant, kb, RagQueryRequest(question="q"), document_settings, embedding, Llm(), Reranker())
         assert response.sources
 
 

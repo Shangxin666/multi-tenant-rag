@@ -15,10 +15,12 @@ from app.modules.rag.embedding import EmbeddingBackend, get_embedding_backend
 from app.modules.rag.generation import LlmBackend, get_llm_backend
 from app.modules.rag.schemas import RagQueryRequest, RagQueryResponse
 from app.modules.rag.service import query
+from app.modules.rag.reranking import RerankerBackend, get_reranker_backend
 
 router = APIRouter(tags=["rag"])
 SettingsDep = Annotated[Settings, Depends(get_settings)]
 EmbeddingDep = Annotated[EmbeddingBackend, Depends(get_embedding_backend)]
+RerankerDep = Annotated[RerankerBackend, Depends(get_reranker_backend)]
 LlmDep = Annotated[LlmBackend, Depends(get_llm_backend)]
 
 
@@ -50,7 +52,7 @@ async def index_document(document_id: UUID, session: Database,
 @router.post("/knowledge-bases/{knowledge_base_id}/query", response_model=RagQueryResponse)
 async def query_knowledge_base(knowledge_base_id: UUID, request: RagQueryRequest, session: Database,
                                user: Annotated[User, Depends(get_current_user)],
-                               settings: SettingsDep, embedding: EmbeddingDep, llm: LlmDep) -> RagQueryResponse:
+                               settings: SettingsDep, embedding: EmbeddingDep, llm: LlmDep, reranker: RerankerDep) -> RagQueryResponse:
     tenant_id = user.tenant_id
     try:
         kb_id = await session.scalar(select(KnowledgeBase.id).where(
@@ -63,4 +65,4 @@ async def query_knowledge_base(knowledge_base_id: UUID, request: RagQueryRequest
         raise HTTPException(503, "Retrieval unavailable") from None
     if kb_id is None:
         raise HTTPException(404, "Knowledge base not found")
-    return await query(session, tenant_id, kb_id, request, settings, embedding, llm)
+    return await query(session, tenant_id, kb_id, request, settings, embedding, llm, reranker)
