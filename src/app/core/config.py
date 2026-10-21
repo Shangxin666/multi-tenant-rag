@@ -55,6 +55,11 @@ class Settings(BaseSettings):
     reranker_batch_size: int = Field(default=8, ge=1, le=32)
     reranker_max_length: int = Field(default=512, ge=32, le=512)
 
+    agent_max_concurrent: int = Field(default=2, ge=1, le=8)
+    agent_timeout_seconds: float = Field(default=120, gt=0, le=300)
+    agent_model_timeout_seconds: float = Field(default=30, gt=0, le=60)
+    agent_tool_timeout_seconds: float = Field(default=30, gt=0, le=60)
+
     @model_validator(mode="after")
     def validate_ingestion_limits(self) -> "Settings":
         if self.chunk_overlap >= self.chunk_size:

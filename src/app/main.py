@@ -14,6 +14,7 @@ from app.modules.auth.router import router as auth_router
 from app.modules.users.router import router as users_router
 from app.modules.knowledge_bases.router import router as knowledge_bases_router
 from app.modules.rag.router import router as rag_router
+from app.modules.agent.router import router as agent_router
 
 
 def create_app(settings: Settings | None = None, *, database_engine: AsyncEngine | None = None) -> FastAPI:
@@ -30,6 +31,7 @@ def create_app(settings: Settings | None = None, *, database_engine: AsyncEngine
     application.add_middleware(RequestBodyLimitMiddleware, max_body_size=settings.max_upload_request_bytes)
     application.include_router(documents_router)
     application.include_router(rag_router)
+    application.include_router(agent_router)
     application.include_router(router)
     application.include_router(auth_router)
     application.include_router(users_router)

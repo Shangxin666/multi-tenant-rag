@@ -18,6 +18,7 @@ def config_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
         "DENSE_CANDIDATE_K", "SPARSE_CANDIDATE_K", "RRF_K", "RERANK_CANDIDATE_K",
         "RERANKER_MODEL", "RERANKER_DEVICE", "RERANKER_BATCH_SIZE", "RERANKER_MAX_LENGTH",
         "APP_DB_PASSWORD", "MIGRATION_DB_PASSWORD",
+        "AGENT_MAX_CONCURRENT", "AGENT_TIMEOUT_SECONDS", "AGENT_MODEL_TIMEOUT_SECONDS", "AGENT_TOOL_TIMEOUT_SECONDS",
     ):
         monkeypatch.delenv(key, raising=False)
     monkeypatch.chdir(tmp_path)
@@ -44,6 +45,8 @@ def prevent_real_rag_backends(monkeypatch):
     def no_client(*args, **kwargs):
         raise AssertionError("Automatic tests must use a fake LLM or mock transport")
     monkeypatch.setattr(generation, "AsyncOpenAI", no_client)
+    from app.modules.agent import backend as agent_backend
+    monkeypatch.setattr(agent_backend, "AsyncOpenAI", no_client)
 
 
 @pytest.fixture

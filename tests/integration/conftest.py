@@ -111,6 +111,8 @@ async def application(app_db_engine: AsyncEngine, database_settings: Settings, d
             yield session
 
     app.dependency_overrides[get_db] = override_db
+    from app.modules.agent.tools import get_agent_session_factory
+    app.dependency_overrides[get_agent_session_factory] = lambda: factory
     app.dependency_overrides[get_settings] = lambda: document_settings
     from app.modules.rag.reranking import get_reranker_backend
     class FakeReranker:

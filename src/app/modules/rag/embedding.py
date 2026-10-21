@@ -1,3 +1,4 @@
+from app.modules.rag.work import inference_lock
 from functools import lru_cache
 from threading import Lock
 from typing import Any, Protocol, Sequence
@@ -50,7 +51,7 @@ class BgeEmbedding:
     def _encode(self, texts: Sequence[str]) -> list[list[float]]:
         # Caller runs this entire operation in a worker thread. Serialize loading
         # and inference per process to bound model memory and avoid duplicate loads.
-        with self._lock:
+        with inference_lock(self._lock):
             if self._model is None:
                 self._model = self._load()
             output = self._model.encode(

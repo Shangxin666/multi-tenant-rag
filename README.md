@@ -673,3 +673,94 @@ p95 429.0 ms。数值包含问题 embedding；不代表完整 HTTP 或高并发�
 缓存复测进程峰值 RSS 2069.9 MiB（约 2.02 GiB，包含两个模型和框架）。
 Reranker revision 为 2cfc18c9415c912f9d8155881c133215df768a70；
 Embedding revision 为 7999e1d3359715c523056ef9478215996d62a620。
+
+## M8：单知识库 Agent 与 SSE
+
+保留普通 `POST /knowledge-bases/{id}/query`。新增
+`POST /knowledge-bases/{id}/agent/stream`，Bearer 认证，Admin/Member 均可使用，
+JSON 请求为 `{"question":"问题", "top_k":5}`，校验与普通 Query 相同。
+浏览器应使用支持 Authorization 和 POST 的 fetch 流读取，不使用原生 EventSource。
+本阶段没有持久化记忆、断点恢复、SSE 重连重放或多 Agent，也没有新增数据库迁移。
+
+### 运行图、工具与预算
+
+实际使用 LangGraph `START → llm → tools → llm`，模型结束调用工具后进入
+`finalize → END`。工具顺序执行，复用 M7 的 Dense/Sparse/RRF/Rerank pipeline。
+两个工具是 `search_knowledge_base(query, top_k)` 和 `get_document_info(document_id)`；
+参数禁止额外字段，模型不能设置 tenant 或知识库。工具会重新校验用户 active 和当前 KB，
+数据库操作使用原有应用角色、TenantSession 和事务局部 RLS 上下文。
+文档查询必须同时匹配 document ID、tenant 和 KB；所有数据库事务在模型推理前结束。
+
+State 中 messages 保存模型对话及完整工具证据；sources 只保留来源身份和公开摘要；
+pending_tool_calls 只存当前轮待执行调用，执行后清空。重复 Chunk/Document 沿用 source ID，
+后续工具结果只返回 already_provided，不重复完整证据。
+
+| 限制 | 默认值 |
+| --- | --- |
+| AGENT_MAX_CONCURRENT | 每进程 2 个，满载立即 429，无等候队列 |
+| AGENT_TIMEOUT_SECONDS | 120 秒，使用 monotonic deadline |
+| AGENT_MODEL_TIMEOUT_SECONDS / AGENT_TOOL_TIMEOUT_SECONDS | 各 30 秒，且不超过总剩余时间 |
+| 模型调用 / 工具尝试 | 最多 5 / 4 次，每轮最多 2 个工具 |
+| LangGraph recursion_limit | 16 |
+| 输出 token 预留预算 | 8192；单次 max_tokens 为 1024 或最后一轮 2048 |
+| 工具证据 / 序列化模型输入 | 12000 / 24000 字符，后者不是精确 token 计数 |
+| 来源 / 工具 JSON 参数 / SSE 队列 | 20 个 / 4096 bytes / 8 个事件 |
+| SSE 分片 / 心跳 / 发送等待 | 512 字符 / 15 秒 / 5 秒 |
+
+### SSE 协议
+
+每个事件有 `id: <run_id>:<seq>`、`event: <类型>`，data 是 JSON envelope：
+`v=1, run_id, seq, event, data`。Pydantic discriminated union 位于 agent/schemas.py。
+
+| event | data |
+| --- | --- |
+| agent_start | knowledge_base_id |
+| tool_start | 服务端 call_id、白名单 tool 名称 |
+| tool_result | call_id、tool、status(ok/empty/error)、source_ids、error_code |
+| answer_delta | text |
+| error | 安全 code、固定 message、retryable |
+| agent_end | status(completed/failed)、finish_reason、answer、sources、model_calls、tool_attempts |
+
+过程事件实时发送；最终回答完整生成、校验引用后才分片发送，**不是逐 token streaming**。
+客户端仅把 `agent_end.status=completed` 视为成功；断开或 failed 时不要提交临时回答。
+来源包含 kind(chunk/document)、source_id、document_id、filename 及安全摘要和允许的引用元数据，
+不包含完整证据、工具参数、系统 Prompt、向量、存储路径或凭证。
+流开始前使用 HTTP 401/404/422/429/503；开始后错误使用 error + failed agent_end，
+已断开的客户端无法保证收到结束事件。代理必须关闭响应缓冲。
+
+### DeepSeek、取消与安全边界
+
+固定 LangGraph 1.2.15；本次实际验证环境为 AsyncOpenAI 2.54.0、FastAPI 0.141.1、
+Starlette 1.6.0。继续使用环境配置的 DeepSeek 模型，显式关闭 thinking，不读取 reasoning_content。
+增量 tool_call 按 index 组装，验证结束原因、ID、参数长度和 JSON Schema 后才执行。
+未知工具、非法参数和不可见文档返回安全工具错误供有限重试；上游失败、预算和超时终止运行。
+显式关闭 LangSmith tracing，没有 checkpointer 或持久化消息。
+
+客户端断开会取消上游 SDK 流、Graph、工具和数据库 await，并关闭 Session。
+等待模型锁时每 50ms 检查取消/deadline。已经运行的原生 CPU 推理无法强制终止：
+HTTP 请求可结束，但容量名额保留到实际计算结束；不伪装成已释放 CPU。
+容量按进程计数，不能代替部署级限流，普通 RAG 路径也不受此 Agent 容量限制。
+首次模型下载或冷加载可能超过工具 deadline，应在部署时准备权重缓存。
+
+工具证据是不可信输入，不能升级为系统指令。知识库事实回答必须具有已提供的 Chunk 引用；
+未知编号或缺少引用会失败。只有文档状态来源时输出服务端构造的状态摘要，不能据此回答正文事实。
+没有证据的直接回答使用固定能力/缺少证据提示，不发布模型自由生成的事实。
+**有效来源编号不等于事实真实**：混合来源、逐条事实蕴含与引用充分性仍不保证，深入评估留到 M9。
+RLS 是第二道隔离防线，不防御应用进程完全失陷或任意 SQL 执行。
+
+### 验证
+
+自动化测试：`.venv\Scripts\python.exe -m pytest -o addopts=`，使用 Fake 模型、真实独立
+PostgreSQL 和本地 Uvicorn 网络测试；不下载模型、不调用外部 LLM。
+覆盖工具循环、参数/预算/引用、SSE 顺序、DeepSeek 等待取消、本地锁与原生计算取消、
+队列背压、真实数据库 pg_sleep 中断、Admin/Member 和 tenant/KB 隔离。
+
+人工真实验证：`.venv\Scripts\python.exe -m scripts.verify_m8`。
+脚本仅向已配置的 https://api.deepseek.com 发送固定人工年假资料、问题及 Agent 协议包装，
+在独立测试库创建并清理自己的租户，不能与回归测试同时运行。需本地模型权重和 API Key。
+2026-10-15 真实验证：2 次模型调用、2 次检索、来源去重为 S1，回答明确为 12 天带薪年假。
+首个 agent_start 约 0.368 秒，首次工具完成约 11.286 秒（含 Reranker 冷加载），
+第二次工具约 0.087 秒，最终回答约 12.383 秒，总耗时约 12.384 秒。
+这是单次人工用例，不是吞吐或延迟基准；安全结果保存在忽略文件 `.data/verification/m8.json`。
+本次全量 M1～M8 回归为 **266 passed（114.60 秒）**，其中新增 M8 测试 30 项。
+`alembic check`、`pip check`、`git diff --check` 通过，历史迁移保持不变。

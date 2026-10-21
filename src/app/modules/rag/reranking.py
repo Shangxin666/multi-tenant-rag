@@ -1,3 +1,4 @@
+from app.modules.rag.work import inference_lock
 from functools import lru_cache
 from threading import Lock
 from typing import Annotated, Any, Protocol, Sequence
@@ -41,7 +42,7 @@ class BgeReranker:
     def score(self, question: str, passages: Sequence[str]) -> list[float]:
         if not passages:
             return []
-        with self._lock:
+        with inference_lock(self._lock):
             if self._model is None:
                 self._model = self._load()
             scores = self._model.predict([(question, passage) for passage in passages],
