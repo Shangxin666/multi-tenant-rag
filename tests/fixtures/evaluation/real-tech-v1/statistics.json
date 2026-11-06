@@ -1,0 +1,120 @@
+{
+  "documents": 15,
+  "chunks": 215,
+  "average_chunks_per_document": 14.333333333333334,
+  "cases": 30,
+  "answerable_candidates": 25,
+  "categories": {
+    "exact": 5,
+    "paraphrase": 5,
+    "multi_evidence": 5,
+    "similar_concepts": 5,
+    "unanswerable": 5,
+    "version_boundary": 5
+  },
+  "unique_candidate_evidence_chunks": 41,
+  "verified_cases": 0,
+  "trusted_evaluation_cases": 0,
+  "experiment_records": 0,
+  "per_document": [
+    {
+      "id": "fed3c5ac-22aa-5e05-9efc-9a4763bf10c3",
+      "title": "响应式基础",
+      "source_path": "src/guide/essentials/reactivity-fundamentals.md",
+      "chunk_count": 16
+    },
+    {
+      "id": "a150347d-3fbc-5288-a2e5-f30930ce4ffd",
+      "title": "计算属性",
+      "source_path": "src/guide/essentials/computed.md",
+      "chunk_count": 10
+    },
+    {
+      "id": "43285cff-4e6c-56a9-b83b-96d230693890",
+      "title": "侦听器",
+      "source_path": "src/guide/essentials/watchers.md",
+      "chunk_count": 15
+    },
+    {
+      "id": "a7b624b9-0b37-51d9-b741-8440279bccf3",
+      "title": "生命周期钩子",
+      "source_path": "src/guide/essentials/lifecycle.md",
+      "chunk_count": 3
+    },
+    {
+      "id": "0787652d-12ec-5ccf-bb61-c5b469ca30ff",
+      "title": "模板引用",
+      "source_path": "src/guide/essentials/template-refs.md",
+      "chunk_count": 8
+    },
+    {
+      "id": "00cb767a-684b-5e51-a3ad-776a2c1a573e",
+      "title": "组件基础",
+      "source_path": "src/guide/essentials/component-basics.md",
+      "chunk_count": 24
+    },
+    {
+      "id": "66579c72-991c-5232-905a-7185b837a3a8",
+      "title": "Props",
+      "source_path": "src/guide/components/props.md",
+      "chunk_count": 20
+    },
+    {
+      "id": "326f923f-dfad-576b-a8b1-eaec96b7603d",
+      "title": "组件事件",
+      "source_path": "src/guide/components/events.md",
+      "chunk_count": 7
+    },
+    {
+      "id": "e67d1c5e-13dc-56b8-abb1-6c5429b8223e",
+      "title": "组件 v-model",
+      "source_path": "src/guide/components/v-model.md",
+      "chunk_count": 21
+    },
+    {
+      "id": "186942cf-75a4-5850-8aaf-323f47e41e87",
+      "title": "透传 Attributes",
+      "source_path": "src/guide/components/attrs.md",
+      "chunk_count": 5
+    },
+    {
+      "id": "59c80964-b6c0-5e25-8a64-42b69b089494",
+      "title": "插槽 Slots",
+      "source_path": "src/guide/components/slots.md",
+      "chunk_count": 23
+    },
+    {
+      "id": "5d5c7f08-5933-501a-a44a-a3c6c3859dd6",
+      "title": "依赖注入",
+      "source_path": "src/guide/components/provide-inject.md",
+      "chunk_count": 11
+    },
+    {
+      "id": "d0021c21-8e51-5df7-b425-ee209b5bc5c0",
+      "title": "组合式函数",
+      "source_path": "src/guide/reusability/composables.md",
+      "chunk_count": 17
+    },
+    {
+      "id": "f7446304-dabc-52b0-a5d2-f9f12e039b05",
+      "title": "深入响应式系统",
+      "source_path": "src/guide/extras/reactivity-in-depth.md",
+      "chunk_count": 21
+    },
+    {
+      "id": "56d5bfa7-e882-5b6b-90fa-1837897b5d8a",
+      "title": "响应式 API：核心",
+      "source_path": "src/api/reactivity-core.md",
+      "chunk_count": 14
+    }
+  ],
+  "query_scopes": [
+    {
+      "tenant_id": "5c76e7ab-9d77-5e47-8fe0-1123efa37550",
+      "knowledge_base_id": "c6c78148-47cc-55e5-a0cf-4eead2c1daa6",
+      "documents": 15,
+      "candidate_chunks": 215,
+      "queries": 30
+    }
+  ]
+}

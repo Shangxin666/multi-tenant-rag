@@ -1,0 +1,625 @@
+[
+  {
+    "id": "VUE001",
+    "category": "exact",
+    "question": "我改完 count 就去读页面上的数字，拿到的还是旧值。Vue 里应该等哪个时机，代码怎么写？",
+    "expected_answer": "DOM 更新不是同步的；修改状态后 await nextTick()，再读取更新后的 DOM。",
+    "evidence": [
+      [
+        "guide/essentials/reactivity-fundamentals.md",
+        336,
+        338
+      ]
+    ],
+    "rubric": [
+      "说明 DOM 更新被缓冲",
+      "给出修改状态后 await nextTick() 的顺序"
+    ]
+  },
+  {
+    "id": "VUE002",
+    "category": "exact",
+    "question": "模板里反复用同一个计算结果，用 computed 和直接调用方法有什么实际区别？",
+    "expected_answer": "计算属性基于响应式依赖缓存，只在依赖变化时重新计算；方法在重渲染时会再次执行。",
+    "evidence": [
+      [
+        "guide/essentials/computed.md",
+        173,
+        173
+      ],
+      [
+        "guide/essentials/computed.md",
+        197,
+        197
+      ]
+    ],
+    "rubric": [
+      "说明缓存依据是响应式依赖",
+      "区分方法重渲染时再次执行"
+    ]
+  },
+  {
+    "id": "VUE003",
+    "category": "exact",
+    "question": "孙组件 emit 了 save，爷爷组件直接写 @save 为什么收不到？组件事件不是也会冒泡吗？",
+    "expected_answer": "Vue 组件事件没有 DOM 事件的冒泡机制，只能直接监听子组件；跨层通信需显式转发或使用合适的跨层通信机制。",
+    "evidence": [
+      [
+        "guide/components/events.md",
+        65,
+        65
+      ]
+    ],
+    "rubric": [
+      "明确组件事件不冒泡",
+      "说明直接子组件监听范围"
+    ]
+  },
+  {
+    "id": "VUE004",
+    "category": "exact",
+    "question": "我想等接口返回之后再注册 onMounted，这样写可以吗？生命周期钩子什么时候必须注册？",
+    "expected_answer": "生命周期钩子需要在组件初始化时同步注册，不应等异步接口返回后再注册；可以在同步起源于 setup 的外部函数中注册。",
+    "evidence": [
+      [
+        "guide/essentials/lifecycle.md",
+        44,
+        44
+      ],
+      [
+        "guide/essentials/lifecycle.md",
+        55,
+        55
+      ]
+    ],
+    "rubric": [
+      "同步注册",
+      "区分同步调用链与词法位置"
+    ]
+  },
+  {
+    "id": "VUE005",
+    "category": "exact",
+    "question": "组件现在有 header 和 main 两个根节点，父组件传的 class 不知道落哪儿，还报了警告，要怎么处理？",
+    "expected_answer": "多根节点组件不会自动透传 attributes，需要显式选择目标元素绑定 $attrs，否则可能产生运行时警告。",
+    "evidence": [
+      [
+        "guide/components/attrs.md",
+        129,
+        137
+      ]
+    ],
+    "rubric": [
+      "多根节点没有自动透传",
+      "显式将 $attrs 绑定到目标元素"
+    ]
+  },
+  {
+    "id": "VUE006",
+    "category": "paraphrase",
+    "question": "watch(obj.count, ...) 一直没按预期触发，我只想盯着 count，不想监控整个对象，该怎么改？",
+    "expected_answer": "直接传 obj.count 得到的是普通值；应使用 watch(() => obj.count, callback) 提供 getter 数据源。",
+    "evidence": [
+      [
+        "guide/essentials/watchers.md",
+        137,
+        155
+      ]
+    ],
+    "rubric": [
+      "指出传入的是普通 number",
+      "提供 getter 形式"
+    ]
+  },
+  {
+    "id": "VUE007",
+    "category": "paraphrase",
+    "question": "reactive 数组里放了 ref，取出来怎么还是个对象？我以为 Vue 都会帮忙拆开。",
+    "expected_answer": "ref 作为响应式数组或 Map 等原生集合的元素访问时不会自动解包，需要读取 .value。",
+    "evidence": [
+      [
+        "guide/essentials/reactivity-fundamentals.md",
+        497,
+        508
+      ]
+    ],
+    "rubric": [
+      "数组与集合元素不自动解包",
+      "说明 .value"
+    ]
+  },
+  {
+    "id": "VUE008",
+    "category": "paraphrase",
+    "question": "页面外层和内层都 provide 了同名配置，最里面的组件 inject 到底会用哪一份？",
+    "expected_answer": "沿祖先链解析时使用距离注入组件最近的同名提供者的值。",
+    "evidence": [
+      [
+        "guide/components/provide-inject.md",
+        126,
+        126
+      ]
+    ],
+    "rubric": [
+      "最近祖先提供者优先"
+    ]
+  },
+  {
+    "id": "VUE009",
+    "category": "paraphrase",
+    "question": "父组件已经拿到子组件 ref 了，为什么调用不到 script setup 里写的那个方法？",
+    "expected_answer": "script setup 组件默认私有；子组件需要用 defineExpose 显式暴露方法，且应在 await 之前调用。",
+    "evidence": [
+      [
+        "guide/essentials/template-refs.md",
+        191,
+        191
+      ],
+      [
+        "guide/essentials/template-refs.md",
+        210,
+        210
+      ]
+    ],
+    "rubric": [
+      "默认私有",
+      "defineExpose",
+      "await 前调用"
+    ]
+  },
+  {
+    "id": "VUE010",
+    "category": "paraphrase",
+    "question": "我把 useXXX 返回的状态解构出来用，页面就不更新了。组合式函数应该返回什么结构才不容易踩这个坑？",
+    "expected_answer": "推荐返回包含多个 ref 的普通非响应式对象；解构后 ref 仍保持响应性。直接解构返回的 reactive 对象可能丢失属性的响应性连接。",
+    "evidence": [
+      [
+        "guide/reusability/composables.md",
+        266,
+        275
+      ]
+    ],
+    "rubric": [
+      "普通对象包含多个 ref",
+      "解释 reactive 对象解构的风险"
+    ]
+  },
+  {
+    "id": "VUE011",
+    "category": "multi_evidence",
+    "question": "搜索条件变化后要刷新接口数据，结果再拿来算一段展示文字。这两步都塞进 computed 合适吗，应该怎样分工？",
+    "expected_answer": "computed getter 应保持无副作用，用于计算派生展示值；请求等副作用应放在 watch 或 watchEffect 等侦听逻辑中。",
+    "evidence": [
+      [
+        "guide/essentials/computed.md",
+        379,
+        379
+      ],
+      [
+        "guide/essentials/watchers.md",
+        5,
+        5
+      ]
+    ],
+    "rubric": [
+      "请求与派生计算分开",
+      "computed getter 不做请求",
+      "侦听状态变化执行副作用"
+    ]
+  },
+  {
+    "id": "VUE012",
+    "category": "multi_evidence",
+    "question": "编辑器子组件收到一个对象 prop，想修改里面的姓名并通知父组件保存。技术上能直接改吗，推荐的数据流怎么设计？",
+    "expected_answer": "对象 prop 的嵌套值技术上可以修改，但通常不推荐；子组件抛出变更事件，由父组件监听并更新自己的状态，保持数据流清晰。",
+    "evidence": [
+      [
+        "guide/components/props.md",
+        455,
+        459
+      ],
+      [
+        "guide/essentials/component-basics.md",
+        363,
+        363
+      ],
+      [
+        "guide/essentials/component-basics.md",
+        384,
+        384
+      ]
+    ],
+    "rubric": [
+      "区分不能改 prop 绑定与可以改嵌套对象",
+      "通常由子组件 emit 通知父组件更新"
+    ]
+  },
+  {
+    "id": "VUE013",
+    "category": "multi_evidence",
+    "question": "封装按钮时把 click 写进 emits，父组件的 @click 还是不是透传到原生按钮？为什么声明事件会影响这个行为？",
+    "expected_answer": "声明过的事件监听器会被组件消费，不再作为普通透传监听器；click 声明为组件事件后，父级监听的是组件 emit 的 click，而非自动监听原生 click。",
+    "evidence": [
+      [
+        "guide/components/attrs.md",
+        72,
+        72
+      ],
+      [
+        "guide/components/events.md",
+        225,
+        225
+      ]
+    ],
+    "rubric": [
+      "声明过的监听器被消费",
+      "区分组件 click 与原生 click"
+    ]
+  },
+  {
+    "id": "VUE014",
+    "category": "multi_evidence",
+    "question": "想把输入框自动聚焦逻辑抽成 useFocus，应该什么时候读取模板 ref，卸载时带上的事件监听器又该在哪清理？",
+    "expected_answer": "模板引用在挂载后才可访问，初次渲染或元素被卸载时可能为空；DOM 副作用放在 onMounted 等挂载后阶段，事件监听器在 onUnmounted 清理。",
+    "evidence": [
+      [
+        "guide/essentials/template-refs.md",
+        96,
+        96
+      ],
+      [
+        "guide/reusability/composables.md",
+        293,
+        295
+      ]
+    ],
+    "rubric": [
+      "挂载后访问模板 ref",
+      "处理 null",
+      "卸载时清理事件监听器"
+    ]
+  },
+  {
+    "id": "VUE015",
+    "category": "multi_evidence",
+    "question": "把 reactive 对象里的一个数字解构到局部变量，和从组合式函数拿到一个 ref 再解构，为什么更新效果不一样？",
+    "expected_answer": "解构 reactive 对象的原始类型属性会脱离源对象的代理访问，局部绑定不再响应；从普通对象解构得到的 ref 保留自身的响应式容器身份。",
+    "evidence": [
+      [
+        "guide/extras/reactivity-in-depth.md",
+        107,
+        107
+      ],
+      [
+        "guide/reusability/composables.md",
+        268,
+        275
+      ]
+    ],
+    "rubric": [
+      "解释代理 get/set 与局部绑定",
+      "区分 ref 容器和原始值"
+    ]
+  },
+  {
+    "id": "VUE016",
+    "category": "similar_concepts",
+    "question": "watch 和 watchEffect 是不是只差一个不用写监听源？如果回调里有 await，依赖追踪有什么容易漏掉的地方？",
+    "expected_answer": "watch 只追踪显式数据源；watchEffect 自动追踪同步执行中访问的响应式依赖，异步回调第一个 await 之后才访问的属性不会被其追踪。",
+    "evidence": [
+      [
+        "guide/essentials/watchers.md",
+        356,
+        356
+      ],
+      [
+        "guide/essentials/watchers.md",
+        363,
+        365
+      ]
+    ],
+    "rubric": [
+      "显式源与自动追踪区别",
+      "第一个 await 前的同步依赖限制"
+    ]
+  },
+  {
+    "id": "VUE017",
+    "category": "similar_concepts",
+    "question": "同一个 ref 放进 reactive 对象属性时不用 .value，放进数组或 Map 就要写，这两种情况到底怎么区分？",
+    "expected_answer": "深层 reactive 对象的属性会自动解包 ref，但响应式数组或原生集合的元素访问不会自动解包，后者需 .value。",
+    "evidence": [
+      [
+        "guide/essentials/reactivity-fundamentals.md",
+        470,
+        470
+      ],
+      [
+        "guide/essentials/reactivity-fundamentals.md",
+        495,
+        499
+      ]
+    ],
+    "rubric": [
+      "深层对象属性自动解包",
+      "数组及 Map 元素不解包"
+    ]
+  },
+  {
+    "id": "VUE018",
+    "category": "similar_concepts",
+    "question": "插槽写在父组件里，为什么不能直接读子组件的局部变量？作用域插槽是怎么把这部分数据交给我的？",
+    "expected_answer": "插槽表达式遵循定义位置的作用域，不能直接访问子组件状态；子组件通过 slot 出口传递属性，父组件通过 v-slot 接收插槽 props。",
+    "evidence": [
+      [
+        "guide/components/slots.md",
+        101,
+        103
+      ],
+      [
+        "guide/components/slots.md",
+        349,
+        353
+      ]
+    ],
+    "rubric": [
+      "定义作用域",
+      "slot props 与 v-slot"
+    ]
+  },
+  {
+    "id": "VUE019",
+    "category": "similar_concepts",
+    "question": "把对象交给 reactive 后，返回值和原对象用 === 比较为什么不相等？修改时应该一直用哪一个？",
+    "expected_answer": "reactive 返回的是原对象的 Proxy，不与原对象严格相等；应该统一使用代理对象，以便访问和修改被响应式系统追踪。",
+    "evidence": [
+      [
+        "guide/essentials/reactivity-fundamentals.md",
+        399,
+        399
+      ],
+      [
+        "guide/essentials/reactivity-fundamentals.md",
+        409,
+        409
+      ]
+    ],
+    "rubric": [
+      "Proxy 与原对象不同身份",
+      "使用代理对象"
+    ]
+  },
+  {
+    "id": "VUE020",
+    "category": "similar_concepts",
+    "question": "组件 v-model 看起来像双向绑定，它和手写 prop 加事件有什么关系？不使用宏时应该接收和触发什么名字？",
+    "expected_answer": "默认组件 v-model 对应 modelValue prop 和 update:modelValue 事件；子组件读取 prop，通过事件通知父组件更新，宏只是简化该协议。",
+    "evidence": [
+      [
+        "guide/components/v-model.md",
+        55,
+        62
+      ],
+      [
+        "guide/components/v-model.md",
+        78,
+        87
+      ]
+    ],
+    "rubric": [
+      "modelValue",
+      "update:modelValue",
+      "解释 prop + 事件协议"
+    ]
+  },
+  {
+    "id": "VUE021",
+    "category": "unanswerable",
+    "question": "项目用 Vue Router 4，登录过期时 beforeEach 怎么配置才能登录后回到原来的地址？请给完整配置。",
+    "expected_answer": "这批冻结文档没有 Vue Router 导航守卫配置证据，不能据此提供已核实的完整实现；需要补充 Vue Router 官方资料。",
+    "evidence": [],
+    "rubric": [
+      "说明当前资料范围不足",
+      "不编造路由配置"
+    ],
+    "negative_reason": "out_of_selected_corpus",
+    "negative_search_terms": [
+      "beforeEach",
+      "导航守卫"
+    ]
+  },
+  {
+    "id": "VUE022",
+    "category": "unanswerable",
+    "question": "Pinia store 想跨标签页同步，还要让持久化缓存两小时后失效，具体插件配置怎么写？",
+    "expected_answer": "这批文档没有该 Pinia 插件、跨标签页同步和 TTL 配置的足够证据，需要插件名称、版本及其文档。",
+    "evidence": [],
+    "rubric": [
+      "不把 Vue 核心响应式知识当插件配置证据",
+      "请求插件与版本信息"
+    ],
+    "negative_reason": "out_of_selected_corpus",
+    "negative_search_terms": [
+      "persistedstate",
+      "TTL",
+      "跨标签页"
+    ]
+  },
+  {
+    "id": "VUE023",
+    "category": "unanswerable",
+    "question": "Vite 开发服务器把 /socket 代理到后端 WebSocket，vite.config.ts 里代理规则应该怎么写？",
+    "expected_answer": "所选 Vue 文档没有 Vite WebSocket 代理配置证据，应查阅相应版本的 Vite 文档，不能将组件通信机制当作服务代理配置。",
+    "evidence": [],
+    "rubric": [
+      "区分 Vue 组件与 Vite 服务器配置",
+      "指出资料缺失"
+    ],
+    "negative_reason": "out_of_selected_corpus",
+    "negative_search_terms": [
+      "server.proxy",
+      "WebSocket",
+      "ws: true"
+    ]
+  },
+  {
+    "id": "VUE024",
+    "category": "unanswerable",
+    "question": "我的 UserProfile.vue 第 87 行报 Cannot read properties of undefined，你直接告诉我那一行该怎么改，代码暂时不能提供。",
+    "expected_answer": "缺少项目代码、堆栈和触发条件，无法从通用官方文档确定具体修改；应先请求最小复现或相关代码。",
+    "evidence": [],
+    "rubric": [
+      "不猜测私有代码",
+      "请求最小复现与堆栈"
+    ],
+    "negative_reason": "insufficient_user_context",
+    "negative_search_terms": [
+      "UserProfile.vue"
+    ]
+  },
+  {
+    "id": "VUE025",
+    "category": "unanswerable",
+    "question": "一万个带校验的输入框全部改成 ref 后，在我的电脑上每次更新能保证低于 16ms 吗？给我确定的耗时数值。",
+    "expected_answer": "这些文档不包含指定硬件和应用负载的测量结果，不能保证 16ms 或给出确定耗时；需要实际基准测量。",
+    "evidence": [],
+    "rubric": [
+      "拒绝无实测依据的数值保证",
+      "区分响应式机制与性能测量"
+    ],
+    "negative_reason": "missing_measurement_evidence",
+    "negative_search_terms": [
+      "16ms",
+      "一万个"
+    ]
+  },
+  {
+    "id": "VUE026",
+    "category": "version_boundary",
+    "requested_version": "Vue 3.3 versus 3.4+",
+    "question": "项目还在 Vue 3.3，组件双向绑定能直接照文档用 defineModel 吗？如果不按 3.4 的推荐写法，旧协议是什么？",
+    "expected_answer": "该快照从 Vue 3.4 开始推荐 defineModel；对 Vue 3.3 不应直接套用这项推荐，应按 modelValue prop 与 update:modelValue 事件实现相同协议。",
+    "evidence": [
+      [
+        "guide/components/v-model.md",
+        13,
+        13
+      ],
+      [
+        "guide/components/v-model.md",
+        59,
+        60
+      ],
+      [
+        "guide/components/v-model.md",
+        62,
+        62
+      ]
+    ],
+    "rubric": [
+      "识别 3.4 推荐边界，不推断实验 API 绝对不存在",
+      "给出旧协议"
+    ]
+  },
+  {
+    "id": "VUE027",
+    "category": "version_boundary",
+    "requested_version": "Vue 3.4 versus 3.5+",
+    "question": "升级到 Vue 3.5 后，从 defineProps 解构出来的变量为什么又能跟着更新了？在 3.4 项目里也能这样理解吗？",
+    "expected_answer": "在同一 script setup 中，3.5+ 编译器会把对解构 props 变量的访问转换为 props 属性访问；3.4 及以下的同类解构变量是不会随 prop 更新的常量，不能混用解释。",
+    "evidence": [
+      [
+        "guide/components/props.md",
+        122,
+        138
+      ]
+    ],
+    "rubric": [
+      "3.5 编译器转换",
+      "3.4 及以下区别",
+      "同一 script setup 上下文"
+    ]
+  },
+  {
+    "id": "VUE028",
+    "category": "version_boundary",
+    "requested_version": "Vue 3.4 versus 3.5+",
+    "question": "Vue 3.4 项目复制 useTemplateRef 示例后用不了，这个 API 从哪个版本开始有，旧项目应该怎样拿模板引用？",
+    "expected_answer": "useTemplateRef 是 3.5+ API；之前需要声明一个与模板 ref attribute 匹配的 ref，并在挂载后访问。",
+    "evidence": [
+      [
+        "guide/essentials/template-refs.md",
+        15,
+        15
+      ],
+      [
+        "guide/essentials/template-refs.md",
+        37,
+        48
+      ],
+      [
+        "guide/essentials/template-refs.md",
+        96,
+        96
+      ]
+    ],
+    "rubric": [
+      "3.5+ 边界",
+      "同名 ref 旧写法",
+      "挂载后访问"
+    ]
+  },
+  {
+    "id": "VUE029",
+    "category": "version_boundary",
+    "requested_version": "Vue 3.4 versus 3.5+",
+    "question": "想让 watch 只往对象里检查两层，deep: 2 能直接用在 Vue 3.4 吗？数字形式的 deep 有版本要求吗？",
+    "expected_answer": "文档将数字形式的 deep 标为 Vue 3.5+，表示最大遍历深度；不能将这项语义直接用于 3.4。",
+    "evidence": [
+      [
+        "guide/essentials/watchers.md",
+        227,
+        227
+      ],
+      [
+        "api/reactivity-core.md",
+        426,
+        426
+      ]
+    ],
+    "rubric": [
+      "3.5+ 数字 deep",
+      "最大遍历深度",
+      "不对 3.4 作同样保证"
+    ]
+  },
+  {
+    "id": "VUE030",
+    "category": "version_boundary",
+    "requested_version": "Vue 3.5+",
+    "question": "Vue 3.5 里我先 await 再调用 onWatcherCleanup 取消旧请求，为什么不对？它和回调参数给的 onCleanup 限制一样吗？",
+    "expected_answer": "onWatcherCleanup 仅在 3.5+ 支持，必须在 watch/watchEffect 的同步执行阶段调用，不能放在 await 后；回调参数 onCleanup 与侦听器实例绑定，不受该同步限制。",
+    "evidence": [
+      [
+        "guide/essentials/watchers.md",
+        449,
+        449
+      ],
+      [
+        "guide/essentials/watchers.md",
+        489,
+        489
+      ],
+      [
+        "api/reactivity-core.md",
+        557,
+        559
+      ]
+    ],
+    "rubric": [
+      "3.5+",
+      "同步阶段注册",
+      "与 onCleanup 区分"
+    ]
+  }
+]

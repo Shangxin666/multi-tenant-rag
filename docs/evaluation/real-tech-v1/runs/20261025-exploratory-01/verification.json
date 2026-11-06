@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "method": "Independent standard-library recomputation from ranked IDs and content-review-draft labels, without evaluation metric imports or model calls",
+  "records_verified": 58,
+  "excluded_cases": [
+    "VUE026"
+  ],
+  "source_files_unchanged": true,
+  "experiment_class": "exploratory/unverified",
+  "human_gold": false,
+  "metrics": {
+    "dense_exact_offline": {
+      "answerable_n": 24,
+      "negative_n": 5,
+      "metrics": {
+        "recall@1": 0.11428571428571428,
+        "hit_rate@1": 0.4166666666666667,
+        "recall@3": 0.2820436507936508,
+        "hit_rate@3": 0.5833333333333334,
+        "recall@5": 0.43065476190476193,
+        "hit_rate@5": 0.75,
+        "recall@10": 0.6195436507936508,
+        "hit_rate@10": 0.875,
+        "mrr@10": 0.546875,
+        "ndcg@10": 0.4785612930636043
+      },
+      "evidence_group_metrics": {
+        "evidence_group_coverage@1": 0.3159722222222222,
+        "evidence_group_coverage@3": 0.5069444444444444,
+        "evidence_group_coverage@5": 0.6736111111111112,
+        "evidence_group_coverage@10": 0.8333333333333334
+      },
+      "negative_empty_rate": 0.0,
+      "pipeline_p50_ms": 11.0852999787312,
+      "pipeline_p95_ms": 13.683720020344479,
+      "stage_timings_ms": {
+        "query_embedding": {
+          "p50_ms": 10.52819998585619,
+          "p95_ms": 13.216140004806219
+        },
+        "dense_search": {
+          "p50_ms": 0.5003999976906925,
+          "p95_ms": 0.6484200013801453
+        },
+        "cross_encoder_rerank": {
+          "p50_ms": 0.0,
+          "p95_ms": 0.0
+        }
+      },
+      "failure_counts": {
+        "labeled_relevant_chunks_missing_at_10": 17,
+        "necessary_evidence_groups_uncovered_at_10": 5,
+        "negative_query_returned_results": 5
+      }
+    },
+    "dense_rerank_offline": {
+      "answerable_n": 24,
+      "negative_n": 5,
+      "metrics": {
+        "recall@1": 0.20694444444444443,
+        "hit_rate@1": 0.625,
+        "recall@3": 0.5198412698412699,
+        "hit_rate@3": 0.9166666666666666,
+        "recall@5": 0.6424603174603175,
+        "hit_rate@5": 0.9166666666666666,
+        "recall@10": 0.7546626984126984,
+        "hit_rate@10": 0.9166666666666666,
+        "mrr@10": 0.75,
+        "ndcg@10": 0.6585653239385129
+      },
+      "evidence_group_metrics": {
+        "evidence_group_coverage@1": 0.4097222222222222,
+        "evidence_group_coverage@3": 0.7743055555555556,
+        "evidence_group_coverage@5": 0.8611111111111112,
+        "evidence_group_coverage@10": 0.9027777777777778
+      },
+      "negative_empty_rate": 0.0,
+      "pipeline_p50_ms": 6352.024400024675,
+      "pipeline_p95_ms": 6622.646980016725,
+      "stage_timings_ms": {
+        "query_embedding": {
+          "p50_ms": 10.52819998585619,
+          "p95_ms": 13.216140004806219
+        },
+        "dense_search": {
+          "p50_ms": 0.5003999976906925,
+          "p95_ms": 0.6484200013801453
+        },
+        "cross_encoder_rerank": {
+          "p50_ms": 6339.125900005456,
+          "p95_ms": 6609.657240001252
+        }
+      },
+      "failure_counts": {
+        "labeled_relevant_chunks_missing_at_10": 11,
+        "necessary_evidence_groups_uncovered_at_10": 3,
+        "rerank_worsened_vs_dense": 4,
+        "negative_query_returned_results": 5
+      }
+    }
+  }
+}

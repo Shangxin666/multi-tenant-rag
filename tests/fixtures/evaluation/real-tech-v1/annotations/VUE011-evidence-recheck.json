@@ -1,0 +1,224 @@
+{
+  "case_id": "VUE011",
+  "source_proposal_sha256": "c9fb844ba7e0b0d9dc0dc6f196ce49660db47ad280afc58ffe4bbc1f29f88e62",
+  "review_scope": "all seven previously marked G2 chunks; no search for additional positives",
+  "results": [
+    {
+      "chunk_id": "62e663f6-fd0c-559c-83e0-7c188ac39bb9",
+      "source_path": "src/guide/reusability/composables.md",
+      "chunk_index": 6,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "reactive_request_code",
+      "reason": "同块说明 props.id 改变时重新 fetch，并展示 watchEffect 调用读取 toValue(url) 的 fetchData；不是独立的一次性异步请求。",
+      "quote": "或者接收一个 [getter 函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/get#description)：\n\n```js\n// 当 props.id 改变时重新 fetch\nconst { data, error } = useFetch(() => `/posts/${props.id}`)\n```\n\n我们可以用 [`watchEffect()`](/api/reactivity-core.html#watcheffect) 和 [`toValue()`](/api/reactivity-utilities.html#tovalue) API 来重构我们现有的实现：\n\n```js{7,12} [fetch.js]\nimport { ref, watchEffect, toValue } from 'vue'\n\nexport function useFetch(url) {\n  const data = ref(null)\n  const error = ref(null)\n\n  const fetchData = () => {\n    // reset state before fetching..\n    data.value = null\n    error.value = null\n\n    fetch(toValue(url))\n      .then((res) => res.json())\n      .then((json) => (data.value = json))\n      .catch((err) => (error.value = err))\n  }\n\n  watchEffect(() => {\n    fetchData()\n  })\n\n  return { data, error }",
+      "location": {
+        "source_path": "src/guide/reusability/composables.md",
+        "line_start": 198,
+        "line_end": 229,
+        "char_start": 4885,
+        "char_end": 5716,
+        "section": {
+          "level": 3,
+          "title": "接收响应式状态",
+          "anchor": "accepting-reactive-state",
+          "line": 183,
+          "char_start": 4556,
+          "section_path": [
+            "组合式函数",
+            "异步状态示例",
+            "接收响应式状态"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/reusability/composables.md#L198-L229"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    },
+    {
+      "chunk_id": "8e4f1aff-7937-55a2-8a64-90738891a3c4",
+      "source_path": "src/guide/essentials/watchers.md",
+      "chunk_index": 0,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "reactive_request_code",
+      "reason": "watch 监听 question 的变化，调用同块 getAnswer，并执行 fetch 后更新 answer；原来仅引用第 5 行的背景不充分，应以此具体链路替代引文。",
+      "quote": "在选项式 API 中，我们可以使用 [`watch` 选项](/api/options-state#watch)在每次响应式属性发生变化时触发一个函数。\n\n```js\nexport default {\n  data() {\n    return {\n      question: '',\n      answer: 'Questions usually contain a question mark. ;-)',\n      loading: false\n    }\n  },\n  watch: {\n    // 每当 question 改变时，这个函数就会执行\n    question(newQuestion, oldQuestion) {\n      if (newQuestion.includes('?')) {\n        this.getAnswer()\n      }\n    }\n  },\n  methods: {\n    async getAnswer() {\n      this.loading = true\n      this.answer = 'Thinking...'\n      try {\n        const res = await fetch('https://yesno.wtf/api')\n        this.answer = (await res.json()).answer\n      } catch (error) {\n        this.answer = 'Error! Could not reach the API. ' + error\n      } finally {\n        this.loading = false\n      }\n    }\n  }\n}",
+      "location": {
+        "source_path": "src/guide/essentials/watchers.md",
+        "line_start": 9,
+        "line_end": 42,
+        "char_start": 151,
+        "char_end": 928,
+        "section": {
+          "level": 2,
+          "title": "基本示例",
+          "anchor": "basic-example",
+          "line": 3,
+          "char_start": 19,
+          "section_path": [
+            "侦听器",
+            "基本示例"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/essentials/watchers.md#L9-L42"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    },
+    {
+      "chunk_id": "978727b4-5fcd-52c9-9986-cade596174c5",
+      "source_path": "src/guide/essentials/computed.md",
+      "chunk_index": 9,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "direct_normative_statement",
+      "reason": "原文明示使用侦听器根据其他响应式状态的变更创建副作用，不仅是计算属性标题或禁止请求的背景；无需必须有代码才能成为直接事实依据。",
+      "quote": "计算属性的 getter 应只做计算而没有任何其他的副作用，这一点非常重要，请务必牢记。举例来说，**不要改变其他状态、在 getter 中做异步请求或者更改 DOM**！一个计算属性的声明中描述的是如何根据其他值派生一个值。因此 getter 的职责应该仅为计算和返回该值。在之后的指引中我们会讨论如何使用[侦听器](./watchers)根据其他响应式状态的变更来创建副作用。",
+      "location": {
+        "source_path": "src/guide/essentials/computed.md",
+        "line_start": 379,
+        "line_end": 379,
+        "char_start": 7819,
+        "char_end": 8009,
+        "section": {
+          "level": 3,
+          "title": "Getter 不应有副作用",
+          "anchor": "getters-should-be-side-effect-free",
+          "line": 377,
+          "char_start": 7762,
+          "section_path": [
+            "计算属性",
+            "最佳实践",
+            "Getter 不应有副作用"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/essentials/computed.md#L379-L379"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    },
+    {
+      "chunk_id": "b7b4b10e-3228-5438-9b74-94acea8e14c9",
+      "source_path": "src/guide/essentials/watchers.md",
+      "chunk_index": 7,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "reactive_request_code",
+      "reason": "明确描述 todoId 变化时加载远程资源，并给出 watch(todoId, async ... fetch ...)；正标签依据不是前面的 once 示例。",
+      "quote": "侦听器的回调使用与源完全相同的响应式状态是很常见的。例如下面的代码，在每当 `todoId` 的引用发生变化时使用侦听器来加载一个远程资源：\n\n```js\nconst todoId = ref(1)\nconst data = ref(null)\n\nwatch(\n  todoId,\n  async () => {\n    const response = await fetch(\n      `https://jsonplaceholder.typicode.com/todos/${todoId.value}`\n    )\n    data.value = await response.json()\n  },\n  { immediate: true }\n)",
+      "location": {
+        "source_path": "src/guide/essentials/watchers.md",
+        "line_start": 318,
+        "line_end": 333,
+        "char_start": 6936,
+        "char_end": 7267,
+        "section": {
+          "level": 2,
+          "title": "`watchEffect()` \\*\\*",
+          "anchor": "watcheffect",
+          "line": 316,
+          "char_start": 6896,
+          "section_path": [
+            "侦听器",
+            "`watchEffect()` \\*\\*"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/essentials/watchers.md#L318-L333"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    },
+    {
+      "chunk_id": "db2b988d-215d-57ec-bede-2f464494b832",
+      "source_path": "src/guide/essentials/watchers.md",
+      "chunk_index": 2,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "reactive_request_code",
+      "reason": "question 为 ref，watch(question, async ...) 在变化后 fetch 并更新响应式 answer；有完整源—回调—副作用链路。",
+      "quote": "\n```vue\n<script setup>\nimport { ref, watch } from 'vue'\n\nconst question = ref('')\nconst answer = ref('Questions usually contain a question mark. ;-)')\nconst loading = ref(false)\n\n// 可以直接侦听一个 ref\nwatch(question, async (newQuestion, oldQuestion) => {\n  if (newQuestion.includes('?')) {\n    loading.value = true\n    answer.value = 'Thinking...'\n    try {\n      const res = await fetch('https://yesno.wtf/api')\n      answer.value = (await res.json()).answer\n    } catch (error) {\n      answer.value = 'Error! Could not reach the API. ' + error\n    } finally {\n      loading.value = false\n    }\n  }",
+      "location": {
+        "source_path": "src/guide/essentials/watchers.md",
+        "line_start": 73,
+        "line_end": 95,
+        "char_start": 2158,
+        "char_end": 2751,
+        "section": {
+          "level": 2,
+          "title": "基本示例",
+          "anchor": "basic-example",
+          "line": 3,
+          "char_start": 19,
+          "section_path": [
+            "侦听器",
+            "基本示例"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/essentials/watchers.md#L73-L95"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    },
+    {
+      "chunk_id": "e6a99cf2-692a-571b-bba4-cc7b833242b0",
+      "source_path": "src/guide/essentials/watchers.md",
+      "chunk_index": 8,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "reactive_request_code_and_statement",
+      "reason": "watchEffect 内发起 fetch，原文明确 todoId.value 是依赖，每次变化时回调再次执行；不是只含 await 的代码。",
+      "quote": "我们可以用 [`watchEffect` 函数](/api/reactivity-core#watcheffect) 来简化上面的代码。`watchEffect()` 允许我们自动跟踪回调的响应式依赖。上面的侦听器可以重写为：\n\n```js\nwatchEffect(async () => {\n  const response = await fetch(\n    `https://jsonplaceholder.typicode.com/todos/${todoId.value}`\n  )\n  data.value = await response.json()\n})\n```\n\n这个例子中，回调会立即执行，不需要指定 `immediate: true`。在执行期间，它会自动追踪 `todoId.value` 作为依赖(和计算属性类似)。每当 `todoId.value` 变化时，回调会再次执行。有了 `watchEffect()`，我们不再需要明确传递 `todoId` 作为源值。",
+      "location": {
+        "source_path": "src/guide/essentials/watchers.md",
+        "line_start": 338,
+        "line_end": 349,
+        "char_start": 7318,
+        "char_end": 7765,
+        "section": {
+          "level": 2,
+          "title": "`watchEffect()` \\*\\*",
+          "anchor": "watcheffect",
+          "line": 316,
+          "char_start": 6896,
+          "section_path": [
+            "侦听器",
+            "`watchEffect()` \\*\\*"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/essentials/watchers.md#L338-L349"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    },
+    {
+      "chunk_id": "eb733fbd-8a4c-595e-bebe-6f8c374b6aca",
+      "source_path": "src/guide/essentials/watchers.md",
+      "chunk_index": 9,
+      "fact_id": "G2",
+      "disposition": "retain_direct_support",
+      "support_type": "reactive_request_code",
+      "reason": "watch(id, ...) 内使用 newId 发起 fetch；正标签依据是该直接示例，而非 watch/watchEffect 的比较标题。",
+      "quote": "有时我们可能会在侦听器中执行副作用，例如异步请求：\n\n<div class=\"composition-api\">\n\n```js\nwatch(id, (newId) => {\n  fetch(`/api/${newId}`).then(() => {\n    // 回调逻辑\n  })\n})\n```",
+      "location": {
+        "source_path": "src/guide/essentials/watchers.md",
+        "line_start": 371,
+        "line_end": 381,
+        "char_start": 8468,
+        "char_end": 8616,
+        "section": {
+          "level": 2,
+          "title": "副作用清理",
+          "anchor": "side-effect-cleanup",
+          "line": 369,
+          "char_start": 8435,
+          "section_path": [
+            "侦听器",
+            "副作用清理"
+          ]
+        },
+        "source_url": "https://github.com/vuejs-translations/docs-zh-cn/blob/418f5ae6e15c7a90beae017e44d58dac3d93ad95/src/guide/essentials/watchers.md#L371-L381"
+      },
+      "review_scope": "existing VUE011/G2 association only; not corpus-wide exhaustiveness"
+    }
+  ],
+  "chunk_ids_to_remove": [],
+  "chunk_ids_to_downgrade_from_G2": [],
+  "new_positive_chunk_ids": [],
+  "citation_fix": "VUE011-R02: line 5 -> lines 9-42 inside the same already-positive chunk",
+  "relevance_exhaustiveness_verified": false
+}

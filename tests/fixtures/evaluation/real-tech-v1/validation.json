@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "scope": "structural checks only; not human semantic validation",
+  "documents": 15,
+  "rebuilt_chunks": 215,
+  "cases": 30,
+  "all_unverified": true,
+  "trusted_evaluation_cases": 0,
+  "historical_v2_files_unchanged": 192,
+  "models_loaded": false,
+  "database_accessed": false
+}
