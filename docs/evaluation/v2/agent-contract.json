@@ -1,0 +1,2094 @@
+{
+  "started_at": "2026-10-24T07:30:54.326816+00:00",
+  "code_head": "136262f528d0c32e5dc2c35671816f4794cef14b",
+  "worktree_dirty": true,
+  "source_sha256": "f7e904f9fe0380c29c024a9368289300a4c2309f598509acb37c370feb121462",
+  "dataset_sha256": "ed221414caa67606ce0576288e3f39fae4e6f7e5bb7e0d2a98ce94e817b1dd5a",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "versions": {
+    "numpy": "2.5.3",
+    "sqlalchemy": "2.0.52",
+    "sentence-transformers": "5.7.0",
+    "langgraph": "1.2.15"
+  },
+  "version": "agent-contract-v2.0",
+  "agent_dataset_sha256": "c6673b544fae950398a1b3e4b33e260b39e1a13546414f54366778d52660ef99",
+  "mode": "scripted-graph-contract",
+  "scope": "synthetic mock tools; no real writes; scripted fault injection is not model accuracy",
+  "status": "complete",
+  "records": [
+    {
+      "id": "search_fact",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "e6591fd4-bd28-49b3-94bd-ab240376517b",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "e6591fd4-bd28-49b3-94bd-ab240376517b",
+            "tool": "search_knowledge_base",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "人事-方案-000的带薪年假额度为12天。 [S1]"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "answer",
+        "answer": "人事-方案-000的带薪年假额度为12天。 [S1]",
+        "sources": [
+          {
+            "source_id": "S1",
+            "kind": "chunk",
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263",
+            "filename": "synthetic.md",
+            "chunk_index": 0,
+            "page": null,
+            "title": "synthetic",
+            "distance": 0.0,
+            "snippet": "synthetic 模拟业务资料；人事-方案-000；主题：人事；文档类型：0。\n人事-方案-000的带薪年假额度为12天。\n人事-方案-000仅适用于已签署该方案的正式业务单元；相邻编号方案具有独立合同，不能套用其额度。结算按生效月份核对，不追溯变更已经关闭的账期。\n人事-方案-000的变更流程要求责任人发起版本申请，审核者对适用对象、计算口径与生效日期逐项签字。若申请缺少适用范围，审批退回补充，原版本继续有效。\n第2节 版本归档\n人事-方案-000的历史版本保存于只读归档区，归档索引包含生效月份、审批单号和经办部门。撤销方案需注明替代版本，历史审批记录仍可审计。查询历史数据必须选择对应月份"
+          }
+        ],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "3e4cc39c-e5ce-4fe2-9f2b-dcbe46bd8943",
+      "trace": {
+        "version": 1,
+        "trace_id": "3e4cc39c-e5ce-4fe2-9f2b-dcbe46bd8943",
+        "duration_ms": 16.00000000325963,
+        "spans": [
+          {
+            "span_id": "73a1e09e-911e-47f9-bc84-14781779fe2d",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "duration_ms": 16.00000000325963
+          },
+          {
+            "span_id": "c4695ef4-56a7-4ed5-87f4-52d5c5fbeb05",
+            "parent_span_id": "73a1e09e-911e-47f9-bc84-14781779fe2d",
+            "name": "agent.finalize",
+            "start_ms": 16.00000000325963,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "document_status",
+      "input": "查询文档 43076243-273e-50c7-ad50-efe6be0a4263 的状态。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "get_document_info"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+            }
+          }
+        ],
+        "finish_reason": "document_info",
+        "error": null,
+        "executed_names": [
+          "get_document_info"
+        ],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "get_document_info",
+          "raw_arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "get_document_info",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "6a53452c-b4cd-478d-8675-4362134ca5a9",
+            "tool": "get_document_info"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "6a53452c-b4cd-478d-8675-4362134ca5a9",
+            "tool": "get_document_info",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "文档状态 [S1]：{\"status\":\"ready\"}"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "document_info",
+        "answer": "文档状态 [S1]：{\"status\":\"ready\"}",
+        "sources": [
+          {
+            "source_id": "S1",
+            "kind": "document",
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263",
+            "filename": "corpus/000-0.html",
+            "chunk_index": null,
+            "page": null,
+            "title": null,
+            "distance": null,
+            "snippet": "{\"status\":\"ready\"}"
+          }
+        ],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "47ca7851-ff5c-43c8-b8b7-af056e9f9e5d",
+      "trace": {
+        "version": 1,
+        "trace_id": "47ca7851-ff5c-43c8-b8b7-af056e9f9e5d",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "d50fc173-f7e2-49cb-9418-5f0a761cda09",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "88be6f9f-51d5-45c5-89d8-74c4074b7dbb",
+            "parent_span_id": "d50fc173-f7e2-49cb-9418-5f0a761cda09",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "search_then_document",
+      "input": "先搜索人事-方案-000的规定，再查看文档43076243-273e-50c7-ad50-efe6be0a4263的状态，最后用正文作答。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base",
+            "get_document_info"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          },
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base",
+          "get_document_info"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        },
+        {
+          "name": "get_document_info",
+          "raw_arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        },
+        {
+          "name": "get_document_info",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "4e7beefd-4c0e-48ab-849c-3cd0e49104b6",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "4e7beefd-4c0e-48ab-849c-3cd0e49104b6",
+            "tool": "search_knowledge_base",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "b1a092ba-29c5-4b3e-838e-8c7a5d330183",
+            "tool": "get_document_info"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "b1a092ba-29c5-4b3e-838e-8c7a5d330183",
+            "tool": "get_document_info",
+            "status": "ok",
+            "source_ids": [
+              "S2"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "人事-方案-000的带薪年假额度为12天。 [S1]"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "answer",
+        "answer": "人事-方案-000的带薪年假额度为12天。 [S1]",
+        "sources": [
+          {
+            "source_id": "S1",
+            "kind": "chunk",
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263",
+            "filename": "synthetic.md",
+            "chunk_index": 0,
+            "page": null,
+            "title": "synthetic",
+            "distance": 0.0,
+            "snippet": "synthetic 模拟业务资料；人事-方案-000；主题：人事；文档类型：0。\n人事-方案-000的带薪年假额度为12天。\n人事-方案-000仅适用于已签署该方案的正式业务单元；相邻编号方案具有独立合同，不能套用其额度。结算按生效月份核对，不追溯变更已经关闭的账期。\n人事-方案-000的变更流程要求责任人发起版本申请，审核者对适用对象、计算口径与生效日期逐项签字。若申请缺少适用范围，审批退回补充，原版本继续有效。\n第2节 版本归档\n人事-方案-000的历史版本保存于只读归档区，归档索引包含生效月份、审批单号和经办部门。撤销方案需注明替代版本，历史审批记录仍可审计。查询历史数据必须选择对应月份"
+          }
+        ],
+        "model_calls": 3,
+        "tool_attempts": 2
+      },
+      "error": null,
+      "trace_id": "c99bbcb9-b3d7-44a0-a085-8dd2186d9cb6",
+      "trace": {
+        "version": 1,
+        "trace_id": "c99bbcb9-b3d7-44a0-a085-8dd2186d9cb6",
+        "duration_ms": 14.999999999417923,
+        "spans": [
+          {
+            "span_id": "fb74d037-2350-49e6-a8de-47743af3e939",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 3,
+            "tool_attempts": 2,
+            "duration_ms": 14.999999999417923
+          },
+          {
+            "span_id": "a7fc55c6-7df9-4634-b249-512c6fb7eb28",
+            "parent_span_id": "fb74d037-2350-49e6-a8de-47743af3e939",
+            "name": "agent.finalize",
+            "start_ms": 14.999999999417923,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 2,
+        "argument_attempts": 2,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "document_then_search",
+      "input": "先查看文档43076243-273e-50c7-ad50-efe6be0a4263状态，再搜索人事-方案-000的规定并回答。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "get_document_info",
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+            }
+          },
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "get_document_info",
+          "search_knowledge_base"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "calls": [
+        {
+          "name": "get_document_info",
+          "raw_arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          },
+          "schema_valid": true
+        },
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "get_document_info",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          }
+        },
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "7b6dec57-2720-47f3-9860-1fc122c01012",
+            "tool": "get_document_info"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "7b6dec57-2720-47f3-9860-1fc122c01012",
+            "tool": "get_document_info",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "84a8ee40-383d-44c2-aae0-9549f2cde45c",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "84a8ee40-383d-44c2-aae0-9549f2cde45c",
+            "tool": "search_knowledge_base",
+            "status": "ok",
+            "source_ids": [
+              "S2"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "人事-方案-000的带薪年假额度为12天。 [S2]"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "answer",
+        "answer": "人事-方案-000的带薪年假额度为12天。 [S2]",
+        "sources": [
+          {
+            "source_id": "S2",
+            "kind": "chunk",
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263",
+            "filename": "synthetic.md",
+            "chunk_index": 0,
+            "page": null,
+            "title": "synthetic",
+            "distance": 0.0,
+            "snippet": "synthetic 模拟业务资料；人事-方案-000；主题：人事；文档类型：0。\n人事-方案-000的带薪年假额度为12天。\n人事-方案-000仅适用于已签署该方案的正式业务单元；相邻编号方案具有独立合同，不能套用其额度。结算按生效月份核对，不追溯变更已经关闭的账期。\n人事-方案-000的变更流程要求责任人发起版本申请，审核者对适用对象、计算口径与生效日期逐项签字。若申请缺少适用范围，审批退回补充，原版本继续有效。\n第2节 版本归档\n人事-方案-000的历史版本保存于只读归档区，归档索引包含生效月份、审批单号和经办部门。撤销方案需注明替代版本，历史审批记录仍可审计。查询历史数据必须选择对应月份"
+          }
+        ],
+        "model_calls": 3,
+        "tool_attempts": 2
+      },
+      "error": null,
+      "trace_id": "7bb06f5a-f0b8-4627-aa29-2fa815f38da7",
+      "trace": {
+        "version": 1,
+        "trace_id": "7bb06f5a-f0b8-4627-aa29-2fa815f38da7",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "5aafed88-8373-4239-9c1f-ab1d06cad79f",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 3,
+            "tool_attempts": 2,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "21a60b1b-c93d-4b47-84c7-398d79405ca5",
+            "parent_span_id": "5aafed88-8373-4239-9c1f-ab1d06cad79f",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 2,
+        "argument_attempts": 2,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "two_search_rounds",
+      "input": "分别搜索两次人事-方案-000的规定，核对结果后作答。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base",
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          },
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        },
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        },
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "8338ac78-68cd-4caf-bf6a-3cc63178ae35",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "8338ac78-68cd-4caf-bf6a-3cc63178ae35",
+            "tool": "search_knowledge_base",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "5d7d8669-e7af-46a8-a0ad-05dada89e8a5",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "5d7d8669-e7af-46a8-a0ad-05dada89e8a5",
+            "tool": "search_knowledge_base",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "人事-方案-000的带薪年假额度为12天。 [S1]"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "answer",
+        "answer": "人事-方案-000的带薪年假额度为12天。 [S1]",
+        "sources": [
+          {
+            "source_id": "S1",
+            "kind": "chunk",
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263",
+            "filename": "synthetic.md",
+            "chunk_index": 0,
+            "page": null,
+            "title": "synthetic",
+            "distance": 0.0,
+            "snippet": "synthetic 模拟业务资料；人事-方案-000；主题：人事；文档类型：0。\n人事-方案-000的带薪年假额度为12天。\n人事-方案-000仅适用于已签署该方案的正式业务单元；相邻编号方案具有独立合同，不能套用其额度。结算按生效月份核对，不追溯变更已经关闭的账期。\n人事-方案-000的变更流程要求责任人发起版本申请，审核者对适用对象、计算口径与生效日期逐项签字。若申请缺少适用范围，审批退回补充，原版本继续有效。\n第2节 版本归档\n人事-方案-000的历史版本保存于只读归档区，归档索引包含生效月份、审批单号和经办部门。撤销方案需注明替代版本，历史审批记录仍可审计。查询历史数据必须选择对应月份"
+          }
+        ],
+        "model_calls": 3,
+        "tool_attempts": 2
+      },
+      "error": null,
+      "trace_id": "d97a191b-d02a-4c1d-b16b-40ef64eef4f6",
+      "trace": {
+        "version": 1,
+        "trace_id": "d97a191b-d02a-4c1d-b16b-40ef64eef4f6",
+        "duration_ms": 16.00000000325963,
+        "spans": [
+          {
+            "span_id": "008665a3-f93d-4baf-8564-33240e317b93",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 3,
+            "tool_attempts": 2,
+            "duration_ms": 16.00000000325963
+          },
+          {
+            "span_id": "2cc634cb-767d-4116-9036-8ce94bf3bdc4",
+            "parent_span_id": "008665a3-f93d-4baf-8564-33240e317b93",
+            "name": "agent.finalize",
+            "start_ms": 16.00000000325963,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 2,
+        "argument_attempts": 2,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "tenant_injection",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5, \"tenant_id\": \"04483192-7425-518f-8fb3-5c16e77f401f\"}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5,
+            "tenant_id": "04483192-7425-518f-8fb3-5c16e77f401f"
+          },
+          "schema_valid": false
+        }
+      ],
+      "executed_calls": [],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "b54a3cbe-5c76-4fbc-8bab-f462fb896127",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "b54a3cbe-5c76-4fbc-8bab-f462fb896127",
+            "tool": "search_knowledge_base",
+            "status": "error",
+            "source_ids": [],
+            "error_code": "invalid_arguments"
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "22129a43-ee3f-4667-ac0a-c4c3bac9e7ef",
+      "trace": {
+        "version": 1,
+        "trace_id": "22129a43-ee3f-4667-ac0a-c4c3bac9e7ef",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "1ddee63b-6ead-4d98-bb84-a23d9abd0617",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "invalid_arguments": 1,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "ba45dd72-5fc8-48d5-b0b8-bd539779c858",
+            "parent_span_id": "1ddee63b-6ead-4d98-bb84-a23d9abd0617",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 0,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": true,
+        "task_success": true
+      }
+    },
+    {
+      "id": "kb_injection",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5, \"knowledge_base_id\": \"0190619b-f5e0-5733-a50c-a625efa1e7a0\"}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5,
+            "knowledge_base_id": "0190619b-f5e0-5733-a50c-a625efa1e7a0"
+          },
+          "schema_valid": false
+        }
+      ],
+      "executed_calls": [],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "526d195e-1c3c-4602-b74d-fc51a19fa97b",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "526d195e-1c3c-4602-b74d-fc51a19fa97b",
+            "tool": "search_knowledge_base",
+            "status": "error",
+            "source_ids": [],
+            "error_code": "invalid_arguments"
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "531ad4ec-b3e4-43d7-8315-446817f6c64c",
+      "trace": {
+        "version": 1,
+        "trace_id": "531ad4ec-b3e4-43d7-8315-446817f6c64c",
+        "duration_ms": 14.999999999417923,
+        "spans": [
+          {
+            "span_id": "79ffcb0f-a868-4479-8fab-d2a6c1feaad5",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "invalid_arguments": 1,
+            "duration_ms": 14.999999999417923
+          },
+          {
+            "span_id": "f1ad6ae3-4e81-4dc8-a2c3-bf7212ba5da0",
+            "parent_span_id": "79ffcb0f-a868-4479-8fab-d2a6c1feaad5",
+            "name": "agent.finalize",
+            "start_ms": 14.999999999417923,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 0,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": true,
+        "task_success": true
+      }
+    },
+    {
+      "id": "illegal_top_k",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 100}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 100
+          },
+          "schema_valid": false
+        }
+      ],
+      "executed_calls": [],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "dbff1ccd-b707-4fe3-b2f5-b3baa4aebe78",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "dbff1ccd-b707-4fe3-b2f5-b3baa4aebe78",
+            "tool": "search_knowledge_base",
+            "status": "error",
+            "source_ids": [],
+            "error_code": "invalid_arguments"
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "b281868d-7ba2-43b9-a833-092f91382687",
+      "trace": {
+        "version": 1,
+        "trace_id": "b281868d-7ba2-43b9-a833-092f91382687",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "848e27cf-3f4d-4b54-add7-0113eb4c2f19",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "invalid_arguments": 1,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "633ce439-db63-487a-bb14-3c082dc14e2b",
+            "parent_span_id": "848e27cf-3f4d-4b54-add7-0113eb4c2f19",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 0,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": true,
+        "task_success": true
+      }
+    },
+    {
+      "id": "malformed_json",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{",
+          "arguments": null,
+          "schema_valid": false
+        }
+      ],
+      "executed_calls": [],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "3b8d10a0-a9bb-43d9-8b47-11bd20517327",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "3b8d10a0-a9bb-43d9-8b47-11bd20517327",
+            "tool": "search_knowledge_base",
+            "status": "error",
+            "source_ids": [],
+            "error_code": "invalid_arguments"
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "f52848bc-1a32-4277-87c8-95be110bd6a8",
+      "trace": {
+        "version": 1,
+        "trace_id": "f52848bc-1a32-4277-87c8-95be110bd6a8",
+        "duration_ms": 16.00000000325963,
+        "spans": [
+          {
+            "span_id": "15315eaf-c31f-4a42-a4a8-d65b9d538267",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "invalid_arguments": 1,
+            "duration_ms": 16.00000000325963
+          },
+          {
+            "span_id": "410a9bc1-f939-4d4f-9461-1103bd69c526",
+            "parent_span_id": "15315eaf-c31f-4a42-a4a8-d65b9d538267",
+            "name": "agent.finalize",
+            "start_ms": 16.00000000325963,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 0,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": true,
+        "task_success": true
+      }
+    },
+    {
+      "id": "unknown_write_tool",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "delete_document"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "delete_document",
+            "expect_rejected": "invalid_tool"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "delete_document",
+          "raw_arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}",
+          "arguments": {
+            "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+          },
+          "schema_valid": false
+        }
+      ],
+      "executed_calls": [],
+      "events": [
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "f57fb485-0e60-4bf5-8cfd-99f4ca25bd16",
+      "trace": {
+        "version": 1,
+        "trace_id": "f57fb485-0e60-4bf5-8cfd-99f4ca25bd16",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "a749ec74-9232-49f5-ba6c-b1672158bc52",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "invalid_tool": 1,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "77a5f784-e473-4803-a5b0-1e5798e7f2e5",
+            "parent_span_id": "a749ec74-9232-49f5-ba6c-b1672158bc52",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 0,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": true,
+        "task_success": true
+      }
+    },
+    {
+      "id": "foreign_existing_document",
+      "input": "查询文档 dce9395c-6052-5e21-9530-a17465d62eff 的状态。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "get_document_info"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "dce9395c-6052-5e21-9530-a17465d62eff"
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [
+          "get_document_info"
+        ],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "get_document_info",
+          "raw_arguments": "{\"document_id\": \"dce9395c-6052-5e21-9530-a17465d62eff\"}",
+          "arguments": {
+            "document_id": "dce9395c-6052-5e21-9530-a17465d62eff"
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "get_document_info",
+          "arguments": {
+            "document_id": "dce9395c-6052-5e21-9530-a17465d62eff"
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "78f5790d-b287-4435-a927-2b079fa5213d",
+            "tool": "get_document_info"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "78f5790d-b287-4435-a927-2b079fa5213d",
+            "tool": "get_document_info",
+            "status": "error",
+            "source_ids": [],
+            "error_code": "resource_not_found"
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "a1c83603-82b6-4608-b70f-5b69efe057ce",
+      "trace": {
+        "version": 1,
+        "trace_id": "a1c83603-82b6-4608-b70f-5b69efe057ce",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "db95c0cb-fe0c-4fca-9a3c-121c9336a25b",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "c406d2a4-ba5f-4957-aa69-209ea8477a62",
+            "parent_span_id": "db95c0cb-fe0c-4fca-9a3c-121c9336a25b",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "tool_resource_not_found",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "f88ce586-3bc9-46b7-a872-4a472cc588bd",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "f88ce586-3bc9-46b7-a872-4a472cc588bd",
+            "tool": "search_knowledge_base",
+            "status": "error",
+            "source_ids": [],
+            "error_code": "resource_not_found"
+          }
+        },
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 2,
+        "tool_attempts": 1
+      },
+      "error": null,
+      "trace_id": "c4a0111f-a2d3-412d-a34a-841e4b33eabd",
+      "trace": {
+        "version": 1,
+        "trace_id": "c4a0111f-a2d3-412d-a34a-841e4b33eabd",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "de5f926e-93d0-468c-878f-92c91925842f",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "db8633d1-8e3e-4e1a-bb3a-27c2611f8cab",
+            "parent_span_id": "de5f926e-93d0-468c-878f-92c91925842f",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "tool_unavailable",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": "unavailable",
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "60d4e5fe-879f-457c-971d-e1eca70ea6d7",
+            "tool": "search_knowledge_base"
+          }
+        }
+      ],
+      "final": null,
+      "error": "unavailable",
+      "trace_id": "2dee5a24-8195-458d-8447-1695e06e4fad",
+      "trace": {
+        "version": 1,
+        "trace_id": "2dee5a24-8195-458d-8447-1695e06e4fad",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "69123134-f560-45b4-b21a-5f79a55f05b3",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "error",
+            "usage": null,
+            "model_calls": 1,
+            "tool_attempts": 1,
+            "error_code": "unavailable",
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "tool_forbidden",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": "forbidden",
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "91e0b685-075f-427a-8191-4c50b7d7c8cd",
+            "tool": "search_knowledge_base"
+          }
+        }
+      ],
+      "final": null,
+      "error": "forbidden",
+      "trace_id": "2b576cd0-a1df-475b-9c5a-6eb5fc091c0b",
+      "trace": {
+        "version": 1,
+        "trace_id": "2b576cd0-a1df-475b-9c5a-6eb5fc091c0b",
+        "duration_ms": 14.999999999417923,
+        "spans": [
+          {
+            "span_id": "b9ce7005-e008-4c5d-9380-e2ab3be4e6b2",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "error",
+            "usage": null,
+            "model_calls": 1,
+            "tool_attempts": 1,
+            "error_code": "forbidden",
+            "duration_ms": 14.999999999417923
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "invalid_citation",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": "invalid_citation",
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "calls": [
+        {
+          "name": "search_knowledge_base",
+          "raw_arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          },
+          "schema_valid": true
+        }
+      ],
+      "executed_calls": [
+        {
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "人事-方案-000",
+            "top_k": 5
+          }
+        }
+      ],
+      "events": [
+        {
+          "event": "tool_start",
+          "data": {
+            "call_id": "fc426b59-ea10-42c0-b895-e03fffc1041b",
+            "tool": "search_knowledge_base"
+          }
+        },
+        {
+          "event": "tool_result",
+          "data": {
+            "call_id": "fc426b59-ea10-42c0-b895-e03fffc1041b",
+            "tool": "search_knowledge_base",
+            "status": "ok",
+            "source_ids": [
+              "S1"
+            ],
+            "error_code": null
+          }
+        }
+      ],
+      "final": null,
+      "error": "invalid_citation",
+      "trace_id": "a4a5713c-46e9-4f0c-baec-5ea952a5f6e6",
+      "trace": {
+        "version": 1,
+        "trace_id": "a4a5713c-46e9-4f0c-baec-5ea952a5f6e6",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "886eca66-ba27-4635-bb10-45c3f102c27e",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "error",
+            "usage": null,
+            "model_calls": 2,
+            "tool_attempts": 1,
+            "error_code": "invalid_citation",
+            "duration_ms": 0.0
+          },
+          {
+            "span_id": "d33f88e4-7df8-4efa-a0de-e1cd0a2ec2db",
+            "parent_span_id": "886eca66-ba27-4635-bb10-45c3f102c27e",
+            "name": "agent.finalize",
+            "start_ms": 0.0,
+            "status": "error",
+            "usage": null,
+            "error_code": "invalid_citation",
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 1,
+        "argument_attempts": 1,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    },
+    {
+      "id": "no_evidence",
+      "input": "你好，请说明需要什么信息才能查询知识库。",
+      "expected": {
+        "allowed_sequences": [
+          []
+        ],
+        "calls": [],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "calls": [],
+      "executed_calls": [],
+      "events": [
+        {
+          "event": "answer_delta",
+          "data": {
+            "text": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。"
+          }
+        }
+      ],
+      "final": {
+        "status": "completed",
+        "finish_reason": "no_evidence",
+        "answer": "当前没有可引用的知识库证据。请补充问题或文档信息，我可以帮助检索。",
+        "sources": [],
+        "model_calls": 1,
+        "tool_attempts": 0
+      },
+      "error": null,
+      "trace_id": "308e7585-a79a-485f-be93-687bbcd5eaa2",
+      "trace": {
+        "version": 1,
+        "trace_id": "308e7585-a79a-485f-be93-687bbcd5eaa2",
+        "duration_ms": 16.00000000325963,
+        "spans": [
+          {
+            "span_id": "5294ade4-14f2-488e-b557-3097870d3765",
+            "parent_span_id": null,
+            "name": "agent.run",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "model_calls": 1,
+            "duration_ms": 16.00000000325963
+          },
+          {
+            "span_id": "d57ae4cb-238f-4214-a70b-c92cb96c14c2",
+            "parent_span_id": "5294ade4-14f2-488e-b557-3097870d3765",
+            "name": "agent.finalize",
+            "start_ms": 16.00000000325963,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 0.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "scores": {
+        "tool_selection_pass": true,
+        "argument_correct": 0,
+        "argument_attempts": 0,
+        "ordered_sequence_pass": true,
+        "expected_fault_handling_pass": null,
+        "task_success": true
+      }
+    }
+  ],
+  "langsmith_uploaded": false,
+  "summary": {
+    "n": 16,
+    "tool_selection_accuracy": 1.0,
+    "ordered_sequence_accuracy": 1.0,
+    "argument_correct": 13,
+    "argument_attempts": 18,
+    "tool_argument_accuracy": 0.7222222222222222,
+    "task_success_rate": 1.0
+  }
+}

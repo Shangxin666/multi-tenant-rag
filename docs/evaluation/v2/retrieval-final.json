@@ -1,0 +1,5275 @@
+{
+  "started_at": "2026-10-24T07:45:17.556808+00:00",
+  "code_head": "136262f528d0c32e5dc2c35671816f4794cef14b",
+  "worktree_dirty": true,
+  "source_sha256": "cf07b5fba1828c96a32d902d2469c4d0fceafc42aa86faae9755804f8d7b7dd2",
+  "dataset_sha256": "ed221414caa67606ce0576288e3f39fae4e6f7e5bb7e0d2a98ce94e817b1dd5a",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "versions": {
+    "numpy": "2.5.3",
+    "sqlalchemy": "2.0.52",
+    "sentence-transformers": "5.7.0",
+    "langgraph": "1.2.15"
+  },
+  "dataset_version": "synthetic-business-v2.0",
+  "counts": {
+    "documents": 180,
+    "chunks": 320,
+    "cases": 120,
+    "categories": {
+      "paraphrase": 24,
+      "exact": 30,
+      "distractor": 18,
+      "unanswerable": 12,
+      "multi_evidence": 24,
+      "boundary": 12
+    },
+    "splits": {
+      "dev": 80,
+      "final": 40
+    },
+    "human_reviewed": 0
+  },
+  "mode": "offline",
+  "split": "final",
+  "status": "complete",
+  "records": [
+    {
+      "case_id": "Q041",
+      "question": "数据-方案-040正式方案的备份保留期限是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8"
+      ],
+      "relevant_chunk_ids": [
+        "d6bfa53a-26de-57c7-8686-53714504d617"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 0.0,
+        "hit_rate@3": 0.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.2,
+        "ndcg@10": 0.38685280723454163
+      },
+      "latency_ms": 10.656899990863167,
+      "scope_violations": [],
+      "trace_id": "d6d4fef6-0e02-402c-82ce-21d7883fc233",
+      "trace": {
+        "version": 1,
+        "trace_id": "d6d4fef6-0e02-402c-82ce-21d7883fc233",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "29277e67-720b-45f0-ba57-184875659069",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9578.999999997905
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q041",
+      "question": "数据-方案-040正式方案的备份保留期限是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "a75880cc-d500-5c14-a24a-becd1d3092ac",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2"
+      ],
+      "relevant_chunk_ids": [
+        "d6bfa53a-26de-57c7-8686-53714504d617"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9585.260499981814,
+      "scope_violations": [],
+      "trace_id": "d6d4fef6-0e02-402c-82ce-21d7883fc233",
+      "trace": {
+        "version": 1,
+        "trace_id": "d6d4fef6-0e02-402c-82ce-21d7883fc233",
+        "duration_ms": 9578.999999997905,
+        "spans": [
+          {
+            "span_id": "29277e67-720b-45f0-ba57-184875659069",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9578.999999997905
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q042",
+      "question": "请整合支持-方案-041的正式服务响应时限、升级等待时限及审批人与所需材料。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "94c8e4db-e6ab-5c2c-88ad-85e4532bb910",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "76e93c1a-41d7-56ab-b88e-4e5863f6edfd",
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24"
+      ],
+      "relevant_chunk_ids": [
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 0.5,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.7903864795495061
+      },
+      "latency_ms": 11.586699998588301,
+      "scope_violations": [],
+      "trace_id": "3945c957-a5c8-4eb5-9096-b9c47f662d36",
+      "trace": {
+        "version": 1,
+        "trace_id": "3945c957-a5c8-4eb5-9096-b9c47f662d36",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "6f6a644f-488e-4b50-b8d7-ed55c3f03a5d",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8110.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q042",
+      "question": "请整合支持-方案-041的正式服务响应时限、升级等待时限及审批人与所需材料。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "32e980db-03f6-50ed-a2ae-a5744ad2018a",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e"
+      ],
+      "relevant_chunk_ids": [
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8121.869399998104,
+      "scope_violations": [],
+      "trace_id": "3945c957-a5c8-4eb5-9096-b9c47f662d36",
+      "trace": {
+        "version": 1,
+        "trace_id": "3945c957-a5c8-4eb5-9096-b9c47f662d36",
+        "duration_ms": 8110.000000000582,
+        "spans": [
+          {
+            "span_id": "6f6a644f-488e-4b50-b8d7-ed55c3f03a5d",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8110.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q043",
+      "question": "人事-方案-042的带薪年假额度是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "66f78890-dc60-5ed8-856f-b23f5bef1233",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e"
+      ],
+      "relevant_chunk_ids": [
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.3333333333333333,
+        "ndcg@10": 0.5
+      },
+      "latency_ms": 10.720399994170293,
+      "scope_violations": [],
+      "trace_id": "72bdf8fa-151f-4b8b-b53a-50b37f5d6168",
+      "trace": {
+        "version": 1,
+        "trace_id": "72bdf8fa-151f-4b8b-b53a-50b37f5d6168",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "6cfac1b1-ad07-4036-b1cf-17100e8f2472",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9110.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q043",
+      "question": "人事-方案-042的带薪年假额度是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "66f78890-dc60-5ed8-856f-b23f5bef1233",
+        "f8a14298-022d-5abc-9644-1d9a358d44e7",
+        "1b80e0f6-de42-511a-b6f2-37c9a2adcdde",
+        "f4dea286-7197-5c1c-996e-4987a6dd13c1"
+      ],
+      "relevant_chunk_ids": [
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9125.931299990043,
+      "scope_violations": [],
+      "trace_id": "72bdf8fa-151f-4b8b-b53a-50b37f5d6168",
+      "trace": {
+        "version": 1,
+        "trace_id": "72bdf8fa-151f-4b8b-b53a-50b37f5d6168",
+        "duration_ms": 9110.000000000582,
+        "spans": [
+          {
+            "span_id": "6cfac1b1-ad07-4036-b1cf-17100e8f2472",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9110.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q044",
+      "question": "我们执行财务-方案-043，想确认正式规定里差旅住宿限额的具体数值。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "c3ab00ba-25f2-5042-b181-feb138a56a56",
+        "02587db6-5e3d-5fc6-b22f-9537805e217e",
+        "3d5ee4b5-abbe-5f9c-8886-bbc28d99320e",
+        "2e049e92-9f29-5340-a16e-2c938eab803b"
+      ],
+      "relevant_chunk_ids": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.833800009801053,
+      "scope_violations": [],
+      "trace_id": "cfe4d17a-d93e-4479-93ea-87da39246567",
+      "trace": {
+        "version": 1,
+        "trace_id": "cfe4d17a-d93e-4479-93ea-87da39246567",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "fc6968e9-c285-4795-accf-d4d04a3b4945",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9110.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q044",
+      "question": "我们执行财务-方案-043，想确认正式规定里差旅住宿限额的具体数值。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "bdc917de-0a7d-5a13-93ec-2b2113321f79",
+        "3d5ee4b5-abbe-5f9c-8886-bbc28d99320e",
+        "c3ab00ba-25f2-5042-b181-feb138a56a56",
+        "3924ba9b-bb2d-51b9-905e-65a3e632d4c2"
+      ],
+      "relevant_chunk_ids": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9124.822100013262,
+      "scope_violations": [],
+      "trace_id": "cfe4d17a-d93e-4479-93ea-87da39246567",
+      "trace": {
+        "version": 1,
+        "trace_id": "cfe4d17a-d93e-4479-93ea-87da39246567",
+        "duration_ms": 9110.000000000582,
+        "spans": [
+          {
+            "span_id": "fc6968e9-c285-4795-accf-d4d04a3b4945",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9110.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q045",
+      "question": "我们执行设备-方案-044，想确认正式规定里额定输入电压的具体数值。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "f6ca750c-77d2-51e8-acbe-d03f840ae4fc",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "3bd88ba3-565b-5bcb-b3bf-614e08922271",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22"
+      ],
+      "relevant_chunk_ids": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.242700009257533,
+      "scope_violations": [],
+      "trace_id": "dd3ad7a6-00f7-4fa7-b232-b110fb9baafe",
+      "trace": {
+        "version": 1,
+        "trace_id": "dd3ad7a6-00f7-4fa7-b232-b110fb9baafe",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "de3cf0bb-3ddd-41f5-bcc2-8e3bb5858548",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9531.000000002678
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q045",
+      "question": "我们执行设备-方案-044，想确认正式规定里额定输入电压的具体数值。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "f6ca750c-77d2-51e8-acbe-d03f840ae4fc",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "faba18ad-a72b-57de-988d-f410903fad2e",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "926116cd-4ece-587b-baee-0800ac19332f",
+        "8df8f4e0-2569-51d7-8b98-a9f4451e303c"
+      ],
+      "relevant_chunk_ids": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9544.561800008523,
+      "scope_violations": [],
+      "trace_id": "dd3ad7a6-00f7-4fa7-b232-b110fb9baafe",
+      "trace": {
+        "version": 1,
+        "trace_id": "dd3ad7a6-00f7-4fa7-b232-b110fb9baafe",
+        "duration_ms": 9531.000000002678,
+        "spans": [
+          {
+            "span_id": "de3cf0bb-3ddd-41f5-bcc2-8e3bb5858548",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9531.000000002678
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q046",
+      "question": "平台-方案-045的API每分钟限额是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "3bd88ba3-565b-5bcb-b3bf-614e08922271"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9.04669999727048,
+      "scope_violations": [],
+      "trace_id": "3767de65-e81b-44a9-bb67-f3dc180a4856",
+      "trace": {
+        "version": 1,
+        "trace_id": "3767de65-e81b-44a9-bb67-f3dc180a4856",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "6a457dac-8d23-4ddf-a7ec-dba6c138b84a",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9280.999999988126
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q046",
+      "question": "平台-方案-045的API每分钟限额是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "3bd88ba3-565b-5bcb-b3bf-614e08922271",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "926116cd-4ece-587b-baee-0800ac19332f",
+        "3386d41b-e266-506e-b483-544296523a27",
+        "090a6224-16e8-5b50-85d8-22c301eb4f16",
+        "d18e3ffa-3dcb-5f5b-b68a-2b23725957c8",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9287.958900007652,
+      "scope_violations": [],
+      "trace_id": "3767de65-e81b-44a9-bb67-f3dc180a4856",
+      "trace": {
+        "version": 1,
+        "trace_id": "3767de65-e81b-44a9-bb67-f3dc180a4856",
+        "duration_ms": 9280.999999988126,
+        "spans": [
+          {
+            "span_id": "6a457dac-8d23-4ddf-a7ec-dba6c138b84a",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9280.999999988126
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q047",
+      "question": "数据-方案-046的备份保留期限是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "d18e3ffa-3dcb-5f5b-b68a-2b23725957c8",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "090a6224-16e8-5b50-85d8-22c301eb4f16"
+      ],
+      "relevant_chunk_ids": [
+        "92d189a2-c418-5783-8ae5-80e6beed1b22"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.973899999749847,
+      "scope_violations": [],
+      "trace_id": "789aae4f-014f-43ad-ac18-977ac9502138",
+      "trace": {
+        "version": 1,
+        "trace_id": "789aae4f-014f-43ad-ac18-977ac9502138",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "91cb7b29-630c-4149-b583-0d8759b4d8ab",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9187.000000005355
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q047",
+      "question": "数据-方案-046的备份保留期限是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "d18e3ffa-3dcb-5f5b-b68a-2b23725957c8",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "090a6224-16e8-5b50-85d8-22c301eb4f16",
+        "b2e3d9ec-4e05-52a1-af9e-0f268000fc69",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "d6bfa53a-26de-57c7-8686-53714504d617"
+      ],
+      "relevant_chunk_ids": [
+        "92d189a2-c418-5783-8ae5-80e6beed1b22"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9201.818500005174,
+      "scope_violations": [],
+      "trace_id": "789aae4f-014f-43ad-ac18-977ac9502138",
+      "trace": {
+        "version": 1,
+        "trace_id": "789aae4f-014f-43ad-ac18-977ac9502138",
+        "duration_ms": 9187.000000005355,
+        "spans": [
+          {
+            "span_id": "91cb7b29-630c-4149-b583-0d8759b4d8ab",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9187.000000005355
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q048",
+      "question": "支持-方案-047的服务响应时限是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "76e93c1a-41d7-56ab-b88e-4e5863f6edfd",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "94c8e4db-e6ab-5c2c-88ad-85e4532bb910"
+      ],
+      "relevant_chunk_ids": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.07559999905061,
+      "scope_violations": [],
+      "trace_id": "c4e07e05-1c41-4941-95e8-dd88347f01d7",
+      "trace": {
+        "version": 1,
+        "trace_id": "c4e07e05-1c41-4941-95e8-dd88347f01d7",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "04505286-c197-4362-9458-d0d024332ae0",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9015.999999988708
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q048",
+      "question": "支持-方案-047的服务响应时限是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "8994f321-1e14-5652-913c-2257bff91ab6",
+        "76e93c1a-41d7-56ab-b88e-4e5863f6edfd"
+      ],
+      "relevant_chunk_ids": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9022.694799990859,
+      "scope_violations": [],
+      "trace_id": "c4e07e05-1c41-4941-95e8-dd88347f01d7",
+      "trace": {
+        "version": 1,
+        "trace_id": "c4e07e05-1c41-4941-95e8-dd88347f01d7",
+        "duration_ms": 9015.999999988708,
+        "spans": [
+          {
+            "span_id": "04505286-c197-4362-9458-d0d024332ae0",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9015.999999988708
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q049",
+      "question": "我们执行人事-方案-048，想确认正式规定里带薪年假额度的具体数值。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b"
+      ],
+      "relevant_chunk_ids": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 11.082099998020567,
+      "scope_violations": [],
+      "trace_id": "8848825f-b8df-48a5-bcd3-55599cccd13d",
+      "trace": {
+        "version": 1,
+        "trace_id": "8848825f-b8df-48a5-bcd3-55599cccd13d",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "5aa66b8f-c62c-4c58-9b0e-0fca21039453",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9047.000000005937
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q049",
+      "question": "我们执行人事-方案-048，想确认正式规定里带薪年假额度的具体数值。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "d9c4523f-db48-58fb-926c-6715c8583002",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22"
+      ],
+      "relevant_chunk_ids": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9060.669800004689,
+      "scope_violations": [],
+      "trace_id": "8848825f-b8df-48a5-bcd3-55599cccd13d",
+      "trace": {
+        "version": 1,
+        "trace_id": "8848825f-b8df-48a5-bcd3-55599cccd13d",
+        "duration_ms": 9047.000000005937,
+        "spans": [
+          {
+            "span_id": "5aa66b8f-c62c-4c58-9b0e-0fca21039453",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9047.000000005937
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q050",
+      "question": "我们执行财务-方案-049，想确认正式规定里差旅住宿限额的具体数值。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "02587db6-5e3d-5fc6-b22f-9537805e217e",
+        "c3ab00ba-25f2-5042-b181-feb138a56a56",
+        "2e049e92-9f29-5340-a16e-2c938eab803b",
+        "3924ba9b-bb2d-51b9-905e-65a3e632d4c2"
+      ],
+      "relevant_chunk_ids": [
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.68380001722835,
+      "scope_violations": [],
+      "trace_id": "4fded435-b254-4123-a23c-aec714bba795",
+      "trace": {
+        "version": 1,
+        "trace_id": "4fded435-b254-4123-a23c-aec714bba795",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "39e2a314-aaa2-4388-817f-40bdc090d5a1",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8108.99999999674
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q050",
+      "question": "我们执行财务-方案-049，想确认正式规定里差旅住宿限额的具体数值。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "3924ba9b-bb2d-51b9-905e-65a3e632d4c2",
+        "ee46721e-8dfe-570f-8d10-b56669e35725",
+        "02587db6-5e3d-5fc6-b22f-9537805e217e",
+        "3bf34611-0021-5d98-8305-969314d72d3b"
+      ],
+      "relevant_chunk_ids": [
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8115.465700015193,
+      "scope_violations": [],
+      "trace_id": "4fded435-b254-4123-a23c-aec714bba795",
+      "trace": {
+        "version": 1,
+        "trace_id": "4fded435-b254-4123-a23c-aec714bba795",
+        "duration_ms": 8108.99999999674,
+        "spans": [
+          {
+            "span_id": "39e2a314-aaa2-4388-817f-40bdc090d5a1",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8108.99999999674
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q051",
+      "question": "设备-方案-050的额定输入电压是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "4b4a6078-d7c9-5753-ae44-a89783fa4192",
+        "7e2e1d37-7e3e-5b9d-9e36-d6613b5253e6",
+        "12f502c3-67e6-5a9f-a81b-411ba9ecc3f9",
+        "4b203a05-b710-50e3-a122-a0fc86bf316f",
+        "384cc671-8d35-5117-a14e-b1d7e3a4345a",
+        "84b50e94-14aa-501b-8adc-ccafaa4b61a4",
+        "1dabd53d-5b7e-559a-a845-b3dbbe8b354c",
+        "8364ddf9-7439-54f6-804a-6556524fd48f",
+        "dfe20b91-2369-52ea-b8cf-6429ab160b76",
+        "1533ff84-2e62-5eee-b9f9-dff1e135adab"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9.422800008906052,
+      "scope_violations": [],
+      "trace_id": "5b8b4c1f-c9bf-49df-8efc-d6157537f6c0",
+      "trace": {
+        "version": 1,
+        "trace_id": "5b8b4c1f-c9bf-49df-8efc-d6157537f6c0",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "0131726b-b95d-4564-9a0b-1cafd4d50a98",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8843.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q051",
+      "question": "设备-方案-050的额定输入电压是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "1533ff84-2e62-5eee-b9f9-dff1e135adab",
+        "1dabd53d-5b7e-559a-a845-b3dbbe8b354c",
+        "ae7e6b98-a394-515a-9d25-6aad40963f81",
+        "b5968562-5d8e-5731-945a-d49ddb806cd7",
+        "84b50e94-14aa-501b-8adc-ccafaa4b61a4",
+        "4b203a05-b710-50e3-a122-a0fc86bf316f",
+        "12f502c3-67e6-5a9f-a81b-411ba9ecc3f9",
+        "7e2e1d37-7e3e-5b9d-9e36-d6613b5253e6",
+        "384cc671-8d35-5117-a14e-b1d7e3a4345a",
+        "8364ddf9-7439-54f6-804a-6556524fd48f"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 8854.274700017413,
+      "scope_violations": [],
+      "trace_id": "5b8b4c1f-c9bf-49df-8efc-d6157537f6c0",
+      "trace": {
+        "version": 1,
+        "trace_id": "5b8b4c1f-c9bf-49df-8efc-d6157537f6c0",
+        "duration_ms": 8843.999999997322,
+        "spans": [
+          {
+            "span_id": "0131726b-b95d-4564-9a0b-1cafd4d50a98",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8843.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q052",
+      "question": "平台-方案-051正式方案的API每分钟限额是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "e40943cc-5a37-5776-b46f-076e80acab76"
+      ],
+      "relevant_chunk_ids": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "latency_ms": 11.80920000479091,
+      "scope_violations": [],
+      "trace_id": "c8b34cf2-4e3a-4560-9e2c-4aea1da9c509",
+      "trace": {
+        "version": 1,
+        "trace_id": "c8b34cf2-4e3a-4560-9e2c-4aea1da9c509",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "675cdf7a-f990-4be9-9acd-87eab320599e",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8125.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q052",
+      "question": "平台-方案-051正式方案的API每分钟限额是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33"
+      ],
+      "relevant_chunk_ids": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8135.277699999278,
+      "scope_violations": [],
+      "trace_id": "c8b34cf2-4e3a-4560-9e2c-4aea1da9c509",
+      "trace": {
+        "version": 1,
+        "trace_id": "c8b34cf2-4e3a-4560-9e2c-4aea1da9c509",
+        "duration_ms": 8125.0,
+        "spans": [
+          {
+            "span_id": "675cdf7a-f990-4be9-9acd-87eab320599e",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8125.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q053",
+      "question": "数据-方案-052正式方案的备份保留期限是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "d31dd494-b608-5532-bc41-0962f9a54060"
+      ],
+      "relevant_chunk_ids": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "latency_ms": 10.747799999080598,
+      "scope_violations": [],
+      "trace_id": "f6087513-b286-4e63-ac2d-9ae4b2c19ad7",
+      "trace": {
+        "version": 1,
+        "trace_id": "f6087513-b286-4e63-ac2d-9ae4b2c19ad7",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "09ccc8ff-f0c7-482e-b631-4c55ff182efa",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8485.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q053",
+      "question": "数据-方案-052正式方案的备份保留期限是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "b2d48c82-3d8e-58c6-af6c-36e635d5b4ca",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a"
+      ],
+      "relevant_chunk_ids": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8498.906599998008,
+      "scope_violations": [],
+      "trace_id": "f6087513-b286-4e63-ac2d-9ae4b2c19ad7",
+      "trace": {
+        "version": 1,
+        "trace_id": "f6087513-b286-4e63-ac2d-9ae4b2c19ad7",
+        "duration_ms": 8485.000000000582,
+        "spans": [
+          {
+            "span_id": "09ccc8ff-f0c7-482e-b631-4c55ff182efa",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8485.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q054",
+      "question": "请整合支持-方案-053的正式服务响应时限、升级等待时限及审批人与所需材料。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "db625bff-ee07-5cd0-bea0-3daf70f6644b",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775"
+      ],
+      "relevant_chunk_ids": [
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 0.5,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.8175295903539445
+      },
+      "latency_ms": 10.116699995705858,
+      "scope_violations": [],
+      "trace_id": "a7fe8a7a-c6b2-4d6e-a1e9-61f1458f1eca",
+      "trace": {
+        "version": 1,
+        "trace_id": "a7fe8a7a-c6b2-4d6e-a1e9-61f1458f1eca",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "dfb3e386-81bc-4d91-bfe6-7c36c5d1deda",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7968.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q054",
+      "question": "请整合支持-方案-053的正式服务响应时限、升级等待时限及审批人与所需材料。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "e533c9d4-34a3-5427-80c7-943552027024",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "db625bff-ee07-5cd0-bea0-3daf70f6644b",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958"
+      ],
+      "relevant_chunk_ids": [
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 7979.995999994571,
+      "scope_violations": [],
+      "trace_id": "a7fe8a7a-c6b2-4d6e-a1e9-61f1458f1eca",
+      "trace": {
+        "version": 1,
+        "trace_id": "a7fe8a7a-c6b2-4d6e-a1e9-61f1458f1eca",
+        "duration_ms": 7968.999999997322,
+        "spans": [
+          {
+            "span_id": "dfb3e386-81bc-4d91-bfe6-7c36c5d1deda",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7968.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q055",
+      "question": "人事-方案-054正式方案的带薪年假额度是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b"
+      ],
+      "relevant_chunk_ids": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.60380000853911,
+      "scope_violations": [],
+      "trace_id": "da46e54a-9d84-4b64-ad87-0bd747883bef",
+      "trace": {
+        "version": 1,
+        "trace_id": "da46e54a-9d84-4b64-ad87-0bd747883bef",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "f5e5e619-43dd-4bbc-b6f0-275c965f93f4",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 10046.000000002095
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q055",
+      "question": "人事-方案-054正式方案的带薪年假额度是多少？请区分试点沙箱额度和相邻编号。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e"
+      ],
+      "relevant_chunk_ids": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10046.149100016919,
+      "scope_violations": [],
+      "trace_id": "da46e54a-9d84-4b64-ad87-0bd747883bef",
+      "trace": {
+        "version": 1,
+        "trace_id": "da46e54a-9d84-4b64-ad87-0bd747883bef",
+        "duration_ms": 10046.000000002095,
+        "spans": [
+          {
+            "span_id": "f5e5e619-43dd-4bbc-b6f0-275c965f93f4",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 10046.000000002095
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q056",
+      "question": "财务-方案-055的差旅住宿限额是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "2e049e92-9f29-5340-a16e-2c938eab803b",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "5b8faefc-b02a-5a14-804d-3f0762ffc808",
+        "3bf34611-0021-5d98-8305-969314d72d3b",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775"
+      ],
+      "relevant_chunk_ids": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.485999984666705,
+      "scope_violations": [],
+      "trace_id": "72a31fa7-ebe6-460e-a72c-cc8474192359",
+      "trace": {
+        "version": 1,
+        "trace_id": "72a31fa7-ebe6-460e-a72c-cc8474192359",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "065c913c-de4b-4655-b232-ef196675ce02",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8546.999999991385
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q056",
+      "question": "财务-方案-055的差旅住宿限额是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "3bf34611-0021-5d98-8305-969314d72d3b",
+        "5b8faefc-b02a-5a14-804d-3f0762ffc808",
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "2e049e92-9f29-5340-a16e-2c938eab803b"
+      ],
+      "relevant_chunk_ids": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8554.887499980396,
+      "scope_violations": [],
+      "trace_id": "72a31fa7-ebe6-460e-a72c-cc8474192359",
+      "trace": {
+        "version": 1,
+        "trace_id": "72a31fa7-ebe6-460e-a72c-cc8474192359",
+        "duration_ms": 8546.999999991385,
+        "spans": [
+          {
+            "span_id": "065c913c-de4b-4655-b232-ef196675ce02",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8546.999999991385
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q057",
+      "question": "设备-方案-056的额定输入电压是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "384cc671-8d35-5117-a14e-b1d7e3a4345a",
+        "58788a73-b227-53ce-931a-a18b7640630d",
+        "7e2e1d37-7e3e-5b9d-9e36-d6613b5253e6",
+        "4b4a6078-d7c9-5753-ae44-a89783fa4192",
+        "12f502c3-67e6-5a9f-a81b-411ba9ecc3f9",
+        "4b203a05-b710-50e3-a122-a0fc86bf316f",
+        "1533ff84-2e62-5eee-b9f9-dff1e135adab",
+        "ae7e6b98-a394-515a-9d25-6aad40963f81",
+        "8364ddf9-7439-54f6-804a-6556524fd48f",
+        "84b50e94-14aa-501b-8adc-ccafaa4b61a4"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 13.115599984303117,
+      "scope_violations": [],
+      "trace_id": "5229e824-ab9b-4d46-a7cb-3c6f3755cc6b",
+      "trace": {
+        "version": 1,
+        "trace_id": "5229e824-ab9b-4d46-a7cb-3c6f3755cc6b",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "6728561e-f3b4-42e3-ba72-cde902b28fc3",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 10297.000000005937
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q057",
+      "question": "设备-方案-056的额定输入电压是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "384cc671-8d35-5117-a14e-b1d7e3a4345a",
+        "58788a73-b227-53ce-931a-a18b7640630d",
+        "4b203a05-b710-50e3-a122-a0fc86bf316f",
+        "1533ff84-2e62-5eee-b9f9-dff1e135adab",
+        "84b50e94-14aa-501b-8adc-ccafaa4b61a4",
+        "ae7e6b98-a394-515a-9d25-6aad40963f81",
+        "7e2e1d37-7e3e-5b9d-9e36-d6613b5253e6",
+        "dfe20b91-2369-52ea-b8cf-6429ab160b76",
+        "8364ddf9-7439-54f6-804a-6556524fd48f",
+        "564f1fe0-1a75-54b5-b85d-5f95edadc54f"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 10299.437199981185,
+      "scope_violations": [],
+      "trace_id": "5229e824-ab9b-4d46-a7cb-3c6f3755cc6b",
+      "trace": {
+        "version": 1,
+        "trace_id": "5229e824-ab9b-4d46-a7cb-3c6f3755cc6b",
+        "duration_ms": 10297.000000005937,
+        "spans": [
+          {
+            "span_id": "6728561e-f3b4-42e3-ba72-cde902b28fc3",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 10297.000000005937
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q058",
+      "question": "平台-方案-057的API每分钟限额是多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "5889eacb-7dc2-5260-899d-34ba2f03fa09",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "a07598d9-e9fa-5a0f-b812-e4cab2884bec",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "3386d41b-e266-506e-b483-544296523a27",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9.087299986276776,
+      "scope_violations": [],
+      "trace_id": "638cf551-6796-4b1b-8d23-7ed0247e4c8e",
+      "trace": {
+        "version": 1,
+        "trace_id": "638cf551-6796-4b1b-8d23-7ed0247e4c8e",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "c69566bf-5320-4191-8cb9-7c464f88b7c2",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8031.999999991967
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q058",
+      "question": "平台-方案-057的API每分钟限额是多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "3bd88ba3-565b-5bcb-b3bf-614e08922271",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 8047.525599977234,
+      "scope_violations": [],
+      "trace_id": "638cf551-6796-4b1b-8d23-7ed0247e4c8e",
+      "trace": {
+        "version": 1,
+        "trace_id": "638cf551-6796-4b1b-8d23-7ed0247e4c8e",
+        "duration_ms": 8031.999999991967,
+        "spans": [
+          {
+            "span_id": "c69566bf-5320-4191-8cb9-7c464f88b7c2",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8031.999999991967
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q059",
+      "question": "我们执行数据-方案-058，想确认正式规定里备份保留期限的具体数值。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "a07598d9-e9fa-5a0f-b812-e4cab2884bec"
+      ],
+      "relevant_chunk_ids": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 11.10530000005383,
+      "scope_violations": [],
+      "trace_id": "ee4f282e-77a3-4e42-830f-441fa46120e8",
+      "trace": {
+        "version": 1,
+        "trace_id": "ee4f282e-77a3-4e42-830f-441fa46120e8",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "d89df1dd-7c06-4a32-b7a7-eb7a094bf587",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7219.000000011874
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q059",
+      "question": "我们执行数据-方案-058，想确认正式规定里备份保留期限的具体数值。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "a07598d9-e9fa-5a0f-b812-e4cab2884bec",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "7358bec9-b43d-5e2b-b936-a23d043fdc47"
+      ],
+      "relevant_chunk_ids": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "latency_ms": 7226.602599999751,
+      "scope_violations": [],
+      "trace_id": "ee4f282e-77a3-4e42-830f-441fa46120e8",
+      "trace": {
+        "version": 1,
+        "trace_id": "ee4f282e-77a3-4e42-830f-441fa46120e8",
+        "duration_ms": 7219.000000011874,
+        "spans": [
+          {
+            "span_id": "d89df1dd-7c06-4a32-b7a7-eb7a094bf587",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7219.000000011874
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q060",
+      "question": "我们执行支持-方案-059，想确认正式规定里服务响应时限的具体数值。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "6d2126d8-91b5-5a2a-96c4-8bf243485385",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958"
+      ],
+      "relevant_chunk_ids": [
+        "ad391e03-9388-532f-959f-94078d9eefec"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 11.830899995402433,
+      "scope_violations": [],
+      "trace_id": "8bcca080-44cc-4d01-af58-86fd73e5eab5",
+      "trace": {
+        "version": 1,
+        "trace_id": "8bcca080-44cc-4d01-af58-86fd73e5eab5",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "ede42874-c41e-4690-abe0-fc07044c0a47",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8014.999999999418
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q060",
+      "question": "我们执行支持-方案-059，想确认正式规定里服务响应时限的具体数值。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "2ced22e5-dc81-542c-8dde-210fcfa1710e"
+      ],
+      "relevant_chunk_ids": [
+        "ad391e03-9388-532f-959f-94078d9eefec"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8033.791999987443,
+      "scope_violations": [],
+      "trace_id": "8bcca080-44cc-4d01-af58-86fd73e5eab5",
+      "trace": {
+        "version": 1,
+        "trace_id": "8bcca080-44cc-4d01-af58-86fd73e5eab5",
+        "duration_ms": 8014.999999999418,
+        "spans": [
+          {
+            "span_id": "ede42874-c41e-4690-abe0-fc07044c0a47",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8014.999999999418
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q101",
+      "question": "办理数据-方案-040时，备份保留期限和恢复演练周期分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "a75880cc-d500-5c14-a24a-becd1d3092ac",
+        "b2d48c82-3d8e-58c6-af6c-36e635d5b4ca",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "d18e3ffa-3dcb-5f5b-b68a-2b23725957c8",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "faba18ad-a72b-57de-988d-f410903fad2e",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e"
+      ],
+      "relevant_chunk_ids": [
+        "a75880cc-d500-5c14-a24a-becd1d3092ac",
+        "d6bfa53a-26de-57c7-8686-53714504d617"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 0.5,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.8315546295836225
+      },
+      "latency_ms": 12.23000000754837,
+      "scope_violations": [],
+      "trace_id": "423d1a1c-e597-4f3b-a52d-1db0f9307013",
+      "trace": {
+        "version": 1,
+        "trace_id": "423d1a1c-e597-4f3b-a52d-1db0f9307013",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "0b1950b1-7817-442e-af7f-960c0f6e36da",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8453.000000008615
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q101",
+      "question": "办理数据-方案-040时，备份保留期限和恢复演练周期分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "a75880cc-d500-5c14-a24a-becd1d3092ac",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "b2d48c82-3d8e-58c6-af6c-36e635d5b4ca",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "d18e3ffa-3dcb-5f5b-b68a-2b23725957c8",
+        "55313c53-cf1f-54a9-b734-14b20742becf",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12"
+      ],
+      "relevant_chunk_ids": [
+        "a75880cc-d500-5c14-a24a-becd1d3092ac",
+        "d6bfa53a-26de-57c7-8686-53714504d617"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8463.908999998239,
+      "scope_violations": [],
+      "trace_id": "423d1a1c-e597-4f3b-a52d-1db0f9307013",
+      "trace": {
+        "version": 1,
+        "trace_id": "423d1a1c-e597-4f3b-a52d-1db0f9307013",
+        "duration_ms": 8453.000000008615,
+        "spans": [
+          {
+            "span_id": "0b1950b1-7817-442e-af7f-960c0f6e36da",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8453.000000008615
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q102",
+      "question": "想了解支持-方案-041对应火星基地的氧气存量，资料里有多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "unanswerable",
+      "answerable": false,
+      "ranked": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "9ca06b76-cf45-52b5-975e-415438131c5e"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 10.601699992548674,
+      "scope_violations": [],
+      "trace_id": "a962eb0f-f5d0-4b63-869f-2a18d2f1d2e1",
+      "trace": {
+        "version": 1,
+        "trace_id": "a962eb0f-f5d0-4b63-869f-2a18d2f1d2e1",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "ddc27769-8fb0-483a-b91d-b13a6c0eeb1b",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8468.000000008033
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q102",
+      "question": "想了解支持-方案-041对应火星基地的氧气存量，资料里有多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "unanswerable",
+      "answerable": false,
+      "ranked": [
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "32e980db-03f6-50ed-a2ae-a5744ad2018a",
+        "94c8e4db-e6ab-5c2c-88ad-85e4532bb910",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "2ced22e5-dc81-542c-8dde-210fcfa1710e"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 8474.733299997752,
+      "scope_violations": [],
+      "trace_id": "a962eb0f-f5d0-4b63-869f-2a18d2f1d2e1",
+      "trace": {
+        "version": 1,
+        "trace_id": "a962eb0f-f5d0-4b63-869f-2a18d2f1d2e1",
+        "duration_ms": 8468.000000008033,
+        "spans": [
+          {
+            "span_id": "ddc27769-8fb0-483a-b91d-b13a6c0eeb1b",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8468.000000008033
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q103",
+      "question": "办理人事-方案-042时，带薪年假额度和申请提前量分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "66f78890-dc60-5ed8-856f-b23f5bef1233",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067"
+      ],
+      "relevant_chunk_ids": [
+        "66f78890-dc60-5ed8-856f-b23f5bef1233",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 0.5,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.8175295903539445
+      },
+      "latency_ms": 10.394400000222959,
+      "scope_violations": [],
+      "trace_id": "e2d2e0f6-6e4e-4304-a475-87eb0cf48a0a",
+      "trace": {
+        "version": 1,
+        "trace_id": "e2d2e0f6-6e4e-4304-a475-87eb0cf48a0a",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "078040b5-14aa-45cd-993f-7deda4a309ee",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8343.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q103",
+      "question": "办理人事-方案-042时，带薪年假额度和申请提前量分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "66f78890-dc60-5ed8-856f-b23f5bef1233",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "1b80e0f6-de42-511a-b6f2-37c9a2adcdde",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "f4dea286-7197-5c1c-996e-4987a6dd13c1"
+      ],
+      "relevant_chunk_ids": [
+        "66f78890-dc60-5ed8-856f-b23f5bef1233",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8366.31139999372,
+      "scope_violations": [],
+      "trace_id": "e2d2e0f6-6e4e-4304-a475-87eb0cf48a0a",
+      "trace": {
+        "version": 1,
+        "trace_id": "e2d2e0f6-6e4e-4304-a475-87eb0cf48a0a",
+        "duration_ms": 8343.999999997322,
+        "spans": [
+          {
+            "span_id": "078040b5-14aa-45cd-993f-7deda4a309ee",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8343.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q104",
+      "question": "关于财务-方案-043，请说明当前有效差旅住宿限额标准。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "c3ab00ba-25f2-5042-b181-feb138a56a56",
+        "02587db6-5e3d-5fc6-b22f-9537805e217e",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "2e049e92-9f29-5340-a16e-2c938eab803b"
+      ],
+      "relevant_chunk_ids": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.37640001939144,
+      "scope_violations": [],
+      "trace_id": "6ce44dea-f3dd-4579-9b68-c586244a52a5",
+      "trace": {
+        "version": 1,
+        "trace_id": "6ce44dea-f3dd-4579-9b68-c586244a52a5",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "a5dea105-2e9d-40b9-ae82-e04ca3e9a14f",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8218.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q104",
+      "question": "关于财务-方案-043，请说明当前有效差旅住宿限额标准。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "bdc917de-0a7d-5a13-93ec-2b2113321f79",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "3d5ee4b5-abbe-5f9c-8886-bbc28d99320e",
+        "c3ab00ba-25f2-5042-b181-feb138a56a56",
+        "db625bff-ee07-5cd0-bea0-3daf70f6644b"
+      ],
+      "relevant_chunk_ids": [
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8224.288900019019,
+      "scope_violations": [],
+      "trace_id": "6ce44dea-f3dd-4579-9b68-c586244a52a5",
+      "trace": {
+        "version": 1,
+        "trace_id": "6ce44dea-f3dd-4579-9b68-c586244a52a5",
+        "duration_ms": 8218.999999997322,
+        "spans": [
+          {
+            "span_id": "a5dea105-2e9d-40b9-ae82-e04ca3e9a14f",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8218.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q105",
+      "question": "设备-方案-044适用的额定输入电压按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "f6ca750c-77d2-51e8-acbe-d03f840ae4fc",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "3bd88ba3-565b-5bcb-b3bf-614e08922271",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b"
+      ],
+      "relevant_chunk_ids": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.828399997786619,
+      "scope_violations": [],
+      "trace_id": "dc6b4b35-a9b8-44ef-8960-6633f6831044",
+      "trace": {
+        "version": 1,
+        "trace_id": "dc6b4b35-a9b8-44ef-8960-6633f6831044",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "b02634db-42ed-4ffc-816f-38bc8e64e078",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8546.999999991385
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q105",
+      "question": "设备-方案-044适用的额定输入电压按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "f6ca750c-77d2-51e8-acbe-d03f840ae4fc",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "faba18ad-a72b-57de-988d-f410903fad2e",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "a41b6fc0-a9dc-5197-8d55-5e8633c34591",
+        "926116cd-4ece-587b-baee-0800ac19332f",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24"
+      ],
+      "relevant_chunk_ids": [
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8561.662199994316,
+      "scope_violations": [],
+      "trace_id": "dc6b4b35-a9b8-44ef-8960-6633f6831044",
+      "trace": {
+        "version": 1,
+        "trace_id": "dc6b4b35-a9b8-44ef-8960-6633f6831044",
+        "duration_ms": 8546.999999991385,
+        "spans": [
+          {
+            "span_id": "b02634db-42ed-4ffc-816f-38bc8e64e078",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8546.999999991385
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q106",
+      "question": "办理平台-方案-045时，API每分钟限额和令牌有效期分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "f1288d36-8913-55d1-a57c-e2837a298d6f",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "92c26eb2-1390-57a0-a19e-ab55cb701594",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06",
+        "20d11e16-3086-54e0-8731-e35b00620be6"
+      ],
+      "relevant_chunk_ids": [
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "f1288d36-8913-55d1-a57c-e2837a298d6f"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.8503449055347546
+      },
+      "latency_ms": 10.37430000724271,
+      "scope_violations": [],
+      "trace_id": "2a905be2-4836-4cd8-9bbb-b16318632437",
+      "trace": {
+        "version": 1,
+        "trace_id": "2a905be2-4836-4cd8-9bbb-b16318632437",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "1113ea0c-68df-48e2-9b6e-0862750daecf",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7985.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q106",
+      "question": "办理平台-方案-045时，API每分钟限额和令牌有效期分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "f1288d36-8913-55d1-a57c-e2837a298d6f",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06",
+        "92c26eb2-1390-57a0-a19e-ab55cb701594",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "bbf6b40a-4f4f-539f-be18-1f5a053c0e36"
+      ],
+      "relevant_chunk_ids": [
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "f1288d36-8913-55d1-a57c-e2837a298d6f"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 7994.095300004119,
+      "scope_violations": [],
+      "trace_id": "2a905be2-4836-4cd8-9bbb-b16318632437",
+      "trace": {
+        "version": 1,
+        "trace_id": "2a905be2-4836-4cd8-9bbb-b16318632437",
+        "duration_ms": 7985.000000000582,
+        "spans": [
+          {
+            "span_id": "1113ea0c-68df-48e2-9b6e-0862750daecf",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7985.000000000582
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q107",
+      "question": "数据-方案-046适用的备份保留期限按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "d3197e68-3df1-5e7c-a010-7583f48764ef",
+        "3f53be3f-ace9-5b30-9063-237c85641f96",
+        "903584b3-4e31-512f-a7aa-e23e9f9fb1c6",
+        "b8b610df-5327-5843-9875-0996bcaabf90",
+        "f337b0a0-74c8-5097-a461-412b70ff41c1",
+        "e5655bfc-b786-5e6b-8163-5002cef4adb4",
+        "01dd169c-4337-5c5a-8b9f-ffb7106f284f",
+        "82300796-8257-59b4-95b7-4fe73dbf4403",
+        "be5a81ca-631f-5185-8239-e3822db24483",
+        "b3d89c8c-fae3-5206-b2b9-3cc9a7099b17"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 8.855199994286522,
+      "scope_violations": [],
+      "trace_id": "f0627465-61db-4fe3-bb6c-fd8d252d2e34",
+      "trace": {
+        "version": 1,
+        "trace_id": "f0627465-61db-4fe3-bb6c-fd8d252d2e34",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "68e9d545-4233-462d-adb3-d2ee5af3dcfb",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9219.000000011874
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q107",
+      "question": "数据-方案-046适用的备份保留期限按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "dbe7acab-c14c-5732-a7a4-f9a91ed1ce34",
+        "f337b0a0-74c8-5097-a461-412b70ff41c1",
+        "3f53be3f-ace9-5b30-9063-237c85641f96",
+        "e5655bfc-b786-5e6b-8163-5002cef4adb4",
+        "be5a81ca-631f-5185-8239-e3822db24483",
+        "b50bffc8-638a-5ccd-8f11-56d6e8aafdf1",
+        "01dd169c-4337-5c5a-8b9f-ffb7106f284f",
+        "b8b610df-5327-5843-9875-0996bcaabf90",
+        "903584b3-4e31-512f-a7aa-e23e9f9fb1c6",
+        "b36ec223-ec47-59f7-9f8d-a295e933e85a"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9223.605199993472,
+      "scope_violations": [],
+      "trace_id": "f0627465-61db-4fe3-bb6c-fd8d252d2e34",
+      "trace": {
+        "version": 1,
+        "trace_id": "f0627465-61db-4fe3-bb6c-fd8d252d2e34",
+        "duration_ms": 9219.000000011874,
+        "spans": [
+          {
+            "span_id": "68e9d545-4233-462d-adb3-d2ee5af3dcfb",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9219.000000011874
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q108",
+      "question": "不要把试点当作正式要求：支持-方案-047实际生效的服务响应时限规定是什么？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "7772d291-113e-505c-bb30-eab6bedd23b1"
+      ],
+      "relevant_chunk_ids": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 0.0,
+        "hit_rate@3": 0.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.2,
+        "ndcg@10": 0.38685280723454163
+      },
+      "latency_ms": 9.92529999348335,
+      "scope_violations": [],
+      "trace_id": "967c0263-397c-488c-8e62-81b4e762a423",
+      "trace": {
+        "version": 1,
+        "trace_id": "967c0263-397c-488c-8e62-81b4e762a423",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "08cd1805-7445-454d-8da3-dc036f8ba454",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8014.999999999418
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q108",
+      "question": "不要把试点当作正式要求：支持-方案-047实际生效的服务响应时限规定是什么？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "76e93c1a-41d7-56ab-b88e-4e5863f6edfd"
+      ],
+      "relevant_chunk_ids": [
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8038.299499996356,
+      "scope_violations": [],
+      "trace_id": "967c0263-397c-488c-8e62-81b4e762a423",
+      "trace": {
+        "version": 1,
+        "trace_id": "967c0263-397c-488c-8e62-81b4e762a423",
+        "duration_ms": 8014.999999999418,
+        "spans": [
+          {
+            "span_id": "08cd1805-7445-454d-8da3-dc036f8ba454",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8014.999999999418
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q109",
+      "question": "人事-方案-048适用的带薪年假额度按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e"
+      ],
+      "relevant_chunk_ids": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.72530001308769,
+      "scope_violations": [],
+      "trace_id": "0c865370-a6a2-40cc-abbf-2b2fa0d064de",
+      "trace": {
+        "version": 1,
+        "trace_id": "0c865370-a6a2-40cc-abbf-2b2fa0d064de",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "1a3626f0-ad45-4d18-a5a8-abf532b0a053",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7983.99999999674
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q109",
+      "question": "人事-方案-048适用的带薪年假额度按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "d1129fe9-21ac-5c66-9b34-4cef1438193e",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "d9c4523f-db48-58fb-926c-6715c8583002",
+        "f78b59b8-e3df-5d7d-a715-3b7778d8bdb1"
+      ],
+      "relevant_chunk_ids": [
+        "d0c71e4f-2156-58fd-affe-97c38afe542c"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 7988.266900007147,
+      "scope_violations": [],
+      "trace_id": "0c865370-a6a2-40cc-abbf-2b2fa0d064de",
+      "trace": {
+        "version": 1,
+        "trace_id": "0c865370-a6a2-40cc-abbf-2b2fa0d064de",
+        "duration_ms": 7983.99999999674,
+        "spans": [
+          {
+            "span_id": "1a3626f0-ad45-4d18-a5a8-abf532b0a053",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7983.99999999674
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q110",
+      "question": "想了解财务-方案-049对应火星基地的氧气存量，资料里有多少？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "unanswerable",
+      "answerable": false,
+      "ranked": [
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "3924ba9b-bb2d-51b9-905e-65a3e632d4c2",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 10.725000000093132,
+      "scope_violations": [],
+      "trace_id": "e838b037-4537-40df-90b8-f5e8614cc860",
+      "trace": {
+        "version": 1,
+        "trace_id": "e838b037-4537-40df-90b8-f5e8614cc860",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "f583d5b2-875a-4d8a-b578-565cf1f4dc76",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9266.00000000326
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q110",
+      "question": "想了解财务-方案-049对应火星基地的氧气存量，资料里有多少？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "unanswerable",
+      "answerable": false,
+      "ranked": [
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "3924ba9b-bb2d-51b9-905e-65a3e632d4c2",
+        "ee46721e-8dfe-570f-8d10-b56669e35725",
+        "02587db6-5e3d-5fc6-b22f-9537805e217e",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "3bf34611-0021-5d98-8305-969314d72d3b",
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9285.409199990681,
+      "scope_violations": [],
+      "trace_id": "e838b037-4537-40df-90b8-f5e8614cc860",
+      "trace": {
+        "version": 1,
+        "trace_id": "e838b037-4537-40df-90b8-f5e8614cc860",
+        "duration_ms": 9281.000000002678,
+        "spans": [
+          {
+            "span_id": "f583d5b2-875a-4d8a-b578-565cf1f4dc76",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9266.00000000326
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q111",
+      "question": "设备-方案-050适用的额定输入电压按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "4b4a6078-d7c9-5753-ae44-a89783fa4192",
+        "4b203a05-b710-50e3-a122-a0fc86bf316f",
+        "7e2e1d37-7e3e-5b9d-9e36-d6613b5253e6",
+        "12f502c3-67e6-5a9f-a81b-411ba9ecc3f9",
+        "84b50e94-14aa-501b-8adc-ccafaa4b61a4",
+        "8364ddf9-7439-54f6-804a-6556524fd48f",
+        "dfe20b91-2369-52ea-b8cf-6429ab160b76",
+        "564f1fe0-1a75-54b5-b85d-5f95edadc54f",
+        "1dabd53d-5b7e-559a-a845-b3dbbe8b354c",
+        "384cc671-8d35-5117-a14e-b1d7e3a4345a"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9.830799986957572,
+      "scope_violations": [],
+      "trace_id": "d6f36430-bd66-499b-af29-650936653ad1",
+      "trace": {
+        "version": 1,
+        "trace_id": "d6f36430-bd66-499b-af29-650936653ad1",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "910d1cdd-1c7b-4213-87d9-8b55fdc01284",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9311.999999990803
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q111",
+      "question": "设备-方案-050适用的额定输入电压按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "boundary",
+      "answerable": false,
+      "ranked": [
+        "1533ff84-2e62-5eee-b9f9-dff1e135adab",
+        "1dabd53d-5b7e-559a-a845-b3dbbe8b354c",
+        "4b203a05-b710-50e3-a122-a0fc86bf316f",
+        "ae7e6b98-a394-515a-9d25-6aad40963f81",
+        "7e2e1d37-7e3e-5b9d-9e36-d6613b5253e6",
+        "b5968562-5d8e-5731-945a-d49ddb806cd7",
+        "84b50e94-14aa-501b-8adc-ccafaa4b61a4",
+        "dfe20b91-2369-52ea-b8cf-6429ab160b76",
+        "384cc671-8d35-5117-a14e-b1d7e3a4345a",
+        "4b4a6078-d7c9-5753-ae44-a89783fa4192"
+      ],
+      "relevant_chunk_ids": [],
+      "metrics": {},
+      "latency_ms": 9324.36939998297,
+      "scope_violations": [],
+      "trace_id": "d6f36430-bd66-499b-af29-650936653ad1",
+      "trace": {
+        "version": 1,
+        "trace_id": "d6f36430-bd66-499b-af29-650936653ad1",
+        "duration_ms": 9311.999999990803,
+        "spans": [
+          {
+            "span_id": "910d1cdd-1c7b-4213-87d9-8b55fdc01284",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 9311.999999990803
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": true
+    },
+    {
+      "case_id": "Q112",
+      "question": "办理平台-方案-051时，API每分钟限额和令牌有效期分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "f1288d36-8913-55d1-a57c-e2837a298d6f",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06",
+        "92c26eb2-1390-57a0-a19e-ab55cb701594",
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d"
+      ],
+      "relevant_chunk_ids": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 0.5,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.8065735963827293
+      },
+      "latency_ms": 10.671500014723279,
+      "scope_violations": [],
+      "trace_id": "eb6d5574-d063-495b-a26a-f8494f4c2583",
+      "trace": {
+        "version": 1,
+        "trace_id": "eb6d5574-d063-495b-a26a-f8494f4c2583",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "40a21c93-2da2-487a-9ce7-61a7123189fb",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8047.000000005937
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q112",
+      "question": "办理平台-方案-051时，API每分钟限额和令牌有效期分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "92c26eb2-1390-57a0-a19e-ab55cb701594",
+        "f1288d36-8913-55d1-a57c-e2837a298d6f",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "9f2060bd-17d7-5d66-88b2-1824ec52b3b4"
+      ],
+      "relevant_chunk_ids": [
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8055.531800011522,
+      "scope_violations": [],
+      "trace_id": "eb6d5574-d063-495b-a26a-f8494f4c2583",
+      "trace": {
+        "version": 1,
+        "trace_id": "eb6d5574-d063-495b-a26a-f8494f4c2583",
+        "duration_ms": 8047.000000005937,
+        "spans": [
+          {
+            "span_id": "40a21c93-2da2-487a-9ce7-61a7123189fb",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8047.000000005937
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q113",
+      "question": "数据-方案-052适用的备份保留期限按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "b2d48c82-3d8e-58c6-af6c-36e635d5b4ca",
+        "e98aab92-abd9-5480-8081-335772c59760"
+      ],
+      "relevant_chunk_ids": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.366300000692718,
+      "scope_violations": [],
+      "trace_id": "04c2f3dd-bc38-4c55-820a-e13e04f5951c",
+      "trace": {
+        "version": 1,
+        "trace_id": "04c2f3dd-bc38-4c55-820a-e13e04f5951c",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "667a25ad-9009-4ce0-b7b8-1736a1e24653",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8233.99999999674
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q113",
+      "question": "数据-方案-052适用的备份保留期限按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "b2d48c82-3d8e-58c6-af6c-36e635d5b4ca",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "d9e05bfd-c3ee-5398-ad8e-4140f5e57051"
+      ],
+      "relevant_chunk_ids": [
+        "99a6d564-072b-5689-91c6-501352e2c8eb"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8232.631499995477,
+      "scope_violations": [],
+      "trace_id": "04c2f3dd-bc38-4c55-820a-e13e04f5951c",
+      "trace": {
+        "version": 1,
+        "trace_id": "04c2f3dd-bc38-4c55-820a-e13e04f5951c",
+        "duration_ms": 8233.99999999674,
+        "spans": [
+          {
+            "span_id": "667a25ad-9009-4ce0-b7b8-1736a1e24653",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8233.99999999674
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q114",
+      "question": "支持-方案-053适用的服务响应时限按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "db625bff-ee07-5cd0-bea0-3daf70f6644b",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28"
+      ],
+      "relevant_chunk_ids": [
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 9.711800012155436,
+      "scope_violations": [],
+      "trace_id": "1fe320f9-b851-4905-9f27-ffc94eaaec8b",
+      "trace": {
+        "version": 1,
+        "trace_id": "1fe320f9-b851-4905-9f27-ffc94eaaec8b",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "10252199-e31b-4784-ae27-ad27813273e1",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7936.999999990803
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q114",
+      "question": "支持-方案-053适用的服务响应时限按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "5776e51a-faf7-5cb8-8dbf-a771ce6c008c",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "db625bff-ee07-5cd0-bea0-3daf70f6644b"
+      ],
+      "relevant_chunk_ids": [
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 7945.919000019785,
+      "scope_violations": [],
+      "trace_id": "1fe320f9-b851-4905-9f27-ffc94eaaec8b",
+      "trace": {
+        "version": 1,
+        "trace_id": "1fe320f9-b851-4905-9f27-ffc94eaaec8b",
+        "duration_ms": 7936.999999990803,
+        "spans": [
+          {
+            "span_id": "10252199-e31b-4784-ae27-ad27813273e1",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7936.999999990803
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q115",
+      "question": "不要把试点当作正式要求：人事-方案-054实际生效的带薪年假额度规定是什么？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "885a673a-bac8-555f-8925-ddcab57e3924"
+      ],
+      "relevant_chunk_ids": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.797599999932572,
+      "scope_violations": [],
+      "trace_id": "b717c7ff-066a-4f7a-bcd3-2ee1d0091ce0",
+      "trace": {
+        "version": 1,
+        "trace_id": "b717c7ff-066a-4f7a-bcd3-2ee1d0091ce0",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "7415df8c-dad9-4e00-94be-d71eb335ea31",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8187.000000005355
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q115",
+      "question": "不要把试点当作正式要求：人事-方案-054实际生效的带薪年假额度规定是什么？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "8a2ee225-d20c-5843-9afb-d8453e122d24",
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d",
+        "3d383f5b-b55b-59bf-b0e7-cc13c8a83e9a",
+        "5a90831e-0980-5b5b-8221-980aa2123f98",
+        "d0c71e4f-2156-58fd-affe-97c38afe542c",
+        "718bce2b-3e22-56bd-a6d9-eccf7490abb3",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "5b9a6867-66c1-5467-aff4-632ed8c5511c",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "dc76752a-7993-558d-8f2f-1389db606454"
+      ],
+      "relevant_chunk_ids": [
+        "d19567e4-f3d4-5b8d-8c2d-d48240c3a10d"
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "hit_rate@1": 0.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "latency_ms": 8202.336799993645,
+      "scope_violations": [],
+      "trace_id": "b717c7ff-066a-4f7a-bcd3-2ee1d0091ce0",
+      "trace": {
+        "version": 1,
+        "trace_id": "b717c7ff-066a-4f7a-bcd3-2ee1d0091ce0",
+        "duration_ms": 8187.000000005355,
+        "spans": [
+          {
+            "span_id": "7415df8c-dad9-4e00-94be-d71eb335ea31",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8187.000000005355
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q116",
+      "question": "关于财务-方案-055，请说明当前有效差旅住宿限额标准。",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "2e049e92-9f29-5340-a16e-2c938eab803b",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "5b8faefc-b02a-5a14-804d-3f0762ffc808",
+        "3bf34611-0021-5d98-8305-969314d72d3b",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "02587db6-5e3d-5fc6-b22f-9537805e217e"
+      ],
+      "relevant_chunk_ids": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.21059999766294,
+      "scope_violations": [],
+      "trace_id": "b6cb012d-5f14-468e-8571-38c6dd06b985",
+      "trace": {
+        "version": 1,
+        "trace_id": "b6cb012d-5f14-468e-8571-38c6dd06b985",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "734f6fec-b6f5-401d-98d8-3a10ac550622",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 6593.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q116",
+      "question": "关于财务-方案-055，请说明当前有效差旅住宿限额标准。",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "paraphrase",
+      "answerable": true,
+      "ranked": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "3bf34611-0021-5d98-8305-969314d72d3b",
+        "3dcf2003-29c9-51ec-b3d7-75ccce1824f2",
+        "f3ef8cee-c38d-5705-8b80-fbcf23f3e9fb",
+        "5b8faefc-b02a-5a14-804d-3f0762ffc808",
+        "2e049e92-9f29-5340-a16e-2c938eab803b",
+        "71bdb501-2e5f-5882-b04b-84be6f495e58",
+        "a3dcc0a9-2d22-5e3f-8a84-097865b278ef",
+        "14469876-3b8b-509a-adfc-0ca1e7be3a53"
+      ],
+      "relevant_chunk_ids": [
+        "e6c9404e-cea8-5558-bf20-8af87d4624b6"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 6605.744999993476,
+      "scope_violations": [],
+      "trace_id": "b6cb012d-5f14-468e-8571-38c6dd06b985",
+      "trace": {
+        "version": 1,
+        "trace_id": "b6cb012d-5f14-468e-8571-38c6dd06b985",
+        "duration_ms": 6593.999999997322,
+        "spans": [
+          {
+            "span_id": "734f6fec-b6f5-401d-98d8-3a10ac550622",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 6593.999999997322
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q117",
+      "question": "设备-方案-056适用的额定输入电压按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "f6ca750c-77d2-51e8-acbe-d03f840ae4fc",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "9f2736fc-c955-5180-a3d9-bdd685166327",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "5889eacb-7dc2-5260-899d-34ba2f03fa09",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067"
+      ],
+      "relevant_chunk_ids": [
+        "e98aab92-abd9-5480-8081-335772c59760"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8.99329999811016,
+      "scope_violations": [],
+      "trace_id": "72ce45f7-72e6-4abc-af47-a916d282c9a3",
+      "trace": {
+        "version": 1,
+        "trace_id": "72ce45f7-72e6-4abc-af47-a916d282c9a3",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "7f70d0be-fec2-42a7-9982-a818ba820218",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8250.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q117",
+      "question": "设备-方案-056适用的额定输入电压按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "e98aab92-abd9-5480-8081-335772c59760",
+        "90282e37-1d5b-56ee-99a2-779f50242e7b",
+        "f6ca750c-77d2-51e8-acbe-d03f840ae4fc",
+        "fc5a5af1-3cae-5546-a14c-45b3fad360a8",
+        "d31dd494-b608-5532-bc41-0962f9a54060",
+        "9f2736fc-c955-5180-a3d9-bdd685166327",
+        "c53ece7c-46d6-518b-8b7f-901b240786e2",
+        "ed04dc12-8762-5228-9455-896d832fb516",
+        "5889eacb-7dc2-5260-899d-34ba2f03fa09",
+        "a41b6fc0-a9dc-5197-8d55-5e8633c34591"
+      ],
+      "relevant_chunk_ids": [
+        "e98aab92-abd9-5480-8081-335772c59760"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8262.118500002543,
+      "scope_violations": [],
+      "trace_id": "72ce45f7-72e6-4abc-af47-a916d282c9a3",
+      "trace": {
+        "version": 1,
+        "trace_id": "72ce45f7-72e6-4abc-af47-a916d282c9a3",
+        "duration_ms": 8250.0,
+        "spans": [
+          {
+            "span_id": "7f70d0be-fec2-42a7-9982-a818ba820218",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8250.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q118",
+      "question": "不要把试点当作正式要求：平台-方案-057实际生效的API每分钟限额规定是什么？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "54e09577-c37e-5c61-995e-2abfefc83a9e",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "9f906e77-072e-5a8d-895d-dc9cb27bc958"
+      ],
+      "relevant_chunk_ids": [
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.108699992997572,
+      "scope_violations": [],
+      "trace_id": "6cade88c-bf0b-4347-8cd9-fc1cc335c2a0",
+      "trace": {
+        "version": 1,
+        "trace_id": "6cade88c-bf0b-4347-8cd9-fc1cc335c2a0",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "e626569f-61e4-4996-85d6-e2e59228b0e8",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8280.999999988126
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q118",
+      "question": "不要把试点当作正式要求：平台-方案-057实际生效的API每分钟限额规定是什么？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "distractor",
+      "answerable": true,
+      "ranked": [
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775",
+        "f3cfc5c6-5d3c-511e-b678-6ce9ba8d9a28",
+        "b334761e-c533-534f-9a4d-d105cc583db8",
+        "7772d291-113e-505c-bb30-eab6bedd23b1",
+        "a85010b2-4b6f-563c-b2bf-b70cd3f9f30f",
+        "9ca06b76-cf45-52b5-975e-415438131c5e",
+        "92c26eb2-1390-57a0-a19e-ab55cb701594",
+        "e40943cc-5a37-5776-b46f-076e80acab76",
+        "7e847fa4-f13e-5228-b726-82a732fed391",
+        "e6c4bc94-0f66-5e39-b9db-aa762a53bd06"
+      ],
+      "relevant_chunk_ids": [
+        "8f8cd1f0-648d-52a7-ba65-c28cfd2de775"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8290.243499999633,
+      "scope_violations": [],
+      "trace_id": "6cade88c-bf0b-4347-8cd9-fc1cc335c2a0",
+      "trace": {
+        "version": 1,
+        "trace_id": "6cade88c-bf0b-4347-8cd9-fc1cc335c2a0",
+        "duration_ms": 8280.999999988126,
+        "spans": [
+          {
+            "span_id": "e626569f-61e4-4996-85d6-e2e59228b0e8",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8280.999999988126
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q119",
+      "question": "数据-方案-058适用的备份保留期限按什么数值执行？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "a07598d9-e9fa-5a0f-b812-e4cab2884bec",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b"
+      ],
+      "relevant_chunk_ids": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 10.907700008829124,
+      "scope_violations": [],
+      "trace_id": "a1b6162b-6014-41ab-af79-3d4a51f3053b",
+      "trace": {
+        "version": 1,
+        "trace_id": "a1b6162b-6014-41ab-af79-3d4a51f3053b",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "9f8bc547-230b-402c-9e36-caed66014106",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8125.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q119",
+      "question": "数据-方案-058适用的备份保留期限按什么数值执行？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "exact",
+      "answerable": true,
+      "ranked": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12",
+        "885a673a-bac8-555f-8925-ddcab57e3924",
+        "fd811d2a-7bf3-5073-873e-cf39d2831fa5",
+        "cd8b2fa9-0018-5219-ad73-c33c448ac067",
+        "99a6d564-072b-5689-91c6-501352e2c8eb",
+        "775aeda1-2dbe-5f5d-be89-e85e34cf0f3b",
+        "92d189a2-c418-5783-8ae5-80e6beed1b22",
+        "65075587-cd2f-5e9e-8965-ee38ef46206e",
+        "d6bfa53a-26de-57c7-8686-53714504d617",
+        "7358bec9-b43d-5e2b-b936-a23d043fdc47"
+      ],
+      "relevant_chunk_ids": [
+        "f25a0256-3e0c-5909-8386-ea5a05fbbd12"
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 8132.288900014828,
+      "scope_violations": [],
+      "trace_id": "a1b6162b-6014-41ab-af79-3d4a51f3053b",
+      "trace": {
+        "version": 1,
+        "trace_id": "a1b6162b-6014-41ab-af79-3d4a51f3053b",
+        "duration_ms": 8125.0,
+        "spans": [
+          {
+            "span_id": "9f8bc547-230b-402c-9e36-caed66014106",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 8125.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q120",
+      "question": "办理支持-方案-059时，服务响应时限和升级等待时限分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_exact_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "6d2126d8-91b5-5a2a-96c4-8bf243485385",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "db625bff-ee07-5cd0-bea0-3daf70f6644b",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "94c8e4db-e6ab-5c2c-88ad-85e4532bb910",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "76e93c1a-41d7-56ab-b88e-4e5863f6edfd"
+      ],
+      "relevant_chunk_ids": [
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "ad391e03-9388-532f-959f-94078d9eefec"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 0.5,
+        "hit_rate@3": 1.0,
+        "recall@5": 0.5,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 0.8065735963827293
+      },
+      "latency_ms": 11.267200010479428,
+      "scope_violations": [],
+      "trace_id": "ca557868-fd94-4464-a496-76e20e5f0ec8",
+      "trace": {
+        "version": 1,
+        "trace_id": "ca557868-fd94-4464-a496-76e20e5f0ec8",
+        "duration_ms": 0.0,
+        "spans": [
+          {
+            "span_id": "94c8e4f3-d7f7-4eba-bebb-bc4736a5ea81",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7000.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    },
+    {
+      "case_id": "Q120",
+      "question": "办理支持-方案-059时，服务响应时限和升级等待时限分别是多少，需要谁审批和哪些凭证？",
+      "strategy": "dense_rerank_offline",
+      "split": "final",
+      "category": "multi_evidence",
+      "answerable": true,
+      "ranked": [
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "ad391e03-9388-532f-959f-94078d9eefec",
+        "dbc35f02-4e2d-5f2b-a818-09c6f3873e33",
+        "12030954-7e96-51a7-8ae2-8a29a147bff9",
+        "18ee4aa7-fbf6-565e-a051-62c72876184a",
+        "2e713d4e-11f2-5700-beef-2ecd79b18a24",
+        "2ced22e5-dc81-542c-8dde-210fcfa1710e",
+        "c0875043-92ff-522f-85ec-d2e4c9e48dbf",
+        "e791707f-6e82-5eff-a44d-a95ec7e2238b",
+        "6d2126d8-91b5-5a2a-96c4-8bf243485385"
+      ],
+      "relevant_chunk_ids": [
+        "5eda78f2-f616-5ec7-8b79-d10d80c81c3d",
+        "ad391e03-9388-532f-959f-94078d9eefec"
+      ],
+      "metrics": {
+        "recall@1": 0.5,
+        "hit_rate@1": 1.0,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "latency_ms": 7022.4466000072425,
+      "scope_violations": [],
+      "trace_id": "ca557868-fd94-4464-a496-76e20e5f0ec8",
+      "trace": {
+        "version": 1,
+        "trace_id": "ca557868-fd94-4464-a496-76e20e5f0ec8",
+        "duration_ms": 7000.0,
+        "spans": [
+          {
+            "span_id": "94c8e4f3-d7f7-4eba-bebb-bc4736a5ea81",
+            "parent_span_id": null,
+            "name": "rerank",
+            "start_ms": 0.0,
+            "status": "ok",
+            "usage": null,
+            "duration_ms": 7000.0
+          }
+        ],
+        "dropped_spans": 0,
+        "usage": {
+          "calls": 0,
+          "reported_calls": 0,
+          "complete": true,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        }
+      },
+      "failed": false
+    }
+  ],
+  "unavailable": {
+    "dense_pgvector": "PostgreSQL not used in offline mode; no substitute results",
+    "sparse_ts_rank": "PostgreSQL not used in offline mode; no substitute results",
+    "hybrid": "PostgreSQL not used in offline mode; no substitute results",
+    "hybrid_rerank": "PostgreSQL not used in offline mode; no substitute results"
+  },
+  "top_k": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "config": {
+    "embedding_model": "BAAI/bge-small-zh-v1.5",
+    "embedding_device": "cpu",
+    "embedding_batch_size": 32,
+    "reranker_model": "BAAI/bge-reranker-base",
+    "reranker_device": "cpu",
+    "reranker_batch_size": 8,
+    "reranker_max_length": 512,
+    "dense_candidate_k": 30,
+    "sparse_candidate_k": 30,
+    "rrf_k": 60,
+    "rerank_candidate_k": 30
+  },
+  "chunk_size": 1000,
+  "chunk_overlap": 150,
+  "llm_calls": 0,
+  "index_config": {
+    "dense": "exact cosine; no ANN index in existing migrations",
+    "sparse": "GIN / custom Chinese bigram + ASCII identifier / ts_rank; not BM25"
+  },
+  "latency_scope": "warm per query encoding + strategy pipeline; offline exact cosine is not PostgreSQL latency",
+  "summary": {
+    "dense_exact_offline": {
+      "n": 40,
+      "answerable_n": 32,
+      "unanswerable_n": 8,
+      "metrics": {
+        "recall@1": 0.734375,
+        "hit_rate@1": 0.84375,
+        "recall@3": 0.828125,
+        "hit_rate@3": 0.9375,
+        "recall@5": 0.90625,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.8979166666666667,
+        "ndcg@10": 0.8830017971797884
+      },
+      "no_result_accuracy": 0,
+      "answerable_false_empty_rate": 0,
+      "scope_violation_count": 0,
+      "p50_ms": 10.308500008250121,
+      "p95_ms": 11.850854996009728
+    },
+    "dense_rerank_offline": {
+      "n": 40,
+      "answerable_n": 32,
+      "unanswerable_n": 8,
+      "metrics": {
+        "recall@1": 0.828125,
+        "hit_rate@1": 0.9375,
+        "recall@3": 1.0,
+        "hit_rate@3": 1.0,
+        "recall@5": 1.0,
+        "hit_rate@5": 1.0,
+        "recall@10": 1.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.96875,
+        "ndcg@10": 0.9769331095982161
+      },
+      "no_result_accuracy": 0,
+      "answerable_false_empty_rate": 0,
+      "scope_violation_count": 0,
+      "p50_ms": 8328.277449996676,
+      "p95_ms": 9608.304929983567
+    }
+  },
+  "by_category": {
+    "dense_exact_offline": {
+      "boundary": {
+        "n": 6,
+        "answerable_n": 0,
+        "unanswerable_n": 6,
+        "metrics": {},
+        "no_result_accuracy": 0,
+        "answerable_false_empty_rate": null,
+        "scope_violation_count": 0,
+        "p50_ms": 9.255049997591414,
+        "p95_ms": 12.29439998496673
+      },
+      "distractor": {
+        "n": 7,
+        "answerable_n": 7,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 0.42857142857142855,
+          "hit_rate@1": 0.42857142857142855,
+          "recall@3": 0.7142857142857143,
+          "hit_rate@3": 0.7142857142857143,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 0.6285714285714286,
+          "ndcg@10": 0.7193664459445712
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 10.656899990863167,
+        "p95_ms": 11.505720003333408
+      },
+      "exact": {
+        "n": 10,
+        "answerable_n": 10,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 0.9,
+          "hit_rate@1": 0.9,
+          "recall@3": 1.0,
+          "hit_rate@3": 1.0,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 0.9333333333333333,
+          "ndcg@10": 0.95
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 9.776850005437154,
+        "p95_ms": 10.82341500223265
+      },
+      "multi_evidence": {
+        "n": 7,
+        "answerable_n": 7,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 0.5,
+          "hit_rate@1": 1.0,
+          "recall@3": 0.5,
+          "hit_rate@3": 1.0,
+          "recall@5": 0.5714285714285714,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 1.0,
+          "ndcg@10": 0.8172131983058901
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 10.671500014723279,
+        "p95_ms": 12.037010004860349
+      },
+      "paraphrase": {
+        "n": 8,
+        "answerable_n": 8,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 1.0,
+          "hit_rate@1": 1.0,
+          "recall@3": 1.0,
+          "hit_rate@3": 1.0,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 1.0,
+          "ndcg@10": 1.0
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 10.226650003460236,
+        "p95_ms": 11.576939997030422
+      },
+      "unanswerable": {
+        "n": 2,
+        "answerable_n": 0,
+        "unanswerable_n": 2,
+        "metrics": {},
+        "no_result_accuracy": 0,
+        "answerable_false_empty_rate": null,
+        "scope_violation_count": 0,
+        "p50_ms": 10.663349996320903,
+        "p95_ms": 10.71883499971591
+      }
+    },
+    "dense_rerank_offline": {
+      "boundary": {
+        "n": 6,
+        "answerable_n": 0,
+        "unanswerable_n": 6,
+        "metrics": {},
+        "no_result_accuracy": 0,
+        "answerable_false_empty_rate": null,
+        "scope_violation_count": 0,
+        "p50_ms": 9255.782050000562,
+        "p95_ms": 10055.670249981631
+      },
+      "distractor": {
+        "n": 7,
+        "answerable_n": 7,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 0.8571428571428571,
+          "hit_rate@1": 0.8571428571428571,
+          "recall@3": 1.0,
+          "hit_rate@3": 1.0,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 0.9285714285714286,
+          "ndcg@10": 0.9472756790816368
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 8290.243499999633,
+        "p95_ms": 9907.882520006387
+      },
+      "exact": {
+        "n": 10,
+        "answerable_n": 10,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 1.0,
+          "hit_rate@1": 1.0,
+          "recall@3": 1.0,
+          "hit_rate@3": 1.0,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 1.0,
+          "ndcg@10": 1.0
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 8408.50299999147,
+        "p95_ms": 9167.669259998365
+      },
+      "multi_evidence": {
+        "n": 7,
+        "answerable_n": 7,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 0.5,
+          "hit_rate@1": 1.0,
+          "recall@3": 1.0,
+          "hit_rate@3": 1.0,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 1.0,
+          "ndcg@10": 1.0
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 8055.531800011522,
+        "p95_ms": 8434.629719996883
+      },
+      "paraphrase": {
+        "n": 8,
+        "answerable_n": 8,
+        "unanswerable_n": 0,
+        "metrics": {
+          "recall@1": 0.875,
+          "hit_rate@1": 0.875,
+          "recall@3": 1.0,
+          "hit_rate@3": 1.0,
+          "recall@5": 1.0,
+          "hit_rate@5": 1.0,
+          "recall@10": 1.0,
+          "hit_rate@10": 1.0,
+          "mrr@10": 0.9375,
+          "ndcg@10": 0.9538662191964322
+        },
+        "no_result_accuracy": null,
+        "answerable_false_empty_rate": 0,
+        "scope_violation_count": 0,
+        "p50_ms": 8169.877300017106,
+        "p95_ms": 9397.652905010182
+      },
+      "unanswerable": {
+        "n": 2,
+        "answerable_n": 0,
+        "unanswerable_n": 2,
+        "metrics": {},
+        "no_result_accuracy": 0,
+        "answerable_false_empty_rate": null,
+        "scope_violation_count": 0,
+        "p50_ms": 8880.071249994216,
+        "p95_ms": 9244.875404991035
+      }
+    }
+  },
+  "cold_load_and_corpus_encoding_seconds": 17.489435600000434,
+  "model_revisions": {
+    "embedding": "7999e1d3359715c523056ef9478215996d62a620",
+    "reranker": "2cfc18c9415c912f9d8155881c133215df768a70"
+  },
+  "finished_at": "2026-10-24T07:51:15.880478+00:00"
+}

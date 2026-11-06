@@ -1,0 +1,817 @@
+{
+  "version": "agent-contract-v2.0",
+  "scope": "synthetic mock tools; no real writes; scripted fault injection is not model accuracy",
+  "cases": [
+    {
+      "id": "search_fact",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "人事-方案-000的带薪年假额度为12天。 [S1]"
+        }
+      ],
+      "fault_injection": false
+    },
+    {
+      "id": "document_status",
+      "input": "查询文档 43076243-273e-50c7-ad50-efe6be0a4263 的状态。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "get_document_info"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+            }
+          }
+        ],
+        "finish_reason": "document_info",
+        "error": null,
+        "executed_names": [
+          "get_document_info"
+        ],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "get_document_info",
+              "arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "文档状态 [S1]"
+        }
+      ],
+      "fault_injection": false
+    },
+    {
+      "id": "search_then_document",
+      "input": "先搜索人事-方案-000的规定，再查看文档43076243-273e-50c7-ad50-efe6be0a4263的状态，最后用正文作答。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base",
+            "get_document_info"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          },
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base",
+          "get_document_info"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [
+            {
+              "name": "get_document_info",
+              "arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "人事-方案-000的带薪年假额度为12天。 [S1]"
+        }
+      ],
+      "fault_injection": false
+    },
+    {
+      "id": "document_then_search",
+      "input": "先查看文档43076243-273e-50c7-ad50-efe6be0a4263状态，再搜索人事-方案-000的规定并回答。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "get_document_info",
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "43076243-273e-50c7-ad50-efe6be0a4263"
+            }
+          },
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "get_document_info",
+          "search_knowledge_base"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "get_document_info",
+              "arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "人事-方案-000的带薪年假额度为12天。 [S2]"
+        }
+      ],
+      "fault_injection": false
+    },
+    {
+      "id": "two_search_rounds",
+      "input": "分别搜索两次人事-方案-000的规定，核对结果后作答。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base",
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          },
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ],
+        "answer_contains": [
+          "人事-方案-000的带薪年假额度为12天。"
+        ]
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "人事-方案-000的带薪年假额度为12天。 [S1]"
+        }
+      ],
+      "fault_injection": false
+    },
+    {
+      "id": "tenant_injection",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5, \"tenant_id\": \"04483192-7425-518f-8fb3-5c16e77f401f\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "kb_injection",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5, \"knowledge_base_id\": \"0190619b-f5e0-5733-a50c-a625efa1e7a0\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "illegal_top_k",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 100}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "malformed_json",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "expect_rejected": "invalid_arguments"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "unknown_write_tool",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "delete_document"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "delete_document",
+            "expect_rejected": "invalid_tool"
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "delete_document",
+              "arguments": "{\"document_id\": \"43076243-273e-50c7-ad50-efe6be0a4263\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "foreign_existing_document",
+      "input": "查询文档 dce9395c-6052-5e21-9530-a17465d62eff 的状态。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "get_document_info"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "get_document_info",
+            "equals": {
+              "document_id": "dce9395c-6052-5e21-9530-a17465d62eff"
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [
+          "get_document_info"
+        ],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "get_document_info",
+              "arguments": "{\"document_id\": \"dce9395c-6052-5e21-9530-a17465d62eff\"}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": false
+    },
+    {
+      "id": "tool_resource_not_found",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "mock_tool_error": "resource_not_found",
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "tool_unavailable",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": "unavailable",
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "mock_tool_error": "unavailable",
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "tool_forbidden",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "no_evidence",
+        "error": "forbidden",
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "mock_tool_error": "forbidden",
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "invalid_citation",
+      "input": "我们执行人事-方案-000，想确认正式规定里带薪年假额度的具体数值。每次检索最多返回5条结果。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          [
+            "search_knowledge_base"
+          ]
+        ],
+        "calls": [
+          {
+            "name": "search_knowledge_base",
+            "contains": {
+              "query": [
+                "人事-方案-000"
+              ]
+            },
+            "ranges": {
+              "top_k": [
+                1,
+                5
+              ]
+            }
+          }
+        ],
+        "finish_reason": "answer",
+        "error": "invalid_citation",
+        "executed_names": [
+          "search_knowledge_base"
+        ],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [
+            {
+              "name": "search_knowledge_base",
+              "arguments": "{\"query\": \"人事-方案-000\", \"top_k\": 5}"
+            }
+          ],
+          "content": ""
+        },
+        {
+          "calls": [],
+          "content": "答案 [S999]"
+        }
+      ],
+      "fault_injection": true
+    },
+    {
+      "id": "no_evidence",
+      "input": "你好，请说明需要什么信息才能查询知识库。",
+      "tenant_id": "7628c449-e85a-55d1-a518-d01ec7374c0b",
+      "knowledge_base_id": "0b70538b-6e23-5ca5-8ccb-c7a9ac55aa88",
+      "chunk_id": "53f95d37-f4f4-59c9-8811-486cfd96af0b",
+      "expected": {
+        "allowed_sequences": [
+          []
+        ],
+        "calls": [],
+        "finish_reason": "no_evidence",
+        "error": null,
+        "executed_names": [],
+        "answer_contains": []
+      },
+      "mock_tool_error": null,
+      "scripted_turns": [
+        {
+          "calls": [],
+          "content": "没有可用证据。"
+        }
+      ],
+      "fault_injection": false
+    }
+  ]
+}

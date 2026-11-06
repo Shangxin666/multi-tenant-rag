@@ -1,0 +1,65 @@
+{
+  "started_at": "2026-10-24T07:31:06.855283+00:00",
+  "code_head": "136262f528d0c32e5dc2c35671816f4794cef14b",
+  "worktree_dirty": true,
+  "source_sha256": "f7e904f9fe0380c29c024a9368289300a4c2309f598509acb37c370feb121462",
+  "dataset_sha256": "ed221414caa67606ce0576288e3f39fae4e6f7e5bb7e0d2a98ce94e817b1dd5a",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "versions": {
+    "numpy": "2.5.3",
+    "sqlalchemy": "2.0.52",
+    "sentence-transformers": "5.7.0",
+    "langgraph": "1.2.15"
+  },
+  "dataset_version": "synthetic-business-v2.0",
+  "counts": {
+    "documents": 180,
+    "chunks": 320,
+    "cases": 120,
+    "categories": {
+      "paraphrase": 24,
+      "exact": 30,
+      "distractor": 18,
+      "unanswerable": 12,
+      "multi_evidence": 24,
+      "boundary": 12
+    },
+    "splits": {
+      "dev": 80,
+      "final": 40
+    },
+    "human_reviewed": 0
+  },
+  "mode": "postgres",
+  "split": "dev",
+  "status": "failed",
+  "records": [],
+  "unavailable": {},
+  "top_k": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "config": {
+    "embedding_model": "BAAI/bge-small-zh-v1.5",
+    "embedding_device": "cpu",
+    "embedding_batch_size": 32,
+    "reranker_model": "BAAI/bge-reranker-base",
+    "reranker_device": "cpu",
+    "reranker_batch_size": 8,
+    "reranker_max_length": 512,
+    "dense_candidate_k": 30,
+    "sparse_candidate_k": 30,
+    "rrf_k": 60,
+    "rerank_candidate_k": 30
+  },
+  "chunk_size": 1000,
+  "chunk_overlap": 150,
+  "llm_calls": 0,
+  "latency_scope": "warm per query encoding + strategy pipeline; offline exact cosine is not PostgreSQL latency",
+  "summary": {},
+  "by_category": {},
+  "error_type": "ConnectionRefusedError",
+  "finished_at": "2026-10-24T07:31:09.072463+00:00"
+}
